@@ -63,3 +63,13 @@ setup(
 
 
 # questionnaire-package
+
+
+# TODO: 
+
+
+setup,py
+check for each questionnaire compatibility 
+init file for questionnaires and export for public api 
+main functionality check (Test)  (April 4th)
+try for each questionnaire analysis functionality 

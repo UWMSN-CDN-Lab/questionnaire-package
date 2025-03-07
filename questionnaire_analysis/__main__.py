@@ -1,4 +1,4 @@
-# from questionnaire_analysis.common import access_csv, detect_questionnaires
+from questionnaire_analysis.common import access_csv, detect_questionnaires
 
 def main():
     input_file_path = './data/your_data.csv'  # Update this to your CSV path
