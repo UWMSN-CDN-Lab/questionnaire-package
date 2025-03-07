@@ -14,20 +14,7 @@ questionnaire_analysis/         # Top-level package folder
 
 This file structure should be followed for the package 
 
-
-TODOS:
-Look up init and setup requirements
-Look up Licensing for pip install or not as well
-Main File design 
-
 Sample main init file : 
-
-"""
-pyexample.
-
-An example python library.
-"""
-
 __version__ = "0.1.0"
 __author__ = ''
 __credits__ = ''
@@ -67,9 +54,12 @@ setup(
 
 # TODO: 
 
-
+FILE PATHING
+RESEARCH LAB WORKAROUND
 setup,py
 check for each questionnaire compatibility 
 init file for questionnaires and export for public api 
 main functionality check (Test)  (April 4th)
 try for each questionnaire analysis functionality 
+PIP install package
+
