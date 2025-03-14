@@ -53,15 +53,15 @@ setup(
 
 
 # TODO: 
-
-Making a CSV to toggle to ask the user if we want to create a new csv or not
-Should make one csv instead of multiple ones 
-FILE PATHING
-RESEARCH LAB WORKAROUND
-setup.py
-check for each questionnaire compatibility
-init file for questionnaires and export for public api
+# PMERQ,SU,DOSPERT,UPPS,EERQ work rn, need to make sure other scripts work or not. 
+Making a CSV to toggle to ask the user if we want to create a new csv or not - ND
+Should make one csv instead of multiple ones - ND
+RESEARCH LAB WORKAROUND - ND
+setup.py - PROG
+check for each questionnaire compatibility - PROG
+init file for questionnaires and export for public api - PROG
 main functionality check (Test)  (April 4th)
+
 try for each questionnaire analysis functionality
 PIP install package
 .gitignore for whatever we need to hide
@@ -72,5 +72,4 @@ ADD IN EDGE CASES
 if its less, put out a waring and compute wiht assiming its 0
 To make sure the item numners are correct
 Dont worry about care now. 
-# PMERQ,SU,DOSPERT,UPPS,EERQ work rn, need to make sure other scripts work or not. 
 EDGE CASES:
