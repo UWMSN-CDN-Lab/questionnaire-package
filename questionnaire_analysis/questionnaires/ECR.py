@@ -1,14 +1,6 @@
 import pandas as pd
 # Check for reverse scoring
-# Access CSV file for ECR-S
-def ECR_access_csv(file_path, delimiter=","):
-    try:
-        df = pd.read_csv(file_path, delimiter=delimiter)
-        print(f"Data loaded successfully from {file_path}.")
-        return df
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        return None
+
 
 # Calculate ECR-S subscale scores
 def ECR_calculate_scores(df):
@@ -47,12 +39,10 @@ def ECR_save_results_to_csv(df, output_file_path):
     print(f"Results saved to {output_file_path}.")
 
 # Main function
-def main():
-    input_file_path = './data/ECR_DATA_SET.csv'
+def main(df):
+
     output_file_path = 'processed_ecr_results.csv'
     
-    # Load CSV
-    df = ECR_access_csv(input_file_path)
 
     if df is not None:
         # Calculate ECR-S subscale scores

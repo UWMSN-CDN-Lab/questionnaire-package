@@ -1,14 +1,4 @@
 import pandas as pd
-# prefix_questionnumbe
-# Access CSV file
-def MASQ_access_csv(file_path, delimiter=","):
-    try:
-        df = pd.read_csv(file_path, delimiter=delimiter)
-        print(f"Data loaded successfully from {file_path}.")
-        return df
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        return None
 
 # Define subscales (if applicable, otherwise overall scoring)
 positive_affect_items = [1, 9, 15, 19, 23, 25]  # Items representing positive feelings
@@ -70,12 +60,9 @@ def MASQ_save_results_to_csv(df, output_file_path):
     print(f"Results saved to {output_file_path}.")
 
 # Main function to execute the steps
-def main():
-    input_file_path = './data/Emotion_Survey_Responses.csv'
+def main(df):
     output_file_path = 'processed_emotion_survey_results.csv'
-    
-    # Load the CSV file
-    df = MASQ_access_csv(input_file_path)
+
 
     if df is not None:
         # Process the data to calculate subscale and overall scores

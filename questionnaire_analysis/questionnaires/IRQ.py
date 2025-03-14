@@ -1,14 +1,6 @@
 import pandas as pd
 
-# Access CSV file
-def IRQ_access_csv(file_path, delimiter=","):
-    try:
-        df = pd.read_csv(file_path, delimiter=delimiter)
-        print(f"Data loaded successfully from {file_path}.")
-        return df
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        return None
+
 
 # Calculate total and subscale scores
 def IRQ_calculate_scores(df):
@@ -70,12 +62,9 @@ def IRQ_save_results_to_csv(df, output_file_path):
 
 # Main function to execute the steps
 def main():
-    input_file_path = './data/IRQ_DATA_SET.csv'
     output_file_path = 'processed_irq_results.csv'
     summary_output_file_path = 'irq_summary_results.csv'
-    
-    # Load the CSV file
-    df = IRQ_access_csv(input_file_path)
+
 
     if df is not None:
         # Calculate IRQ subscale and total scores

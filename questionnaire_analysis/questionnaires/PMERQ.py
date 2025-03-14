@@ -1,14 +1,5 @@
 import pandas as pd
 
-# Access CSV file
-def PMERQ_access_csv(file_path, delimiter=","):
-    try:
-        df = pd.read_csv(file_path, delimiter=delimiter)
-        print(f"Data loaded successfully from {file_path}.")
-        return df
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        return None
 
 # Calculate mean scores for the given subscale
 def PMERQ_calculate_subscale_mean(df, items):
@@ -16,7 +7,9 @@ def PMERQ_calculate_subscale_mean(df, items):
     Calculate the average score for each subscale based on the item numbers.
     """
     subscale_items = [item for item in items]
-    return df[subscale_items].mean(axis=1)
+    print(df[subscale_items].dtypes)
+    numeric_df = df[subscale_items].apply(pd.to_numeric, errors='coerce')
+    return numeric_df.mean(axis=1)
 
 # Define subscales based on the PMERQ questionnaire
 subscales = {
@@ -74,12 +67,8 @@ def PMERQ_save_results_to_csv(df, output_file_path):
     print(f"Results saved to {output_file_path}.")
 
 # Main function to execute the steps
-def main():
-    input_file_path = './data/PMERQ_DATA_SET.csv'
+def main(df):
     output_file_path = 'processed_pmerq_results.csv'
-    
-    # Load the CSV file
-    df = PMERQ_access_csv(input_file_path)
 
     if df is not None:
         # Calculate subscale scores

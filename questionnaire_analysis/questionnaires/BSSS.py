@@ -1,14 +1,6 @@
 import pandas as pd
 
-# Access CSV file
-def BSSS_access_csv(file_path, delimiter=","):
-    try:
-        df = pd.read_csv(file_path, delimiter=delimiter)
-        print(f"Data loaded successfully from {file_path}.")
-        return df
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        return None
+
 
 # Calculate total sensation seeking score
 def BSSS_calculate_bsss_score(df):
@@ -51,12 +43,9 @@ def BSSS_save_results_to_csv(df, output_file_path):
     print(f"Results saved to {output_file_path}.")
 
 # Main function to execute the steps
-def main():
-    input_file_path = './data/BSSS_DATA_SET.csv'
+def main(df):
     output_file_path = 'processed_bsss_results.csv'
-    
-    # Load the CSV file
-    df = BSSS_access_csv(input_file_path)
+
 
     if df is not None:
         # Calculate BSSS scores

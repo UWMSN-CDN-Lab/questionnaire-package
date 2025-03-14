@@ -88,13 +88,11 @@ def UCLA_save_summary_to_csv(summary, subgroup_summary, output_file_path):
     print(f"Summary saved to {output_file_path}.")
 
 # Main function to execute the steps
-def main():
-    input_file_path = './data/UCLA_DATA_SET.csv'
+def main(df):
+
     output_file_path = 'processed_ucla_results.csv'
     summary_output_file_path = 'ucla_summary_results.csv'
     
-    # Load the CSV file
-    df = UCLA_access_csv(input_file_path)
 
     if df is not None:
         # Calculate UCLA scores

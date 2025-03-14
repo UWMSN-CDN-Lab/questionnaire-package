@@ -1,36 +1,36 @@
 
 
 __all__ = [
-    "ucla", "dtcgt", "PANAS", "ras", "GCF_c", "ECR_c", "mspss", "SWLS", "ALQ",
-    "BEQ", "IRQ_t", "cesdr", "mini_MASQ", "PMERQ", "BFI", "su", "EERQ", "hexaco",
-    "care", "SD4", "cbcl", "upps", "BSSS", "sias", "pss", "LOTR_t", "DOSPERT", "ippa"
+    "UCLA", "DTCGT", "PANAS", "RAS", "GCF_C", "ECR_C", "MSPSS", "SWLS", "ALQ",
+"BEQ", "IRQ_T", "CESDR", "MINI_MASQ", "PMERQ", "BFI", "SU", "EERQ", "HEXACO",
+"CARE", "SD4", "CBCL", "UPPS", "BSSS", "SIAS", "PSS", "LOTR_T", "DOSPERT", "IPPA"
 ]
 
-from . import ucla
-from . import dtcgt
+from . import UCLA
+from . import DTCGT
 from . import PANAS
-from . import ras
-from . import GCF_c
-from . import ECR_c
-from . import mspss
+from . import RAS
+from . import GCF
+from . import ECR
+from . import MSPSS
 from . import SWLS
 from . import ALQ
 from . import BEQ
-from . import IRQ_t
-from . import cesdr
-from . import mini_MASQ
+from . import IRQ
+from . import CESDR
+from . import MINI_MASQ
 from . import PMERQ
 from . import BFI
-from . import su
+from . import SU
 from . import EERQ
-from . import hexaco
-from . import care
+from . import HEXACO
+from . import CARE
 from . import SD4
-from . import cbcl
-from . import upps
+from . import CBCL
+from . import UPPS
 from . import BSSS
-from . import sias
-from . import pss
-from . import LOTR_t
+from . import SIAS
+from . import PSS
+from . import LOTR
 from . import DOSPERT
-from . import ippa
+from . import IPPA

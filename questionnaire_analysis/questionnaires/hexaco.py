@@ -1,14 +1,5 @@
 import pandas as pd
 
-# Access CSV file for HEXACO
-def HEXACO_access_csv(file_path, delimiter=","):
-    try:
-        df = pd.read_csv(file_path, delimiter=delimiter)
-        print(f"Data loaded successfully from {file_path}.")
-        return df
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        return None
 
 # Calculate HEXACO subscale scores
 def HEXACO_calculate_scores(df):
@@ -96,12 +87,8 @@ def HEXACO_save_results_to_csv(df, output_file_path):
     print(f"Results saved to {output_file_path}.")
 
 # Main function to execute the steps
-def main():
-    input_file_path = './data/HEXACO_DATA_SET.csv'
+def main(df):
     output_file_path = 'processed_hexaco_results.csv'
-    
-    # Load CSV
-    df = HEXACO_access_csv(input_file_path)
 
     if df is not None:
         # Calculate HEXACO subscale scores

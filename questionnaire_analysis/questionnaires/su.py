@@ -2,16 +2,6 @@ import pandas as pd
 
 # SU NOT SETUP FOR OUR SU QUESTIONS!
 
-# Access CSV file for Substance Use
-def SU_access_csv(file_path, delimiter=","):
-    try:
-        df = pd.read_csv(file_path, delimiter=delimiter)
-        print(f"Data loaded successfully from {file_path}.")
-        return df
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        return None
-
 # Calculate Substance Use scores
 def SU_calculate_scores(df):
     """
@@ -28,12 +18,20 @@ def SU_calculate_scores(df):
     
     # Apply reverse scoring for relevant items
     for item in reverse_substance_use_items:
-        df[f'Q{item}'] = 6 - df[f'Q{item}']  # Assuming a 1-5 scale, reverse scoring is 6 - original response
+        column_name = f'SU_{item:02d}'  # Ensure consistent formatting if needed (e.g., SU_05)
+        # Convert the column to numeric first
+        df[column_name] = pd.to_numeric(df[column_name], errors='coerce')
+        # Apply reverse scoring: assuming a 1-5 scale, reverse is computed as 6 - value
+        df[column_name] = 6 - df[column_name]  # Assuming a 1-5 scale, reverse scoring is 6 - original response
 
     # Calculate subscale scores
-    df['Frequency_Use'] = df[['Q1', 'Q2', 'Q3']].mean(axis=1)
-    df['Substance_Type_Use'] = df[['Q4', 'Q5', 'Q6']].mean(axis=1)
-    df['Consequences_Use'] = df[['Q7', 'Q8', 'Q9', 'Q10']].mean(axis=1)
+    numeric_columns = ['SU_01', 'SU_02', 'SU_03', 'SU_04', 'SU_05', 'SU_06',
+                   'SU_07', 'SU_08', 'SU_09', 'SU_10']
+    for col in numeric_columns:
+        df[col] = pd.to_numeric(df[col], errors='coerce')
+    df['Frequency_Use'] = df[['SU_01', 'SU_02', 'SU_03']].mean(axis=1)
+    df['Substance_Type_Use'] = df[['SU_04', 'SU_05', 'SU_06']].mean(axis=1)
+    df['Consequences_Use'] = df[['SU_07', 'SU_08', 'SU_09', 'SU_10']].mean(axis=1)
 
     return df
 
@@ -63,12 +61,9 @@ def SU_save_results_to_csv(df, output_file_path):
     print(f"Results saved to {output_file_path}.")
 
 # Main function to execute the steps
-def main():
-    input_file_path = './data/SU_DATA_SET.csv'
+def main(df):
     output_file_path = 'processed_su_results.csv'
-    
-    # Load CSV
-    df = SU_access_csv(input_file_path)
+
 
     if df is not None:
         # Calculate Substance Use subscale scores

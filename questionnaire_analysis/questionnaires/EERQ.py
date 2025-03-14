@@ -1,14 +1,6 @@
 import pandas as pd
 
-# Access CSV file
-def EERQ_access_csv(file_path, delimiter=","):
-    try:
-        df = pd.read_csv(file_path, delimiter=delimiter)
-        print(f"Data loaded successfully from {file_path}.")
-        return df
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        return None
+
 
 # Calculating total scores
 def EERQ_calculate_scores(df):
@@ -81,10 +73,8 @@ def EERQ_save_results_to_csv(df, output_file_path):
     print(f"Selected summary scores saved to {output_file_path}.")
 
 # Main function to execute the steps
-def main():
+def main(df):
     output_file_path = 'processed_eerq_results.csv'
-    # Load the CSV file
-    df = EERQ_access_csv('/Users/ayusmankhuntia/data-pipeline/emotion_regulation_risk_taking-scripts/Risk-Taking+and+Emotion+Regulation_February+4,+2025_15.23.csv')
 
     if df is not None:
         # Calculate E-ERQ subscale scores

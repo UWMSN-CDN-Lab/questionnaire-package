@@ -1,15 +1,5 @@
 import pandas as pd
 
-# Access CSV file
-def GCF_access_csv(file_path, delimiter=","):
-    try:
-        df = pd.read_csv(file_path, delimiter=delimiter)
-        print(f"Data loaded successfully from {file_path}.")
-        return df
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        return None
-
 # Summarize results
 def GCF_summarize_results(df):
     """
@@ -49,13 +39,9 @@ def GCF_save_summary_to_csv(summary, output_file_path):
     print(f"Summary saved to {output_file_path}.")
 
 # Main function to execute the steps
-def main():
-    input_file_path = './data/GCF_DATA_SET.csv'
+def main(df):
     output_file_path = 'processed_GCF_results.csv'
     summary_output_file_path = 'GCF_summary_results.csv'
-    
-    # Load the CSV file
-    df = GCF_access_csv(input_file_path)
 
     if df is not None:
         # Summarize results

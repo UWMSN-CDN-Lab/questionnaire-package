@@ -1,7 +1,7 @@
-from questionnaire_analysis.common import access_csv, detect_questionnaires
+from .common import access_csv, detect_questionnaires
 
 def main():
-    input_file_path = './data/your_data.csv'  # Update this to your CSV path
+    input_file_path = '/Users/ayusmankhuntia/Desktop/Package/questionnaire-package/questionnaire_analysis/Risk-Taking+and+Emotion+Regulation_February+4,+2025_15.23.csv'  # Update this to your CSV path
     df = access_csv(input_file_path)
     if df is None:
         return

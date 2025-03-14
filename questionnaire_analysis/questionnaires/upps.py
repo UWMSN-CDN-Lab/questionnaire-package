@@ -1,20 +1,4 @@
 import pandas as pd
-
-# Access CSV file for UPPS-P
-def UPPSP_access_csv(file_path, delimiter=","):
-    try:
-        df = pd.read_csv(file_path, delimiter=delimiter)
-        print(f"Data loaded successfully from {file_path}.")
-        df = df.iloc[2:].reset_index(drop=True)  # Reset index after skipping
-
-        # Convert all relevant columns to numeric (ignoring errors)
-        for col in df.columns:
-            df[col] = pd.to_numeric(df[col], errors='coerce')
-        return df
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        return None
-
 # Calculate UPPS-P subscale scores
 def UPPSP_calculate_scores(df):
     """
@@ -26,8 +10,16 @@ def UPPSP_calculate_scores(df):
     - Lack of Perseverance (LPer)
     - Sensation Seeking (SS)
     Reverse scoring is applied where necessary.
-    """
-    
+    """ 
+    all_upss_items = [
+    "UPPS_06", "UPPS_07", "UPPS_11", "UPPS_12", "UPPS_15", "UPPS_16",
+    "UPPS_17", "UPPS_18", "UPPS_19", "UPPS_20", "UPPS_21", "UPPS_22",
+    "UPPS_23", "UPPS_24", "UPPS_27", "UPPS_28", "UPPS_35", "UPPS_36",
+    "UPPS_37", "UPPS_39"
+    ]
+    # Convert all UPPS columns to numeric, coercing errors to NaN
+    for item in all_upss_items:
+        df[item] = pd.to_numeric(df[item], errors='coerce')
     # Reverse-scored items for each subscale
     reverse_neg_urgency = ["UPPS_07", "UPPS_11", "UPPS_17", "UPPS_20"] # Item numbers for Negative Urgency (reverse)
     reverse_pos_urgency = ["UPPS_35", "UPPS_36", "UPPS_37", "UPPS_39"] # Positive Urgency (reverse)
@@ -95,20 +87,13 @@ def UPPSP_save_results_to_csv(df, output_file_path):
     print(f"Selected summary scores saved to {output_file_path}.")
 
 # Main function to execute the steps
-def main():
-    input_file_path = '/Users/ayusmankhuntia/data-pipeline/emotion_regulation_risk_taking-scripts/Risk-Taking+and+Emotion+Regulation_February+4,+2025_15.23.csv'
+def main(df):
     output_file_path = 'processed_upps_results.csv'
-    
-    # Load CSV
-    df = UPPSP_access_csv(input_file_path)
-
     if df is not None:
         # Calculate UPPS-P subscale scores
         df = UPPSP_calculate_scores(df)
-
         # Summarize results
         summary = UPPSP_summarize_results(df)
-
         # Save individual scores to CSV
         UPPSP_save_results_to_csv(df, output_file_path)
 

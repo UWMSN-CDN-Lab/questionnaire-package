@@ -1,14 +1,6 @@
 import pandas as pd
 # TODO
-# Access CSV file for CBCL
-def CBCL_access_csv(file_path, delimiter=","):
-    try:
-        df = pd.read_csv(file_path, delimiter=delimiter)
-        print(f"Data loaded successfully from {file_path}.")
-        return df
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        return None
+
 
 # Calculate CBCL subscale scores
 def CBCL_calculate_scores(df):
@@ -74,12 +66,10 @@ def CBCL_save_results_to_csv(df, output_file_path):
     print(f"Results saved to {output_file_path}.")
 
 # Main function to execute the steps
-def main():
-    input_file_path = './data/CBCL_DATA_SET.csv'
+def main(df):
     output_file_path = 'processed_cbcl_results.csv'
     
-    # Load CSV
-    df = CBCL_access_csv(input_file_path)
+
 
     if df is not None:
         # Calculate CBCL subscale scores

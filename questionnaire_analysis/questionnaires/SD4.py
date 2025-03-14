@@ -1,14 +1,5 @@
 import pandas as pd
 
-# Access CSV file
-def SD4_access_csv(file_path, delimiter=","):
-    try:
-        df = pd.read_csv(file_path, delimiter=delimiter)
-        print(f"Data loaded successfully from {file_path}.")
-        return df
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        return None
 
 # Calculate the SD4 subscale scores
 def SD4_calculate_scores(df):
@@ -92,13 +83,10 @@ def SD4_save_summary_to_csv(summary, subgroup_summary, output_file_path):
     print(f"Summary saved to {output_file_path}.")
 
 # Main function to execute the steps
-def main():
-    input_file_path = './data/SD4_DATA_SET.csv'
+def main(df):
     output_file_path = 'processed_sd4_results.csv'
     summary_output_file_path = 'sd4_summary_results.csv'
-    
-    # Load the CSV file
-    df = SD4_access_csv(input_file_path)
+
 
     if df is not None:
         # Calculate SD4 subscale scores

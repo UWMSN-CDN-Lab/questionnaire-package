@@ -27,7 +27,7 @@ def CARE_calculate_scores(df):
     - Expected Risks
     """
     # Example calculation (based on the format in the provided PDF):
-    df['CARE_Past_Frequency'] = df[['PF_1', 'PF_2', 'PF_3']].mean(axis=1)  # Summing the frequency
+    df['CARE_Past_Frequency'] = df[['CARE_01', 'CARE_02', 'CARE_03']].mean(axis=1)  # Summing the frequency
     df['CARE_Expected_Involvement'] = df[['EI_1', 'EI_2', 'EI_3']].mean(axis=1)
     df['CARE_Expected_Benefits'] = df[['EB_1', 'EB_2', 'EB_3']].mean(axis=1)
     df['CARE_Expected_Risks'] = df[['ER_1', 'ER_2', 'ER_3']].mean(axis=1)
@@ -64,12 +64,12 @@ def CARE_save_results_to_csv(df, output_file_path):
     print(f"Results saved to {output_file_path}.")
 
 # Main function
-def main():
-    input_file_path = './data/CARE_DATA_SET.csv'
+def main(df):
+    #input_file_path = './data/CARE_DATA_SET.csv'
     output_file_path = 'processed_care_results.csv'
     
     # Load CSV
-    df = CARE_access_csv(input_file_path)
+    #df = CARE_access_csv(input_file_path)
     
     if df is not None:
         # Calculate scores

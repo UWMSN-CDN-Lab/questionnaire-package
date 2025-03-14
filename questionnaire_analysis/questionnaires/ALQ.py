@@ -2,14 +2,7 @@ import pandas as pd
 # FIX LATER WITH NAMING CONVENTIONS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 # Access CSV file
-def ALQ_access_csv(file_path, delimiter=","):
-    try:
-        df = pd.read_csv(file_path, delimiter=delimiter)
-        print(f"Data loaded successfully from {file_path}.")
-        return df
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        return None
+
 
 # Reverse scoring for specific ALQ items
 def ALQ_reverse_score(df):
@@ -103,12 +96,10 @@ def ALQ_save_summary_to_csv(summary, subgroup_summary, output_file_path):
 
 # Main function to execute the steps
 def main():
-    input_file_path = './data/ALQ_DATA_SET.csv'
+
     output_file_path = 'processed_alq_results.csv'
     summary_output_file_path = 'alq_summary_results.csv'
-    
-    # Load the CSV file
-    df = ALQ_access_csv(input_file_path)
+
 
     if df is not None:
         # Calculate ALQ scores

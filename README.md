@@ -1,5 +1,5 @@
 FILE STRUCTURE: 
-questionnaire_analysis/         # Top-level package folder
+questionnaire_package/         # Top-level package folder
 ├── setup.py                    # (optional)
 ├── README.md
 └── questionnaire_analysis/     # Package source code
@@ -54,12 +54,23 @@ setup(
 
 # TODO: 
 
+Making a CSV to toggle to ask the user if we want to create a new csv or not
+Should make one csv instead of multiple ones 
 FILE PATHING
 RESEARCH LAB WORKAROUND
-setup,py
-check for each questionnaire compatibility 
-init file for questionnaires and export for public api 
+setup.py
+check for each questionnaire compatibility
+init file for questionnaires and export for public api
 main functionality check (Test)  (April 4th)
-try for each questionnaire analysis functionality 
+try for each questionnaire analysis functionality
 PIP install package
-
+.gitignore for whatever we need to hide
+ReNaming Function
+JSON for stem names convention - Give a warning t say this is being relabeled from this to this
+DRY RUN
+ADD IN EDGE CASES
+if its less, put out a waring and compute wiht assiming its 0
+To make sure the item numners are correct
+Dont worry about care now. 
+# PMERQ,SU,DOSPERT,UPPS,EERQ work rn, need to make sure other scripts work or not. 
+EDGE CASES:

@@ -1,17 +1,9 @@
 import pandas as pd
 
-# Access CSV file
-def panas_access_csv(file_path, delimiter=","):
-    try:
-        df = pd.read_csv(file_path, delimiter=delimiter)
-        print(f"Data loaded successfully from {file_path}.")
-        return df
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        return None
+
 
 # Calculate positive and negative affect scores
-def panas_calculate_affect_scores(df):
+def PANAS_calculate_affect_scores(df):
     """
     Calculate the Positive and Negative Affect scores based on the PANAS-SF items.
     """
@@ -36,7 +28,7 @@ def panas_calculate_affect_scores(df):
     return df
 
 # Summarize results and compare to normative data
-def panas_summarize_results(df):
+def PANAS_summarize_results(df):
     """
     Summarize the Positive and Negative Affect Scores
     """
@@ -48,7 +40,7 @@ def panas_summarize_results(df):
 
 # Save the results to CSV
 # try and catch here 
-def panas_save_results_to_csv(df, output_file_path):
+def PANAS_save_results_to_csv(df, output_file_path):
     """
     Save the processed results to a CSV file.
     """
@@ -56,22 +48,19 @@ def panas_save_results_to_csv(df, output_file_path):
     print(f"Results saved to {output_file_path}.")
 
 # Main function to execute the steps
-def main():
-    input_file_path = './data/PANAS_SF_DATA_SET.csv'
+def main(df):
     output_file_path = 'processed_panas_sf_results.csv'
-    
-    # Load the CSV file
-    df = panas_access_csv(input_file_path)
+
 
     if df is not None:
         # Calculate Positive and Negative Affect Scores
-        df = panas_calculate_affect_scores(df)
+        df = PANAS_calculate_affect_scores(df)
 
         # Summarize results
-        summary = panas_summarize_results(df)
+        summary = PANAS_summarize_results(df)
 
         # Save results to CSV
-        panas_save_results_to_csv(df, output_file_path)
+        PANAS_save_results_to_csv(df, output_file_path)
 
 if __name__ == "__main__":
     main()

@@ -54,12 +54,12 @@ def MSPSS_save_results_to_csv(df, output_file_path):
     print(f"Results saved to {output_file_path}.")
 
 # Main function
-def main():
-    input_file_path = './data/MSPSS_DATA_SET.csv'
+def main(df):
+    #input_file_path = './data/MSPSS_DATA_SET.csv'
     output_file_path = 'processed_mspss_results.csv'
     
     # Load CSV
-    df = MSPSS_access_csv(input_file_path)
+    #df = MSPSS_access_csv(input_file_path)
     
     if df is not None:
         # Calculate MSPSS scores
