@@ -47,7 +47,6 @@ def detect_questionnaires(df):
     "IPPA_": IPPA.main
 }
     detected = {}
-    print(questionnaire_map.items())
     for prefix, main_fn in questionnaire_map.items():
         if any(col.startswith(prefix) for col in df.columns):
             detected[prefix] = main_fn

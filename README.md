@@ -54,6 +54,9 @@ setup(
 
 # TODO: 
 # PMERQ,SU,DOSPERT,UPPS,EERQ work rn, need to make sure other scripts work or not. 
+EERQ fix the fragmentation issues 
+Make a fake long csv with every questionnaire on it
+Change other things like 
 Making a CSV to toggle to ask the user if we want to create a new csv or not - ND
 Should make one csv instead of multiple ones - ND
 RESEARCH LAB WORKAROUND - ND
@@ -64,7 +67,6 @@ main functionality check (Test)  (April 4th)
 
 try for each questionnaire analysis functionality
 PIP install package
-.gitignore for whatever we need to hide
 ReNaming Function
 JSON for stem names convention - Give a warning t say this is being relabeled from this to this
 DRY RUN

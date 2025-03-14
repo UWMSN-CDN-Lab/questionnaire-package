@@ -7,7 +7,6 @@ def PMERQ_calculate_subscale_mean(df, items):
     Calculate the average score for each subscale based on the item numbers.
     """
     subscale_items = [item for item in items]
-    print(df[subscale_items].dtypes)
     numeric_df = df[subscale_items].apply(pd.to_numeric, errors='coerce')
     return numeric_df.mean(axis=1)
 

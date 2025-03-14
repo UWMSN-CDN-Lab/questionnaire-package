@@ -1,8 +1,4 @@
 import pandas as pd
-# FIX LATER WITH NAMING CONVENTIONS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-# Access CSV file
-
 
 # Reverse scoring for specific ALQ items
 def ALQ_reverse_score(df):
