@@ -49,7 +49,9 @@ setup(
 )    
 
 # How to Run:
-python3 -m questionnaire_analysis
+python3 -m questionnaire_analysis file_path_to_csv
+
+
 
 
 
@@ -57,20 +59,17 @@ python3 -m questionnaire_analysis
 
 
 # TODO:
-# PMERQ,SU,DOSPERT,UPPS,EERQ work rn, need to make sure other scripts work or not.
-Make a fake long csv with every questionnaire on it
+# CARE, CBCL, DTCGT, GCF( CALCULATE FUNCTION MISSING), HEXACO, IPPA, MINI_MASQ, MSPSS, PSS(check for reverse scoring columns), RAS(totally wrong), SIAS, URCS (missing)
+# Care doesnt work need to fix
+Make a fake long csv with every questionnaire on it - check for each questionnaire compatibility - PROG
 RESEARCH LAB WORKAROUND - ND
-check for each questionnaire compatibility - PROG
-Perfectly working questionnaires:
-# URCS not present in our questionnaire list
 # Write down instructions on how to make this run and how to make it run for each questionnaire and everything 
 # It shud be as simple to use as possible
 # Documentation for how to run it specifically 
-
-
 # Making a CSV to toggle to ask the user if we want to create a new csv or not - ND
+
+
 EERQ fix the fragmentation issues
-try for each questionnaire analysis functionality
 PIP install package
 ReNaming Function
 JSON for stem names convention - Give a warning t say this is being relabeled from this to this

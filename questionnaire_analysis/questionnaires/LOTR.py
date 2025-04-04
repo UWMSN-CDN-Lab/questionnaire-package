@@ -9,7 +9,7 @@ def LOTR_reverse_score(df, items):
     Original scale is 0-4, where reverse scoring is calculated as 4 - original response.
     """
     for item in items:
-        df[f'LOT_R_{item}'] = 4 - df[f'LOT_R_{item}']
+        df[f'LOTR_{item}'] = 4 - df[f'LOTR_{item}']
     return df
 
 # Calculate LOT-R total score
@@ -24,8 +24,8 @@ def LOTR_calculate_score(df):
     df = LOTR_reverse_score(df, reverse_items)
     
     # Calculate total score by summing specified items
-    score_items = ['LOT_R_1', 'LOT_R_3', 'LOT_R_4', 'LOT_R_7', 'LOT_R_9', 'LOT_R_10']
-    df['LOT_R_Total_Score'] = df[score_items].sum(axis=1)
+    score_items = ['LOTR_1', 'LOTR_3', 'LOTR_4', 'LOTR_7', 'LOTR_9', 'LOTR_10']
+    df['LOTR_Total_Score'] = df[score_items].sum(axis=1)
     
     return df
 
@@ -34,11 +34,11 @@ def LOTR_summarize_results(df):
     """
     Summarize the LOT-R total score by calculating the mean and standard deviation.
     """
-    mean_score = df['LOT_R_Total_Score'].mean()
-    std_score = df['LOT_R_Total_Score'].std()
+    mean_score = df['LOTR_Total_Score'].mean()
+    std_score = df['LOTR_Total_Score'].std()
 
     print("\nSummary of LOT-R Scores:")
-    print(df[['LOT_R_Total_Score']])
+    print(df[['LOTR_Total_Score']])
 
     print(f"\nMean LOT-R Total Score: {mean_score:.2f}")
     print(f"Standard Deviation of LOT-R Total Score: {std_score:.2f}")
