@@ -4,7 +4,7 @@ import pandas as pd
 # Calculate IPPA scores
 def IPPA_calculate_scores(df):
     """
-    Calculate the subscale scores for the IPPA questionnaire.
+    Calculate the subscale scores for the IPPA IPPA_uestionnaire.
     Subscales include:
     - Trust
     - Communication
@@ -13,8 +13,8 @@ def IPPA_calculate_scores(df):
     Reverse scoring is applied where needed.
     """
     # Reverse-scored items for parent and peer sections
-    reverse_parent = ['Q3', 'Q10', 'Q14', 'Q23']
-    reverse_peer = ['Q4', 'Q9', 'Q11', 'Q18', 'Q22']
+    reverse_parent = ['IPPA_03', 'IPPA_10', 'IPPA_14', 'IPPA_23']
+    reverse_peer = ['IPPA_04', 'IPPA_09', 'IPPA_11', 'IPPA_18', 'IPPA_22']
 
     # Reverse scoring for parent items
     for item in reverse_parent:
@@ -25,14 +25,14 @@ def IPPA_calculate_scores(df):
         df[item] = 6 - df[item]
 
     # Parent Attachment Scores (Trust, Communication, Alienation)
-    df['Parent_Trust'] = df[['Q1', 'Q2', 'Q4', 'Q13', 'Q21']].mean(axis=1)
-    df['Parent_Communication'] = df[['Q5', 'Q7', 'Q15', 'Q17']].mean(axis=1)
-    df['Parent_Alienation'] = df[['Q9', 'Q18']].mean(axis=1)
+    df['Parent_Trust'] = df[['IPPA_01', 'IPPA_02', 'IPPA_04', 'IPPA_13', 'IPPA_21']].mean(axis=1)
+    df['Parent_Communication'] = df[['IPPA_05', 'IPPA_07', 'IPPA_15', 'IPPA_17']].mean(axis=1)
+    df['Parent_Alienation'] = df[['IPPA_09', 'IPPA_18']].mean(axis=1)
 
     # Peer Attachment Scores (Trust, Communication, Alienation)
-    df['Peer_Trust'] = df[['Q6', 'Q8', 'Q12', 'Q13']].mean(axis=1)
-    df['Peer_Communication'] = df[['Q1', 'Q2', 'Q7']].mean(axis=1)
-    df['Peer_Alienation'] = df[['Q9', 'Q11', 'Q18']].mean(axis=1)
+    df['Peer_Trust'] = df[['IPPA_06', 'IPPA_08', 'IPPA_12', 'IPPA_13']].mean(axis=1)
+    df['Peer_Communication'] = df[['IPPA_01', 'IPPA_02', 'IPPA_07']].mean(axis=1)
+    df['Peer_Alienation'] = df[['IPPA_09', 'IPPA_11', 'IPPA_18']].mean(axis=1)
 
     return df
 
@@ -83,8 +83,7 @@ def main(df):
         # Summarize results
         summary = IPPA_summarize_results(df)
 
-        # Save individual scores to CSV
-        IPPA_save_results_to_csv(df, output_file_path)
-
+        return df
+    return None
 if __name__ == "__main__":
     main()

@@ -10,7 +10,7 @@ def MASQ_calculate_mean(df, items, label):
     """
     Calculate the mean score for a given list of item numbers.
     """
-    item_columns = [f'Item_{item}' for item in items]
+    item_columns = [f'MASQ_{item}' for item in items]
     mean_score = df[item_columns].mean(axis=1)
     df[label] = mean_score
     return df
@@ -71,8 +71,8 @@ def main(df):
         # Summarize results
         summary = MASQ_summarize_results(df)
 
-        # Save results to CSV
-        MASQ_save_results_to_csv(df, output_file_path)
+        return df
+    return None
 
 if __name__ == "__main__":
     main()

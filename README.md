@@ -59,7 +59,7 @@ python3 -m questionnaire_analysis file_path_to_csv
 
 
 # TODO:
-# CARE, DTCGT, GCF( CALCULATE FUNCTION MISSING), HEXACO, IPPA, MINI_MASQ, MSPSS, PSS(check for reverse scoring columns), RAS(totally wrong), SIAS, URCS (missing), PTM(missing), IRI (missing)
+# CARE, GCF( CALCULATE FUNCTION MISSING), MINI_ASQ ( 0s problem), PSS(check for reverse scoring columns), RAS(totally wrong), SIAS, URCS (missing), PTM(missing), IRI (missing)
 # Care doesnt work need to fix
 Make a fake long csv with every questionnaire on it - check for each questionnaire compatibility - PROG
 RESEARCH LAB WORKAROUND - ND

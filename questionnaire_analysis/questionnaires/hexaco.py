@@ -25,30 +25,30 @@ def HEXACO_calculate_scores(df):
 
     # Apply reverse scoring for relevant items
     for item in reverse_honesty_humility:
-        df[f'Q{item}'] = 6 - df[f'Q{item}']  # Assuming a 1-5 scale, reverse scoring is 6 - original response
+        df[f'HEXACO_{item}'] = 6 - df[f'HEXACO_{item}']  # Assuming a 1-5 scale, reverse scoring is 6 - original response
     
     for item in reverse_emotionality:
-        df[f'Q{item}'] = 6 - df[f'Q{item}']
+        df[f'HEXACO_{item}'] = 6 - df[f'HEXACO_{item}']
 
     for item in reverse_extraversion:
-        df[f'Q{item}'] = 6 - df[f'Q{item}']
+        df[f'HEXACO_{item}'] = 6 - df[f'HEXACO_{item}']
 
     for item in reverse_agreeableness:
-        df[f'Q{item}'] = 6 - df[f'Q{item}']
+        df[f'HEXACO_{item}'] = 6 - df[f'HEXACO_{item}']
 
     for item in reverse_conscientiousness:
-        df[f'Q{item}'] = 6 - df[f'Q{item}']
+        df[f'HEXACO_{item}'] = 6 - df[f'HEXACO_{item}']
 
     for item in reverse_openness:
-        df[f'Q{item}'] = 6 - df[f'Q{item}']
+        df[f'HEXACO_{item}'] = 6 - df[f'HEXACO_{item}']
 
     # Calculate subscale scores
-    df['Honesty_Humility'] = df[['Q1', 'Q4', 'Q9', 'Q16', 'Q24']].mean(axis=1)
-    df['Emotionality'] = df[['Q2', 'Q10', 'Q18', 'Q22', 'Q30']].mean(axis=1)
-    df['Extraversion'] = df[['Q3', 'Q12', 'Q15', 'Q27', 'Q36']].mean(axis=1)
-    df['Agreeableness'] = df[['Q5', 'Q14', 'Q18', 'Q26', 'Q31']].mean(axis=1)
-    df['Conscientiousness'] = df[['Q6', 'Q11', 'Q17', 'Q21', 'Q25']].mean(axis=1)
-    df['Openness'] = df[['Q7', 'Q13', 'Q19', 'Q23', 'Q28']].mean(axis=1)
+    df['Honesty_Humility'] = df[['HEXACO_01', 'HEXACO_04', 'HEXACO_09', 'HEXACO_16', 'HEXACO_24']].mean(axis=1)
+    df['Emotionality'] = df[['HEXACO_02', 'HEXACO_10', 'HEXACO_18', 'HEXACO_22', 'HEXACO_30']].mean(axis=1)
+    df['Extraversion'] = df[['HEXACO_03', 'HEXACO_12', 'HEXACO_15', 'HEXACO_27', 'HEXACO_36']].mean(axis=1)
+    df['Agreeableness'] = df[['HEXACO_05', 'HEXACO_14', 'HEXACO_18', 'HEXACO_26', 'HEXACO_31']].mean(axis=1)
+    df['Conscientiousness'] = df[['HEXACO_06', 'HEXACO_11', 'HEXACO_17', 'HEXACO_21', 'HEXACO_25']].mean(axis=1)
+    df['Openness'] = df[['HEXACO_07', 'HEXACO_13', 'HEXACO_19', 'HEXACO_23', 'HEXACO_28']].mean(axis=1)
 
     return df
 
@@ -98,7 +98,8 @@ def main(df):
         summary = HEXACO_summarize_results(df)
 
         # Save individual scores to CSV
-        HEXACO_save_results_to_csv(df, output_file_path)
+        return df
+    return None
 
 if __name__ == "__main__":
     main()

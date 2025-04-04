@@ -9,9 +9,9 @@ def MSPSS_calculate_scores(df):
     - Friends
     - Significant Others
     """
-    df['Family_Score'] = df[['Q3', 'Q4', 'Q8', 'Q11']].mean(axis=1)
-    df['Friends_Score'] = df[['Q6', 'Q7', 'Q9', 'Q12']].mean(axis=1)
-    df['Significant_Others_Score'] = df[['Q1', 'Q2', 'Q5', 'Q10']].mean(axis=1)
+    df['Family_Score'] = df[['MSPSS_03', 'MSPSS_04', 'MSPSS_08', 'MSPSS_11']].mean(axis=1)
+    df['Friends_Score'] = df[['MSPSS_06', 'MSPSS_07', 'MSPSS_09', 'MSPSS_12']].mean(axis=1)
+    df['Significant_Others_Score'] = df[['MSPSS_01', 'MSPSS_02', 'MSPSS_05', 'MSPSS_10']].mean(axis=1)
     
     # Total MSPSS score
     df['MSPSS_Total_Score'] = df[['Family_Score', 'Friends_Score', 'Significant_Others_Score']].mean(axis=1)
