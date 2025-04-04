@@ -17,14 +17,14 @@ def CBCL_calculate_scores(df):
     - Attention Problems
     - Aggressive Behavior
     """
-    # Example subscale calculation (adjust the item numbers based on your questionnaire):
-    df['Anxiety_Depression'] = df[['Q1', 'Q2', 'Q3', 'Q4']].sum(axis=1)
-    df['Withdrawn_Depressed'] = df[['Q5', 'Q6', 'Q7']].sum(axis=1)
-    df['Somatic_Complaints'] = df[['Q8', 'Q9', 'Q10']].sum(axis=1)
-    df['Social_Problems'] = df[['Q11', 'Q12', 'Q13']].sum(axis=1)
-    df['Thought_Problems'] = df[['Q14', 'Q15', 'Q16']].sum(axis=1)
-    df['Attention_Problems'] = df[['Q17', 'Q18', 'Q19']].sum(axis=1)
-    df['Aggressive_Behavior'] = df[['Q20', 'Q21', 'Q22']].sum(axis=1)
+    # Example subscale calculation (adjust the item numbers based on your CBCL_uestionnaire):
+    df['Anxiety_Depression'] = df[['CBCL_01', 'CBCL_02', 'CBCL_03', 'CBCL_04']].sum(axis=1)
+    df['Withdrawn_Depressed'] = df[['CBCL_05', 'CBCL_06', 'CBCL_07']].sum(axis=1)
+    df['Somatic_Complaints'] = df[['CBCL_08', 'CBCL_09', 'CBCL_10']].sum(axis=1)
+    df['Social_Problems'] = df[['CBCL_11', 'CBCL_12', 'CBCL_13']].sum(axis=1)
+    df['Thought_Problems'] = df[['CBCL_14', 'CBCL_15', 'CBCL_16']].sum(axis=1)
+    df['Attention_Problems'] = df[['CBCL_17', 'CBCL_18', 'CBCL_19']].sum(axis=1)
+    df['Aggressive_Behavior'] = df[['CBCL_20', 'CBCL_21', 'CBCL_22']].sum(axis=1)
     
     return df
 
@@ -81,7 +81,7 @@ def main(df):
         summary = CBCL_summarize_results(df)
 
         # Save individual scores to CSV
-        CBCL_save_results_to_csv(df, output_file_path)
-
+        return df
+    return None
 if __name__ == "__main__":
     main()

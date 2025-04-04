@@ -59,7 +59,7 @@ python3 -m questionnaire_analysis file_path_to_csv
 
 
 # TODO:
-# CARE, CBCL, DTCGT, GCF( CALCULATE FUNCTION MISSING), HEXACO, IPPA, MINI_MASQ, MSPSS, PSS(check for reverse scoring columns), RAS(totally wrong), SIAS, URCS (missing)
+# CARE, DTCGT, GCF( CALCULATE FUNCTION MISSING), HEXACO, IPPA, MINI_MASQ, MSPSS, PSS(check for reverse scoring columns), RAS(totally wrong), SIAS, URCS (missing), PTM(missing), IRI (missing)
 # Care doesnt work need to fix
 Make a fake long csv with every questionnaire on it - check for each questionnaire compatibility - PROG
 RESEARCH LAB WORKAROUND - ND
@@ -79,12 +79,5 @@ if its less, put out a waring and compute wiht assiming its 0
 To make sure the item numners are correct
 
 
-
-
-
-
 # So we want to treat it as a df rather then a csv
 # We want to input the file path as a method rather then using it as an argument as we want to use it for functions
-
-
-
