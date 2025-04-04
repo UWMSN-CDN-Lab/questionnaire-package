@@ -88,14 +88,16 @@ def UPPSP_save_results_to_csv(df, output_file_path):
 
 # Main function to execute the steps
 def main(df):
-    output_file_path = 'processed_upps_results.csv'
     if df is not None:
-        # Calculate UPPS-P subscale scores
+        # Step 1: Calculate UPPS-P subscale scores
         df = UPPSP_calculate_scores(df)
-        # Summarize results
-        summary = UPPSP_summarize_results(df)
-        # Save individual scores to CSV
-        UPPSP_save_results_to_csv(df, output_file_path)
+
+        # Step 2: Print summary stats (optional for dev)
+        _ = UPPSP_summarize_results(df)
+
+
+        return df
+    return None
 
 if __name__ == "__main__":
     main()

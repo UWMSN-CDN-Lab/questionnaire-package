@@ -98,31 +98,15 @@ def DOSPERT_save_results_to_csv(df, output_file_path):
 
 
 
-# Main function to execute the steps
 def main(df):
-    output_file_path = 'processed_dospert_results.csv'
-
-
     if df is not None:
-        # Calculate subscale scores for risk-taking
-
-        # # Calculate subscale scores for risk-perception
-        # df = dospert_calculate_subscale_scores(df, risk_perception_subscales, 'Risk_Perception')
-
-        # Calculate overall scores for risk-taking
+        # Step 1: Calculate subscale & overall scores
         df = DOSPERT_calculate_scores(df)
 
-        # # Calculate overall scores for risk-perception
-        # df = dospert_calculate_scores(df, 'Risk_Perception')
-
-        # Summarize risk-taking results
-        DOSPERT_summarize_results(df)
-
-        # # Summarize risk-perception results
-        # dospert_summarize_results(df, 'Risk_Perception')
-
-        # Save results to CSV
-        DOSPERT_save_results_to_csv(df, output_file_path)
+        # Step 2: Optional logging
+        _ = DOSPERT_summarize_results(df)
+        return df
+    return None
 
 if __name__ == "__main__":
     main()

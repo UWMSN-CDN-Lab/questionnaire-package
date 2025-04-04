@@ -28,7 +28,6 @@ def ALQ_calculate_scores(df):
     
     # Calculate total ALQ score
     df['Total_ALQ_Score'] = df[['Conceptualization', 'Identification', 'Integration']].mean(axis=1)
-    
     return df
 
 # Summarize ALQ results
@@ -93,26 +92,23 @@ def ALQ_save_summary_to_csv(summary, subgroup_summary, output_file_path):
 # Main function to execute the steps
 def main():
 
-    output_file_path = 'processed_alq_results.csv'
-    summary_output_file_path = 'alq_summary_results.csv'
-
-
     if df is not None:
-        # Calculate ALQ scores
+        # Step 1: Score calculations
         df = ALQ_calculate_scores(df)
 
-        # Summarize results
+        # Step 2: Subgroup stats and full summary (print only, optional)
         summary = ALQ_summarize_results(df)
-
-        # Calculate subgroup means and std for a specific subgroup, e.g., 'Gender' or 'Age'
-        subgroup_column = 'Gender'  # Adjust this to your dataset's specific column
+        subgroup_column = 'Gender'
         subgroup_summary = ALQ_subgroup_means(df, subgroup_column)
 
-        # Save individual scores to CSV
-        ALQ_save_results_to_csv(df, output_file_path)
+        # Step 3: Build a per-row summary DataFrame for merging in main script
+        summary_df = df[[
+            'ResponseId', 'Conceptualization', 'Identification',
+            'Integration', 'Total_ALQ_Score'
+        ]].copy()
+        summary_df["Questionnaire"] = "ALQ"
 
-        # Save summarized results to CSV
-        ALQ_save_summary_to_csv(summary, subgroup_summary, summary_output_file_path)
+        return summary_df
 
 if __name__ == "__main__":
     main()

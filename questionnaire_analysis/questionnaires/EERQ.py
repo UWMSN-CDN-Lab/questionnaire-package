@@ -74,17 +74,16 @@ def EERQ_save_results_to_csv(df, output_file_path):
 
 # Main function to execute the steps
 def main(df):
-    output_file_path = 'processed_eerq_results.csv'
-
     if df is not None:
-        # Calculate E-ERQ subscale scores
+        # Step 1: Calculate scores
         df = EERQ_calculate_scores(df)
 
-        # Summarize results
-        summary = EERQ_summarize_results(df)
-        
-        # Save individual scores to CSV
-        EERQ_save_results_to_csv(df, output_file_path)
+        # Step 2: Optional log summary
+        _ = EERQ_summarize_results(df)
+
+
+        return df
+    return None
 
 if __name__ == "__main__":
     main()

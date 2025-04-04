@@ -67,19 +67,26 @@ def BEQ_save_results_to_csv(df, output_file_path):
 
 # Main function to execute the steps
 def main(df):
-
-    output_file_path = 'processed_beq_results.csv'
-
-
     if df is not None:
-        # Calculate BEQ scores
+        # Step 1: Calculate BEQ scores
         df = BEQ_calculate_scores(df)
 
-        # Summarize results
-        summary = BEQ_summarize_results(df)
+        # Step 2: Optional summary logging
+        _ = BEQ_summarize_results(df)
 
-        # Save results to CSV
-        BEQ_save_results_to_csv(df, output_file_path)
+        # Step 3: Build summary DataFrame to return
+        summary_df = df[[
+            "ResponseId",
+            "BEQ_Negative_Expressivity",
+            "BEQ_Positive_Expressivity",
+            "BEQ_Impulse_Strength",
+            "Total_BEQ_Score"
+        ]].copy()
+        summary_df["Questionnaire"] = "BEQ"
+
+        return summary_df
+    return None
+
 
 if __name__ == "__main__":
     main()

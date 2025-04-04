@@ -62,18 +62,14 @@ def SU_save_results_to_csv(df, output_file_path):
 
 # Main function to execute the steps
 def main(df):
-    output_file_path = 'processed_su_results.csv'
-
-
     if df is not None:
-        # Calculate Substance Use subscale scores
+        # Step 1: Score calculations
         df = SU_calculate_scores(df)
 
-        # Summarize results
-        summary = SU_summarize_results(df)
-
-        # Save individual scores to CSV
-        SU_save_results_to_csv(df, output_file_path)
+        # Step 2: Optional summary logging
+        _ = SU_summarize_results(df)
+        return df
+    return None
 
 if __name__ == "__main__":
     main()

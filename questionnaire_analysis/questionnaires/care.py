@@ -4,9 +4,12 @@ import pandas as pd
 # Category : Risky_Sexual_Activity: 02,03,04,05,06,09,10, 11, 12, 13, 14, 15, 16, 17
 # Risky_Drugs : 19, 20, 21, 22, 23, 24
 # Risky_alcohol: 25,26,27,28,29,30,31,32
-# Safe_Sexual_Activity: 01,07,
+# Safe_Sexual_Activity: 01,07
 # 08 is not placed
 # Access CSV file for CARE
+
+# Just mean for now and we look at care later
+
 def CARE_access_csv(file_path, delimiter=","):
     try:
         df = pd.read_csv(file_path, delimiter=delimiter)

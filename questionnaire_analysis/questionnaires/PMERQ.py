@@ -57,6 +57,7 @@ def PMERQ_summarize_engagement_disengagement(df):
     
     return df
 
+
 # Save the results to CSV
 def PMERQ_save_results_to_csv(df, output_file_path):
     """
@@ -64,6 +65,7 @@ def PMERQ_save_results_to_csv(df, output_file_path):
     """
     df.to_csv(output_file_path, index=False)
     print(f"Results saved to {output_file_path}.")
+
 
 # Main function to execute the steps
 def main(df):
@@ -77,7 +79,8 @@ def main(df):
         df = PMERQ_summarize_engagement_disengagement(df)
 
         # Save results to CSV
-        PMERQ_save_results_to_csv(df, output_file_path)
+        #PMERQ_save_results_to_csv(df, output_file_path)
+    return df
 
 if __name__ == "__main__":
     main()

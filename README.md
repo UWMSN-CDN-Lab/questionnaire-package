@@ -48,23 +48,28 @@ setup(
     ],
 )    
 
+# How to Run:
+python3 -m questionnaire_analysis
+
+
 
 # questionnaire-package
 
 
-# TODO: 
-# PMERQ,SU,DOSPERT,UPPS,EERQ work rn, need to make sure other scripts work or not. 
-EERQ fix the fragmentation issues 
+# TODO:
+# PMERQ,SU,DOSPERT,UPPS,EERQ work rn, need to make sure other scripts work or not.
 Make a fake long csv with every questionnaire on it
-Change other things like 
-Making a CSV to toggle to ask the user if we want to create a new csv or not - ND
-Should make one csv instead of multiple ones - ND
 RESEARCH LAB WORKAROUND - ND
-setup.py - PROG
 check for each questionnaire compatibility - PROG
-init file for questionnaires and export for public api - PROG
-main functionality check (Test)  (April 4th)
+Perfectly working questionnaires:
+# URCS not present in our questionnaire list
+# Write down instructions on how to make this run and how to make it run for each questionnaire and everything 
+# It shud be as simple to use as possible
+# Documentation for how to run it specifically 
 
+
+# Making a CSV to toggle to ask the user if we want to create a new csv or not - ND
+EERQ fix the fragmentation issues
 try for each questionnaire analysis functionality
 PIP install package
 ReNaming Function
@@ -73,5 +78,14 @@ DRY RUN
 ADD IN EDGE CASES
 if its less, put out a waring and compute wiht assiming its 0
 To make sure the item numners are correct
-Dont worry about care now. 
-EDGE CASES:
+
+
+
+
+
+
+# So we want to treat it as a df rather then a csv
+# We want to input the file path as a method rather then using it as an argument as we want to use it for functions
+
+
+
