@@ -84,7 +84,7 @@ def main(df):
         ]].copy()
         summary_df["Questionnaire"] = "BEQ"
 
-        return summary_df
+        return df
     return None
 
 

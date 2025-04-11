@@ -7,8 +7,8 @@ def SIAS_calculate_scores(df):
     """
     Calculate the SIAS total score by summing item scores.
     """
-    df['SIAS_Total_Score'] = df[['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8', 'Q9', 'Q10',
-                                 'Q11', 'Q12', 'Q13', 'Q14', 'Q15', 'Q16', 'Q17', 'Q18', 'Q19', 'Q20']].sum(axis=1)
+    df['SIAS_Total_Score'] = df[['SIAS_01', 'SIAS_02', 'SIAS_03', 'SIAS_04', 'SIAS_05', 'SIAS_06', 'SIAS_07', 'SIAS_08', 'SIAS_09', 'SIAS_10',
+                                 'SIAS_11', 'SIAS_12', 'SIAS_13', 'SIAS_14', 'SIAS_15', 'SIAS_16', 'SIAS_17', 'SIAS_18', 'SIAS_19', 'SIAS_20']].sum(axis=1)
     return df
 
 # Summarize results
@@ -44,6 +44,8 @@ def main(df):
 
         # Save individual scores to CSV
         SIAS_save_results_to_csv(df, output_file_path)
+        return df
+    return None
 
 if __name__ == "__main__":
     main()

@@ -22,9 +22,9 @@ def ALQ_calculate_scores(df):
     """
     df = ALQ_reverse_score(df)
     # Calculate subscale scores
-    df['Conceptualization'] = df[['ALQ_1', 'ALQ_2', 'ALQ_3', 'ALQ_4']].mean(axis=1)
-    df['Identification'] = df[['ALQ_5', 'ALQ_6', 'ALQ_7']].mean(axis=1)
-    df['Integration'] = df[['ALQ_8', 'ALQ_9', 'ALQ_10', 'ALQ_11']].mean(axis=1)
+    df['Conceptualization'] = df[['ALQ_01', 'ALQ_02', 'ALQ_03', 'ALQ_04']].mean(axis=1)
+    df['Identification'] = df[['ALQ_05', 'ALQ_06', 'ALQ_07']].mean(axis=1)
+    df['Integration'] = df[['ALQ_08', 'ALQ_09', 'ALQ_10', 'ALQ_11']].mean(axis=1)
     
     # Calculate total ALQ score
     df['Total_ALQ_Score'] = df[['Conceptualization', 'Identification', 'Integration']].mean(axis=1)

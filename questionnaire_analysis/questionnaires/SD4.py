@@ -104,6 +104,8 @@ def main(df):
 
         # Save summarized results to CSV
         SD4_save_summary_to_csv(summary, subgroup_summary, summary_output_file_path)
+        return df
+    return None
 
 if __name__ == "__main__":
     main()

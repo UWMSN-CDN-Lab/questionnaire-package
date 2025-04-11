@@ -59,8 +59,7 @@ python3 -m questionnaire_analysis file_path_to_csv
 
 
 # TODO:
-# CARE, GCF( CALCULATE FUNCTION MISSING), MINI_ASQ ( 0s problem), PSS(check for reverse scoring columns), RAS(totally wrong), SIAS, URCS (missing), PTM(missing), IRI (missing)
-# Care doesnt work need to fix
+# RAS(totally wrong), URCS (missing), PTM(missing), IRI (missing)
 Make a fake long csv with every questionnaire on it - check for each questionnaire compatibility - PROG
 RESEARCH LAB WORKAROUND - ND
 # Write down instructions on how to make this run and how to make it run for each questionnaire and everything 
@@ -81,3 +80,36 @@ To make sure the item numners are correct
 
 # So we want to treat it as a df rather then a csv
 # We want to input the file path as a method rather then using it as an argument as we want to use it for functions
+
+
+
+# EMONET 
+
+
+
+
+
+
+How to run it:
+as a import statement :
+from questionnaire_analysis.questionnaires.eerq import main as eerq_main
+
+
+
+How to run the whole thing: 
+python -m questionnaire_analysis path/to/your.csv
+
+running ht whole thing from python perspective 
+
+Naming Convention _ subscale
+PMERQ_{SUBSCALE_NAME}   
+
+
+To dos...
+-Mean scores from package should have questionnaire tag (e.g., DOSPERT_[subscale_name])
+-Make it so you can run the entire questionnaire scoring function interactively/as you would a method on pandas ex:
+import cdnlab_tools as ct
+import pandas as pd
+dat_path = '/path/to/data.csv'
+scored_questionnaires = ct.score_quest(dat_path)
+#scored_questionnaires is pd.dataframe of mean scores

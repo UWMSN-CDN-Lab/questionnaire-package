@@ -8,7 +8,7 @@ def CESDR_calculate_scores(df):
     Calculate the total score for the Center for Epidemiologic Studies Depression Scale - Revised (CESD-R).
     The CESD-R has 20 items scored on a 0-4 scale.
     """
-    cesdr_items = [f'CESDR_{i}' for i in range(1, 21)]
+    cesdr_items = [f'CESDR_{item:02d}' for item in range(1, 21)]
     
     # Calculate total CESD-R score by summing all item responses
     df['Total_CESDR_Score'] = df[cesdr_items].sum(axis=1)
@@ -89,6 +89,8 @@ def main(df):
 
         # Save summarized results to CSV
         CESDR_save_summary_to_csv(summary, subgroup_summary, summary_output_file_path)
+        return df
+    return None
 
 if __name__ == "__main__":
     main()

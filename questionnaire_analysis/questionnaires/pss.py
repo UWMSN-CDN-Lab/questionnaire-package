@@ -14,8 +14,8 @@ def PSS_calculate_pss_score(row):
     Calculate the total PSS score for a single row.
     """
     pss_columns = [
-        'PSS_1', 'PSS_2', 'PSS_3', 'PSS_4r', 'PSS_5r', 
-        'PSS_6r', 'PSS_7r', 'PSS_8', 'PSS_9r', 'PSS_10r', 
+        'PSS_01', 'PSS_02', 'PSS_03', 'PSS_04r', 'PSS_05r', 
+        'PSS_06r', 'PSS_07r', 'PSS_08', 'PSS_09r', 'PSS_10r', 
         'PSS_11', 'PSS_12', 'PSS_13r', 'PSS_14'
     ]
     return row[pss_columns].sum()
@@ -141,6 +141,8 @@ def main(df):
 
         # Save the results to a new CSV file
         PSS_save_results_to_csv(processed_df, output_file_path)
+        return processed_df
+    return None
 
 if __name__ == "__main__":
     main()

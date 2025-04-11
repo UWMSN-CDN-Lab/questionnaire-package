@@ -7,7 +7,6 @@ __all__ = [
 ]
 
 from . import UCLA
-from . import DTCGT
 from . import PANAS
 from . import RAS
 from . import GCF

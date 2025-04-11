@@ -10,7 +10,7 @@ def MASQ_calculate_mean(df, items, label):
     """
     Calculate the mean score for a given list of item numbers.
     """
-    item_columns = [f'MASQ_{item}' for item in items]
+    item_columns = [f'MASQ_{item:02d}' for item in items]
     mean_score = df[item_columns].mean(axis=1)
     df[label] = mean_score
     return df

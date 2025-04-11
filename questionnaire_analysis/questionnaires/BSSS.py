@@ -56,6 +56,8 @@ def main(df):
 
         # Save results to CSV
         BSSS_save_results_to_csv(df, output_file_path)
+        return df
+    return None
 
 if __name__ == "__main__":
     main()

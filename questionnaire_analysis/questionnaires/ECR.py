@@ -10,8 +10,8 @@ def ECR_calculate_scores(df):
     - Anxiety
     - Avoidance
     """
-    df['Anxiety'] = df[['ECR_2', 'ECR_4', 'ECR_6', 'ECR_8', 'ECR_10', 'ECR_12']].mean(axis=1)
-    df['Avoidance'] = df[['ECR_1', 'ECR_3', 'ECR_5', 'ECR_7', 'ECR_9', 'ECR_11']].mean(axis=1)
+    df['Anxiety'] = df[['ECR_02', 'ECR_04', 'ECR_06', 'ECR_08', 'ECR_10', 'ECR_12']].mean(axis=1)
+    df['Avoidance'] = df[['ECR_01', 'ECR_03', 'ECR_05', 'ECR_07', 'ECR_09', 'ECR_11']].mean(axis=1)
     
     return df
 
@@ -53,6 +53,8 @@ def main(df):
 
         # Save individual scores to CSV
         ECR_save_results_to_csv(df, output_file_path)
+        return df
+    return None
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,6 @@
 import pandas as pd
 from questionnaire_analysis.questionnaires import (
-UCLA, DTCGT, PANAS, RAS, GCF, ECR, MSPSS, SWLS, ALQ, BEQ, IRQ,
+UCLA, PANAS, RAS, GCF, ECR, MSPSS, SWLS, ALQ, BEQ, IRQ,
 CESDR, MINI_MASQ, PMERQ, BFI, SU, EERQ, HEXACO, CARE, SD4, CBCL, UPPS,
 BSSS, SIAS, PSS, LOTR, DOSPERT, IPPA
 )
@@ -18,7 +18,6 @@ def access_csv(file_path, delimiter=","):
 def detect_questionnaires(df):
     questionnaire_map = {
     "UCLA_": UCLA.main,
-    "DTCGT_": DTCGT.main,
     "PANAS_": PANAS.main,
     "RAS_": RAS.main,
     "GCF_": GCF.main,

@@ -1,5 +1,17 @@
 import pandas as pd
 
+def GCF_calculate_scores(df):
+    """
+    Calculate the total GCF score by averaging all GCF item responses.
+    Assumes items are named GCF_01 to GCF_20.
+    """
+    gcf_items = [f'GCF_{i:02d}' for i in range(1, 21)]  # Adjust if you have a different item range
+
+    for item in gcf_items:
+        df[item] = pd.to_numeric(df[item], errors='coerce')
+
+    df['Total_GCF_Score'] = df[gcf_items].mean(axis=1)
+    return df
 # Summarize results
 def GCF_summarize_results(df):
     """
@@ -45,6 +57,9 @@ def main(df):
 
     if df is not None:
         # Summarize results
+        df = GCF_calculate_scores(df)
+
+
         summary = GCF_summarize_results(df)
 
         # Save individual scores to CSV
@@ -52,6 +67,8 @@ def main(df):
 
         # Save summarized results to CSV
         GCF_save_summary_to_csv(summary,summary_output_file_path)
+        return df
+    return None
 
 if __name__ == "__main__":
     main()

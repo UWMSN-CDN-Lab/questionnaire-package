@@ -9,7 +9,7 @@ def LOTR_reverse_score(df, items):
     Original scale is 0-4, where reverse scoring is calculated as 4 - original response.
     """
     for item in items:
-        df[f'LOTR_{item}'] = 4 - df[f'LOTR_{item}']
+        df[f'LOTR_{item:02d}'] = 4 - df[f'LOTR_{item:02d}']
     return df
 
 # Calculate LOT-R total score
@@ -24,7 +24,7 @@ def LOTR_calculate_score(df):
     df = LOTR_reverse_score(df, reverse_items)
     
     # Calculate total score by summing specified items
-    score_items = ['LOTR_1', 'LOTR_3', 'LOTR_4', 'LOTR_7', 'LOTR_9', 'LOTR_10']
+    score_items = ['LOTR_01', 'LOTR_03', 'LOTR_04', 'LOTR_07', 'LOTR_09', 'LOTR_10']
     df['LOTR_Total_Score'] = df[score_items].sum(axis=1)
     
     return df
@@ -70,6 +70,8 @@ def main(df):
 
         # Save results to CSV
         LOTR_save_results_to_csv(df, output_file_path)
+        return df
+    return None
 
 if __name__ == "__main__":
     main()

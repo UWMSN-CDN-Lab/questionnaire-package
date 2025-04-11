@@ -25,22 +25,22 @@ def HEXACO_calculate_scores(df):
 
     # Apply reverse scoring for relevant items
     for item in reverse_honesty_humility:
-        df[f'HEXACO_{item}'] = 6 - df[f'HEXACO_{item}']  # Assuming a 1-5 scale, reverse scoring is 6 - original response
+        df[f'HEXACO_{item:02d}'] = 6 - df[f'HEXACO_{item:02d}']  # Assuming a 1-5 scale, reverse scoring is 6 - original response
     
     for item in reverse_emotionality:
-        df[f'HEXACO_{item}'] = 6 - df[f'HEXACO_{item}']
+        df[f'HEXACO_{item:02d}'] = 6 - df[f'HEXACO_{item:02d}']
 
     for item in reverse_extraversion:
-        df[f'HEXACO_{item}'] = 6 - df[f'HEXACO_{item}']
+        df[f'HEXACO_{item:02d}'] = 6 - df[f'HEXACO_{item:02d}']
 
     for item in reverse_agreeableness:
-        df[f'HEXACO_{item}'] = 6 - df[f'HEXACO_{item}']
+        df[f'HEXACO_{item:02d}'] = 6 - df[f'HEXACO_{item:02d}']
 
     for item in reverse_conscientiousness:
-        df[f'HEXACO_{item}'] = 6 - df[f'HEXACO_{item}']
+        df[f'HEXACO_{item:02d}'] = 6 - df[f'HEXACO_{item:02d}']
 
     for item in reverse_openness:
-        df[f'HEXACO_{item}'] = 6 - df[f'HEXACO_{item}']
+        df[f'HEXACO_{item:02d}'] = 6 - df[f'HEXACO_{item:02d}']
 
     # Calculate subscale scores
     df['Honesty_Humility'] = df[['HEXACO_01', 'HEXACO_04', 'HEXACO_09', 'HEXACO_16', 'HEXACO_24']].mean(axis=1)

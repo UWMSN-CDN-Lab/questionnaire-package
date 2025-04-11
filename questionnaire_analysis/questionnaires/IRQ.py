@@ -12,9 +12,9 @@ def IRQ_calculate_scores(df):
     - Positive-Tendency (IRQ-PT)
     - Positive-Efficacy (IRQ-PE)
     """
-    df['IRQ_NT_Score'] = df[['IRQ_1', 'IRQ_2', 'IRQ_3', 'IRQ_4']].sum(axis=1)
-    df['IRQ_NE_Score'] = df[['IRQ_5', 'IRQ_6', 'IRQ_7', 'IRQ_8']].sum(axis=1)
-    df['IRQ_PT_Score'] = df[['IRQ_9', 'IRQ_10', 'IRQ_11', 'IRQ_12']].sum(axis=1)
+    df['IRQ_NT_Score'] = df[['IRQ_01', 'IRQ_02', 'IRQ_03', 'IRQ_04']].sum(axis=1)
+    df['IRQ_NE_Score'] = df[['IRQ_05', 'IRQ_06', 'IRQ_07', 'IRQ_08']].sum(axis=1)
+    df['IRQ_PT_Score'] = df[['IRQ_09', 'IRQ_10', 'IRQ_11', 'IRQ_12']].sum(axis=1)
     df['IRQ_PE_Score'] = df[['IRQ_13', 'IRQ_14', 'IRQ_15', 'IRQ_16']].sum(axis=1)
     
     # Total score is the sum of all subscales
@@ -75,6 +75,8 @@ def main():
 
         # Save individual scores to CSV
         IRQ_save_results_to_csv(df, output_file_path)
+        return df
+    return None
 
 if __name__ == "__main__":
     main()
