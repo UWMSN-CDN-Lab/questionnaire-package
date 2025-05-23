@@ -1,7 +1,5 @@
 import pandas as pd
 
-
-
 # Calculating total scores
 def EERQ_calculate_scores(df):
     """
@@ -13,13 +11,20 @@ def EERQ_calculate_scores(df):
     # Convert all relevant columns to numeric (ignoring errors)
     for col in df.columns:
         df[col] = pd.to_numeric(df[col], errors='coerce')
-    df['EERQ_Reappraisal_mean'] = df[['EERQ_01', 'EERQ_05', 'EERQ_10', 'EERQ_17', 'EERQ_19', 'EERQ_22']].mean(axis=1)
-    df['EERQ_Suppression_mean'] = df[['EERQ_04', 'EERQ_09', 'EERQ_13', 'EERQ_20']].mean(axis=1)
-    df['EERQ_Distraction_mean'] = df[['EERQ_06', 'EERQ_12', 'EERQ_15', 'EERQ_18', 'EERQ_21']].mean(axis=1)
-    df['EERQ_Selective_Attention_mean'] = df[['EERQ_07', 'EERQ_11', 'EERQ_14', 'EERQ_16']].mean(axis=1)
-    df['EERQ_Situation_Selection_mean'] = df[['EERQ_02', 'EERQ_03', 'EERQ_08']].mean(axis=1)
-    
-    # Optional: You can calculate the overall EERQ score by averaging all strategies
+
+    # Create a dictionary of the new columns with their calculations
+    new_columns = {
+        'EERQ_Reappraisal_mean': df[['EERQ_01', 'EERQ_05', 'EERQ_10', 'EERQ_17', 'EERQ_19', 'EERQ_22']].mean(axis=1),
+        'EERQ_Suppression_mean': df[['EERQ_04', 'EERQ_09', 'EERQ_13', 'EERQ_20']].mean(axis=1),
+        'EERQ_Distraction_mean': df[['EERQ_06', 'EERQ_12', 'EERQ_15', 'EERQ_18', 'EERQ_21']].mean(axis=1),
+        'EERQ_Selective_Attention_mean': df[['EERQ_07', 'EERQ_11', 'EERQ_14', 'EERQ_16']].mean(axis=1),
+        'EERQ_Situation_Selection_mean': df[['EERQ_02', 'EERQ_03', 'EERQ_08']].mean(axis=1)
+    }
+
+    # Concatenate the new columns at once
+    df = pd.concat([df, pd.DataFrame(new_columns)], axis=1)
+
+    # Optional: Calculate the overall EERQ score by averaging all strategies
     df['EERQ_Total_E_ERQ_Score_mean'] = df[['EERQ_Reappraisal_mean', 'EERQ_Suppression_mean', 'EERQ_Distraction_mean', 'EERQ_Selective_Attention_mean', 'EERQ_Situation_Selection_mean']].mean(axis=1)
 
     return df
@@ -31,17 +36,17 @@ def EERQ_summarize_results(df):
     """
     mean_scores = df[['EERQ_Reappraisal_mean', 'EERQ_Suppression_mean', 'EERQ_Distraction_mean', 'EERQ_Selective_Attention_mean', 'EERQ_Situation_Selection_mean', 'EERQ_Total_E_ERQ_Score_mean']].mean()
     std_scores = df[['EERQ_Reappraisal_mean', 'EERQ_Suppression_mean', 'EERQ_Distraction_mean', 'EERQ_Selective_Attention_mean', 'EERQ_Situation_Selection_mean', 'EERQ_Total_E_ERQ_Score_mean']].std()
-    
+
     print("\nSummary of E-ERQ Scores:")
     print(df[['EERQ_Reappraisal_mean', 'EERQ_Suppression_mean', 'EERQ_Distraction_mean', 'EERQ_Selective_Attention_mean', 'EERQ_Situation_Selection_mean', 'EERQ_Total_E_ERQ_Score_mean']])
-    
+
     print(f"\nMean Reappraisal: {mean_scores['EERQ_Reappraisal_mean']:.3f}")
     print(f"Mean Suppression: {mean_scores['EERQ_Suppression_mean']:.3f}")
     print(f"Mean Distraction: {mean_scores['EERQ_Distraction_mean']:.3f}")
     print(f"Mean Selective Attention: {mean_scores['EERQ_Selective_Attention_mean']:.3f}")
     print(f"Mean Situation Selection: {mean_scores['EERQ_Situation_Selection_mean']:.3f}")
     print(f"Mean Total E-ERQ Score: {mean_scores['EERQ_Total_E_ERQ_Score_mean']:.3f}")
-    
+
     return {
         'Mean Reappraisal': mean_scores['EERQ_Reappraisal_mean'],
         'Mean Suppression': mean_scores['EERQ_Suppression_mean'],
@@ -80,8 +85,7 @@ def main(df):
 
         # Step 2: Optional log summary
         _ = EERQ_summarize_results(df)
-
-
+# 
         return df
     return None
 

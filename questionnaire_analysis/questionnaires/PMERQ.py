@@ -30,7 +30,7 @@ def PMERQ_calculate_subscale_scores(df):
     Calculate the mean score for each subscale in the PMERQ.
     """
     for subscale, items in subscales.items():
-        df[subscale] = PMERQ_calculate_subscale_mean(df, items)
+        df[f'PMERQ_{subscale}'] = PMERQ_calculate_subscale_mean(df, items)
     return df
 
 # Summarize the overall engagement and disengagement scores
@@ -39,21 +39,21 @@ def PMERQ_summarize_engagement_disengagement(df):
     Summarize the engagement and disengagement orientation scores.
     """
     engagement_columns = [
-        'Engagement_Situation_Selection', 'Engagement_Situation_Modification', 
-        'Engagement_Attentional_Deployment', 'Engagement_Cognitive_Reappraisal', 
-        'Engagement_Response_Modulation'
+        'PMERQ_Engagement_Situation_Selection', 'PMERQ_Engagement_Situation_Modification', 
+        'PMERQ_Engagement_Attentional_Deployment', 'PMERQ_Engagement_Cognitive_Reappraisal', 
+        'PMERQ_Engagement_Response_Modulation'
     ]
     disengagement_columns = [
-        'Disengagement_Situation_Selection', 'Disengagement_Situation_Modification', 
-        'Disengagement_Attentional_Deployment', 'Disengagement_Cognitive_Reappraisal', 
-        'Disengagement_Response_Modulation'
+        'PMERQ_Disengagement_Situation_Selection', 'PMERQ_Disengagement_Situation_Modification', 
+        'PMERQ_Disengagement_Attentional_Deployment', 'PMERQ_Disengagement_Cognitive_Reappraisal', 
+        'PMERQ_Disengagement_Response_Modulation'
     ]
     
-    df['Engagement_Score'] = df[engagement_columns].mean(axis=1)
-    df['Disengagement_Score'] = df[disengagement_columns].mean(axis=1)
+    df['PMERQ_Engagement_Score'] = df[engagement_columns].mean(axis=1)
+    df['PMERQ_Disengagement_Score'] = df[disengagement_columns].mean(axis=1)
     
     print("\nSummary of Engagement and Disengagement Scores:")
-    print(df[['Engagement_Score', 'Disengagement_Score']])
+    print(df[['PMERQ_Engagement_Score', 'PMERQ_Disengagement_Score']])
     
     return df
 

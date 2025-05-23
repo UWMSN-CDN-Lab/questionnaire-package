@@ -94,6 +94,7 @@ How to run it:
 as a import statement :
 from questionnaire_analysis.questionnaires.eerq import main as eerq_main
 
+As an function:
 
 
 How to run the whole thing: 
@@ -106,10 +107,33 @@ PMERQ_{SUBSCALE_NAME}
 
 
 To dos...
--Mean scores from package should have questionnaire tag (e.g., DOSPERT_[subscale_name])
--Make it so you can run the entire questionnaire scoring function interactively/as you would a method on pandas ex:
+-Mean scores from package should have questionnaire tag (e.g., DOSPERT_[subscale_name]) - double check
+-Make it so you can run the entire questionnaire scoring function interactively/as you would a method on pandas ex: 
 import cdnlab_tools as ct
 import pandas as pd
 dat_path = '/path/to/data.csv'
 scored_questionnaires = ct.score_quest(dat_path)
 #scored_questionnaires is pd.dataframe of mean scores
+-Check that all scores are mean scores, not sum scores
+
+DOspert make last row mean score not overall score 
+Everything shud be numeric 
+Script: Score questionnaires : 
+
+Summer tasks fall in 1 of 3 categories
+
+-Package refinement (fine tuning functionalities)
+-Documentation
+-EmoNet Proj
+
+Add subject ID on summary as well
+Merge according to subject idea
+
+Summer Goals:
+Documentation to be updated perfectly: Make sure the package can run on ERT data without errors, specifically, we can run the function from the terminal to give a csv with scored study variables, the user shud also to run it in a script
+
+EERQ doest get added to the CSV
+It should work on a normal script
+
+
+a feature to just write a json and make a python file to make the run

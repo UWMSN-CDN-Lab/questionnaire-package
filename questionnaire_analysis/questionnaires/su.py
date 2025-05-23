@@ -29,9 +29,9 @@ def SU_calculate_scores(df):
                    'SU_07', 'SU_08', 'SU_09', 'SU_10']
     for col in numeric_columns:
         df[col] = pd.to_numeric(df[col], errors='coerce')
-    df['Frequency_Use'] = df[['SU_01', 'SU_02', 'SU_03']].mean(axis=1)
-    df['Substance_Type_Use'] = df[['SU_04', 'SU_05', 'SU_06']].mean(axis=1)
-    df['Consequences_Use'] = df[['SU_07', 'SU_08', 'SU_09', 'SU_10']].mean(axis=1)
+    df['SU_Frequency_Use'] = df[['SU_01', 'SU_02', 'SU_03']].mean(axis=1)
+    df['SU_Substance_Type_Use'] = df[['SU_04', 'SU_05', 'SU_06']].mean(axis=1)
+    df['SU_Consequences_Use'] = df[['SU_07', 'SU_08', 'SU_09', 'SU_10']].mean(axis=1)
 
     return df
 
@@ -40,19 +40,19 @@ def SU_summarize_results(df):
     """
     Summarize the Substance Use subscale scores by calculating the mean and standard deviation.
     """
-    mean_scores = df[['Frequency_Use', 'Substance_Type_Use', 'Consequences_Use']].mean()
-    std_scores = df[['Frequency_Use', 'Substance_Type_Use', 'Consequences_Use']].std()
+    mean_scores = df[['SU_Frequency_Use', 'SU_Substance_Type_Use', 'SU_Consequences_Use']].mean()
+    std_scores = df[['SU_Frequency_Use', 'SU_Substance_Type_Use', 'SU_Consequences_Use']].std()
 
     print("\nSummary of Substance Use Scores:")
-    print(df[['Frequency_Use', 'Substance_Type_Use', 'Consequences_Use']])
+    print(df[['SU_Frequency_Use', 'SU_Substance_Type_Use', 'SU_Consequences_Use']])
     
     return {
-        'Mean Frequency of Use': mean_scores['Frequency_Use'],
-        'Mean Substance Type Use': mean_scores['Substance_Type_Use'],
-        'Mean Consequences of Use': mean_scores['Consequences_Use'],
-        'Std Dev Frequency of Use': std_scores['Frequency_Use'],
-        'Std Dev Substance Type Use': std_scores['Substance_Type_Use'],
-        'Std Dev Consequences of Use': std_scores['Consequences_Use']
+        'Mean Frequency of Use': mean_scores['SU_Frequency_Use'],
+        'Mean Substance Type Use': mean_scores['SU_Substance_Type_Use'],
+        'Mean Consequences of Use': mean_scores['SU_Consequences_Use'],
+        'Std Dev Frequency of Use': std_scores['SU_Frequency_Use'],
+        'Std Dev Substance Type Use': std_scores['SU_Substance_Type_Use'],
+        'Std Dev Consequences of Use': std_scores['SU_Consequences_Use']
     }
 
 # Save the results to CSV

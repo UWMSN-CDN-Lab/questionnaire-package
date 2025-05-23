@@ -19,7 +19,6 @@ def DOSPERT_calculate_subscale_scores(df):
 
 # Calculate overall scores for both risk-taking
 def DOSPERT_calculate_scores(df):
-    print("2")
     """
     Calculate the overall score for risk-taking and risk-perception.
     """
@@ -34,7 +33,7 @@ def DOSPERT_calculate_scores(df):
     for subscale, items in risk_taking_subscales.items():
         for col in items:
             df[col] = pd.to_numeric(df[col], errors='coerce')
-        df[f'{subscale}_Score'] = df[items].mean(axis=1)
+        df[f'DOSPERT_{subscale}_Score'] = df[items].mean(axis=1)
     dospert_items = [
     "DOSPERT_01", "DOSPERT_02", "DOSPERT_03", "DOSPERT_04", "DOSPERT_05",
     "DOSPERT_06", "DOSPERT_07", "DOSPERT_08", "DOSPERT_09", "DOSPERT_10",
@@ -43,7 +42,7 @@ def DOSPERT_calculate_scores(df):
     "DOSPERT_21", "DOSPERT_22", "DOSPERT_23", "DOSPERT_24", "DOSPERT_25",
     "DOSPERT_26", "DOSPERT_27", "DOSPERT_28", "DOSPERT_29", "DOSPERT_30"
 ]   
-    df['Overall_Score'] = df[dospert_items].sum(axis=1)
+    df['DOSPERT_Overall_Score'] = df[dospert_items].sum(axis=1)
     
     return df
 
@@ -61,12 +60,14 @@ def DOSPERT_summarize_results(df):
 }
     subscales = ['Ethical', 'Financial', 'Health_Safety', 'Recreational', 'Social']
     print("\nSummary of Risk-Taking Scores:")
-    print(df[[f'{subscale}_Score' for subscale in subscales] + ['Overall_Score']])
+    print(df[[f'DOSPERT_{subscale}_Score' for subscale in subscales] + ['DOSPERT_Overall_Score']])
     
     summary = {
-        f'{subscale} Risk-Taking Mean': df[f'{subscale}_Score'].mean() for subscale in subscales
+        f'{subscale} Risk-Taking Mean': df[f'DOSPERT_{subscale}_Score'].mean() for subscale in subscales
     }
-    summary['Overall Risk-Taking Mean'] = df['Overall_Score'].mean()
+    summary['Overall Risk-Taking Mean'] = df['DOSPERT_Overall_Score'].mean()
+
+
     
     for key, value in summary.items():
         print(f"{key}: {value:.3f}")
@@ -95,8 +96,6 @@ def DOSPERT_save_results_to_csv(df, output_file_path):
     
     df_filtered.to_csv(output_file_path, index=False)  # Save filtered data to CSV
     print(f"Selected summary scores saved to {output_file_path}.")
-
-
 
 def main(df):
     if df is not None:
