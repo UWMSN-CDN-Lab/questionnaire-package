@@ -85,7 +85,7 @@ def main(df):
 
         # Step 2: Optional log summary
         _ = EERQ_summarize_results(df)
-# 
+#       
         return df
     return None
 

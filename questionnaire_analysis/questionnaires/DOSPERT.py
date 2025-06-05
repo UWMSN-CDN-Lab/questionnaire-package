@@ -42,7 +42,7 @@ def DOSPERT_calculate_scores(df):
     "DOSPERT_21", "DOSPERT_22", "DOSPERT_23", "DOSPERT_24", "DOSPERT_25",
     "DOSPERT_26", "DOSPERT_27", "DOSPERT_28", "DOSPERT_29", "DOSPERT_30"
 ]   
-    df['DOSPERT_Overall_Score'] = df[dospert_items].sum(axis=1)
+    df['DOSPERT_Overall_Mean_Score'] = df[dospert_items].mean(axis=1)
     
     return df
 
@@ -60,13 +60,12 @@ def DOSPERT_summarize_results(df):
 }
     subscales = ['Ethical', 'Financial', 'Health_Safety', 'Recreational', 'Social']
     print("\nSummary of Risk-Taking Scores:")
-    print(df[[f'DOSPERT_{subscale}_Score' for subscale in subscales] + ['DOSPERT_Overall_Score']])
+    print(df[[f'DOSPERT_{subscale}_Score' for subscale in subscales] + ['DOSPERT_Overall_Mean_Score']])
     
     summary = {
         f'{subscale} Risk-Taking Mean': df[f'DOSPERT_{subscale}_Score'].mean() for subscale in subscales
     }
-    summary['Overall Risk-Taking Mean'] = df['DOSPERT_Overall_Score'].mean()
-
+    summary['Overall Risk-Taking Mean'] = df['DOSPERT_Overall_Mean_Score'].mean()
 
     
     for key, value in summary.items():

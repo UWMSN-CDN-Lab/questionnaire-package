@@ -107,7 +107,6 @@ PMERQ_{SUBSCALE_NAME}
 
 
 To dos...
--Mean scores from package should have questionnaire tag (e.g., DOSPERT_[subscale_name]) - double check
 -Make it so you can run the entire questionnaire scoring function interactively/as you would a method on pandas ex: 
 import cdnlab_tools as ct
 import pandas as pd
@@ -116,7 +115,6 @@ scored_questionnaires = ct.score_quest(dat_path)
 #scored_questionnaires is pd.dataframe of mean scores
 -Check that all scores are mean scores, not sum scores
 
-DOspert make last row mean score not overall score 
 Everything shud be numeric 
 Script: Score questionnaires : 
 
@@ -137,3 +135,6 @@ It should work on a normal script
 
 
 a feature to just write a json and make a python file to make the run
+
+Dospert mean scoring needs to be checked once
+
