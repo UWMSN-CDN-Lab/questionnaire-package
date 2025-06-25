@@ -50,3 +50,32 @@ def detect_questionnaires(df):
         if any(col.startswith(prefix) for col in df.columns):
             detected[prefix] = main_fn
     return detected
+def analyze_questionnaire_csv(csv_path, output_summary=True):
+    """
+    Loads a CSV, detects questionnaires, runs analyses, and returns or saves the summary.
+    """
+    df = access_csv(csv_path)
+    if df is None:
+        return None
+
+    detected = detect_questionnaires(df)
+    if not detected:
+        print("No recognized questionnaires detected in the CSV.")
+        return None
+
+    # Run all detected questionnaires and concatenate results
+    summary_dfs = []
+    for prefix, main_fn in detected.items():
+        print(f"Processing questionnaire with prefix '{prefix}'...")
+        summary_df = main_fn(df)
+        summary_dfs.append(summary_df)
+
+    # Combine all summaries (if multiple)
+    if summary_dfs:
+        final_summary = pd.concat(summary_dfs, axis=1)
+        if output_summary:
+            summary_output_path = csv_path.replace(".csv", "_summary.csv")
+            final_summary.to_csv(summary_output_path, index=False)
+            print(f"Summary saved to: {summary_output_path}")
+        return final_summary
+    return None
