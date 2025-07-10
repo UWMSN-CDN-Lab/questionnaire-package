@@ -28,7 +28,7 @@ def BEQ_calculate_scores(df):
     df['BEQ_Impulse_Strength'] = df[['BEQ_15', 'BEQ_11', 'BEQ_14', 'BEQ_07', 'BEQ_02', 'BEQ_12']].mean(axis=1)
 
     # Calculate the overall BEQ score as the mean of all subscales
-    df['Total_BEQ_Score'] = df[['BEQ_Negative_Expressivity', 'BEQ_Positive_Expressivity', 'BEQ_Impulse_Strength']].mean(axis=1)
+    df['BEQ_Total_Score'] = df[['BEQ_Negative_Expressivity', 'BEQ_Positive_Expressivity', 'BEQ_Impulse_Strength']].mean(axis=1)
     
     return df
 
@@ -37,24 +37,24 @@ def BEQ_summarize_results(df):
     """
     Summarize the BEQ scores by calculating the mean and standard deviation for each subscale and the total score.
     """
-    mean_scores = df[['BEQ_Negative_Expressivity', 'BEQ_Positive_Expressivity', 'BEQ_Impulse_Strength', 'Total_BEQ_Score']].mean()
-    std_scores = df[['BEQ_Negative_Expressivity', 'BEQ_Positive_Expressivity', 'BEQ_Impulse_Strength', 'Total_BEQ_Score']].std()
+    mean_scores = df[['BEQ_Negative_Expressivity', 'BEQ_Positive_Expressivity', 'BEQ_Impulse_Strength', 'BEQ_Total_Score']].mean()
+    std_scores = df[['BEQ_Negative_Expressivity', 'BEQ_Positive_Expressivity', 'BEQ_Impulse_Strength', 'BEQ_Total_Score']].std()
 
     print("\nSummary of BEQ Scores:")
-    print(df[['Total_BEQ_Score', 'BEQ_Negative_Expressivity', 'BEQ_Positive_Expressivity', 'BEQ_Impulse_Strength']])
+    print(df[['BEQ_Total_Score', 'BEQ_Negative_Expressivity', 'BEQ_Positive_Expressivity', 'BEQ_Impulse_Strength']])
 
-    print(f"\nMean Total BEQ Score: {mean_scores['Total_BEQ_Score']:.2f}")
-    print(f"Standard Deviation of Total BEQ Scores: {std_scores['Total_BEQ_Score']:.2f}")
+    print(f"\nMean Total BEQ Score: {mean_scores['BEQ_Total_Score']:.2f}")
+    print(f"Standard Deviation of Total BEQ Scores: {std_scores['BEQ_Total_Score']:.2f}")
 
     return {
-        'Mean Total BEQ Score': mean_scores['Total_BEQ_Score'],
-        'Std Dev Total BEQ Score': std_scores['Total_BEQ_Score'],
+        'Mean Total BEQ Score': mean_scores['BEQ_Total_Score'],
+        'Std Dev Total BEQ Score': std_scores['BEQ_Total_Score'],
         'Mean Negative Expressivity': mean_scores['BEQ_Negative_Expressivity'],
         'Mean Positive Expressivity': mean_scores['BEQ_Positive_Expressivity'],
         'Mean Impulse Strength': mean_scores['BEQ_Impulse_Strength'],
         'Std Dev Negative Expressivity': std_scores['BEQ_Negative_Expressivity'],
         'Std Dev Positive Expressivity': std_scores['BEQ_Positive_Expressivity'],
-        'Std Dev Impulse Strength': std_scores['BEQ_Impulse_Strength'],
+        'Std Dev Impulse Strength': std_scores['BEQ_Impulse_Strength']
     }
 
 # Save the results to CSV
@@ -75,12 +75,18 @@ def main(df):
         _ = BEQ_summarize_results(df)
 
         # Step 3: Build summary DataFrame to return
+        summary_columns = [
+            "BEQ_Negative_Expressivity",
+            "BEQ_Positive_Expressivity",
+            "BEQ_Impulse_Strength",
+            "BEQ_Total_Score"
+        ]
         summary_df = df[[
             "ResponseId",
             "BEQ_Negative_Expressivity",
             "BEQ_Positive_Expressivity",
             "BEQ_Impulse_Strength",
-            "Total_BEQ_Score"
+            "BEQ_Total_Score"
         ]].copy()
         summary_df["Questionnaire"] = "BEQ"
 

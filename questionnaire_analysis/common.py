@@ -34,7 +34,7 @@ def detect_questionnaires(df):
     "SU_": SU.main,
     "EERQ_": EERQ.main,
     "HEXACO_": HEXACO.main,
-    #"CARE_": CARE.main,
+    "CARE_": CARE.main,
     "SD4_": SD4.main,
     "CBCL_": CBCL.main,
     "UPPS_": UPPS.main,
@@ -67,8 +67,13 @@ def analyze_questionnaire_csv(csv_path, output_summary=True):
     summary_dfs = []
     for prefix, main_fn in detected.items():
         print(f"Processing questionnaire with prefix '{prefix}'...")
-        summary_df = main_fn(df)
-        summary_dfs.append(summary_df)
+        try:
+            summary_df = main_fn(df)
+            if summary_df is not None:
+                summary_dfs.append(summary_df)
+        except Exception as e:
+            print(f"Error processing questionnaire '{prefix}': {e}")
+            continue
 
     # Combine all summaries (if multiple)
     if summary_dfs:

@@ -2,17 +2,18 @@ import pandas as pd
 
 
 
-# Calculate the CESD-R total score
+# Calculate CESD-R scores
 def CESDR_calculate_scores(df):
     """
-    Calculate the total score for the Center for Epidemiologic Studies Depression Scale - Revised (CESD-R).
-    The CESD-R has 20 items scored on a 0-4 scale.
+    Calculate the total CESD-R score by summing all item responses.
+    Assumes items are named CESDR_01 to CESDR_20.
     """
-    cesdr_items = [f'CESDR_{item:02d}' for item in range(1, 21)]
-    
-    # Calculate total CESD-R score by summing all item responses
-    df['Total_CESDR_Score'] = df[cesdr_items].sum(axis=1)
-    
+    cesdr_items = [f'CESDR_{i:02d}' for i in range(1, 21)]  # Adjust if you have a different item range
+
+    for item in cesdr_items:
+        df[item] = pd.to_numeric(df[item], errors='coerce')
+
+    df['CESDR_Total_Score'] = df[cesdr_items].sum(axis=1)
     return df
 
 # Summarize results
@@ -20,11 +21,11 @@ def CESDR_summarize_results(df):
     """
     Summarize the CESD-R scores by calculating the mean and standard deviation for the total score.
     """
-    mean_total_score = df['Total_CESDR_Score'].mean()
-    std_total_score = df['Total_CESDR_Score'].std()
+    mean_total_score = df['CESDR_Total_Score'].mean()
+    std_total_score = df['CESDR_Total_Score'].std()
 
     print("\nSummary of CESD-R Scores:")
-    print(df[['Total_CESDR_Score']])
+    print(df[['CESDR_Total_Score']])
 
     print(f"\nMean Total CESD-R Score: {mean_total_score:.2f}")
     print(f"Standard Deviation of CESD-R Scores: {std_total_score:.2f}")
@@ -89,7 +90,13 @@ def main(df):
 
         # Save summarized results to CSV
         CESDR_save_summary_to_csv(summary, subgroup_summary, summary_output_file_path)
-        return df
+        
+        # Only return the summary columns for concatenation
+        summary_columns = [
+            'CESDR_Total_Score'
+        ]
+        # Only return columns that exist (in case of errors)
+        return df[[col for col in summary_columns if col in df.columns]]
     return None
 
 if __name__ == "__main__":

@@ -10,18 +10,18 @@ def GCF_calculate_scores(df):
     for item in gcf_items:
         df[item] = pd.to_numeric(df[item], errors='coerce')
 
-    df['Total_GCF_Score'] = df[gcf_items].mean(axis=1)
+    df['GCF_Total_Score'] = df[gcf_items].mean(axis=1)
     return df
 # Summarize results
 def GCF_summarize_results(df):
     """
     Summarize the GCF scores by calculating the mean and standard deviation for the total score.
     """
-    mean_total_score = df['Total_GCF_Score'].mean()
-    std_total_score = df['Total_GCF_Score'].std()
+    mean_total_score = df['GCF_Total_Score'].mean()
+    std_total_score = df['GCF_Total_Score'].std()
 
     print("\nSummary of Greenleaf Content-free Scale Scores:")
-    print(df[['Total_GCF_Score']])
+    print(df[['GCF_Total_Score']])
 
     print(f"\nMean Total GCF Score: {mean_total_score:.2f}")
     print(f"Standard Deviation of GCF Scores: {std_total_score:.2f}")
@@ -67,7 +67,13 @@ def main(df):
 
         # Save summarized results to CSV
         GCF_save_summary_to_csv(summary,summary_output_file_path)
-        return df
+        
+        # Only return the summary columns for concatenation
+        summary_columns = [
+            'GCF_Total_Score'
+        ]
+        # Only return columns that exist (in case of errors)
+        return df[[col for col in summary_columns if col in df.columns]]
     return None
 
 if __name__ == "__main__":

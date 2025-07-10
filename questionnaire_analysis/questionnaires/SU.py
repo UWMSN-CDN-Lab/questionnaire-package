@@ -32,6 +32,9 @@ def SU_calculate_scores(df):
     df['SU_Frequency_Use'] = df[['SU_01', 'SU_02', 'SU_03']].mean(axis=1)
     df['SU_Substance_Type_Use'] = df[['SU_04', 'SU_05', 'SU_06']].mean(axis=1)
     df['SU_Consequences_Use'] = df[['SU_07', 'SU_08', 'SU_09', 'SU_10']].mean(axis=1)
+    
+    # Calculate total SU score
+    df['SU_Total_Score'] = df[['SU_Frequency_Use', 'SU_Substance_Type_Use', 'SU_Consequences_Use']].mean(axis=1)
 
     return df
 
@@ -68,7 +71,16 @@ def main(df):
 
         # Step 2: Optional summary logging
         _ = SU_summarize_results(df)
-        return df
+        
+        # Only return the summary columns for concatenation
+        summary_columns = [
+            'SU_Frequency_Use',
+            'SU_Substance_Type_Use', 
+            'SU_Consequences_Use',
+            'SU_Total_Score'
+        ]
+        # Only return columns that exist (in case of errors)
+        return df[[col for col in summary_columns if col in df.columns]]
     return None
 
 if __name__ == "__main__":

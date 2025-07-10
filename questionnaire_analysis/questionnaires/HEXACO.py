@@ -43,12 +43,12 @@ def HEXACO_calculate_scores(df):
         df[f'HEXACO_{item:02d}'] = 6 - df[f'HEXACO_{item:02d}']
 
     # Calculate subscale scores
-    df['Honesty_Humility'] = df[['HEXACO_01', 'HEXACO_04', 'HEXACO_09', 'HEXACO_16', 'HEXACO_24']].mean(axis=1)
-    df['Emotionality'] = df[['HEXACO_02', 'HEXACO_10', 'HEXACO_18', 'HEXACO_22', 'HEXACO_30']].mean(axis=1)
-    df['Extraversion'] = df[['HEXACO_03', 'HEXACO_12', 'HEXACO_15', 'HEXACO_27', 'HEXACO_36']].mean(axis=1)
-    df['Agreeableness'] = df[['HEXACO_05', 'HEXACO_14', 'HEXACO_18', 'HEXACO_26', 'HEXACO_31']].mean(axis=1)
-    df['Conscientiousness'] = df[['HEXACO_06', 'HEXACO_11', 'HEXACO_17', 'HEXACO_21', 'HEXACO_25']].mean(axis=1)
-    df['Openness'] = df[['HEXACO_07', 'HEXACO_13', 'HEXACO_19', 'HEXACO_23', 'HEXACO_28']].mean(axis=1)
+    df['HEXACO_Honesty_Humility'] = df[['HEXACO_01', 'HEXACO_04', 'HEXACO_09', 'HEXACO_16', 'HEXACO_24']].mean(axis=1)
+    df['HEXACO_Emotionality'] = df[['HEXACO_02', 'HEXACO_10', 'HEXACO_18', 'HEXACO_22', 'HEXACO_30']].mean(axis=1)
+    df['HEXACO_Extraversion'] = df[['HEXACO_03', 'HEXACO_12', 'HEXACO_15', 'HEXACO_27', 'HEXACO_36']].mean(axis=1)
+    df['HEXACO_Agreeableness'] = df[['HEXACO_05', 'HEXACO_14', 'HEXACO_18', 'HEXACO_26', 'HEXACO_31']].mean(axis=1)
+    df['HEXACO_Conscientiousness'] = df[['HEXACO_06', 'HEXACO_11', 'HEXACO_17', 'HEXACO_21', 'HEXACO_25']].mean(axis=1)
+    df['HEXACO_Openness'] = df[['HEXACO_07', 'HEXACO_13', 'HEXACO_19', 'HEXACO_23', 'HEXACO_28']].mean(axis=1)
 
     return df
 
@@ -57,28 +57,28 @@ def HEXACO_summarize_results(df):
     """
     Summarize the HEXACO subscale scores by calculating the mean and standard deviation.
     """
-    mean_scores = df[['Honesty_Humility', 'Emotionality', 'Extraversion', 
-                      'Agreeableness', 'Conscientiousness', 'Openness']].mean()
-    std_scores = df[['Honesty_Humility', 'Emotionality', 'Extraversion', 
-                     'Agreeableness', 'Conscientiousness', 'Openness']].std()
+    mean_scores = df[['HEXACO_Honesty_Humility', 'HEXACO_Emotionality', 'HEXACO_Extraversion', 
+                      'HEXACO_Agreeableness', 'HEXACO_Conscientiousness', 'HEXACO_Openness']].mean()
+    std_scores = df[['HEXACO_Honesty_Humility', 'HEXACO_Emotionality', 'HEXACO_Extraversion', 
+                     'HEXACO_Agreeableness', 'HEXACO_Conscientiousness', 'HEXACO_Openness']].std()
 
     print("\nSummary of HEXACO Scores:")
-    print(df[['Honesty_Humility', 'Emotionality', 'Extraversion', 
-              'Agreeableness', 'Conscientiousness', 'Openness']])
+    print(df[['HEXACO_Honesty_Humility', 'HEXACO_Emotionality', 'HEXACO_Extraversion', 
+              'HEXACO_Agreeableness', 'HEXACO_Conscientiousness', 'HEXACO_Openness']])
     
     return {
-        'Mean Honesty-Humility': mean_scores['Honesty_Humility'],
-        'Mean Emotionality': mean_scores['Emotionality'],
-        'Mean Extraversion': mean_scores['Extraversion'],
-        'Mean Agreeableness': mean_scores['Agreeableness'],
-        'Mean Conscientiousness': mean_scores['Conscientiousness'],
-        'Mean Openness': mean_scores['Openness'],
-        'Std Dev Honesty-Humility': std_scores['Honesty_Humility'],
-        'Std Dev Emotionality': std_scores['Emotionality'],
-        'Std Dev Extraversion': std_scores['Extraversion'],
-        'Std Dev Agreeableness': std_scores['Agreeableness'],
-        'Std Dev Conscientiousness': std_scores['Conscientiousness'],
-        'Std Dev Openness': std_scores['Openness']
+        'Mean Honesty-Humility': mean_scores['HEXACO_Honesty_Humility'],
+        'Mean Emotionality': mean_scores['HEXACO_Emotionality'],
+        'Mean Extraversion': mean_scores['HEXACO_Extraversion'],
+        'Mean Agreeableness': mean_scores['HEXACO_Agreeableness'],
+        'Mean Conscientiousness': mean_scores['HEXACO_Conscientiousness'],
+        'Mean Openness': mean_scores['HEXACO_Openness'],
+        'Std Dev Honesty-Humility': std_scores['HEXACO_Honesty_Humility'],
+        'Std Dev Emotionality': std_scores['HEXACO_Emotionality'],
+        'Std Dev Extraversion': std_scores['HEXACO_Extraversion'],
+        'Std Dev Agreeableness': std_scores['HEXACO_Agreeableness'],
+        'Std Dev Conscientiousness': std_scores['HEXACO_Conscientiousness'],
+        'Std Dev Openness': std_scores['HEXACO_Openness']
     }
 
 # Save the results to CSV
@@ -98,7 +98,19 @@ def main(df):
         summary = HEXACO_summarize_results(df)
 
         # Save individual scores to CSV
-        return df
+        HEXACO_save_results_to_csv(df, output_file_path)
+        
+        # Only return the summary columns for concatenation
+        summary_columns = [
+            'HEXACO_Honesty_Humility',
+            'HEXACO_Emotionality',
+            'HEXACO_Extraversion',
+            'HEXACO_Agreeableness',
+            'HEXACO_Conscientiousness',
+            'HEXACO_Openness'
+        ]
+        # Only return columns that exist (in case of errors)
+        return df[[col for col in summary_columns if col in df.columns]]
     return None
 
 if __name__ == "__main__":

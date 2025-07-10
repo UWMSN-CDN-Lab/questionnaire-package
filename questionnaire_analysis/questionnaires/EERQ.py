@@ -6,8 +6,6 @@ def EERQ_calculate_scores(df):
     Calculate the total score for the EERQ scale.
     Each subscale is calculated by averaging or summing relevant items.
     """
-    df = df.iloc[2:].reset_index(drop=True)  # Reset index after skipping
-
     # Convert all relevant columns to numeric (ignoring errors)
     for col in df.columns:
         df[col] = pd.to_numeric(df[col], errors='coerce')
@@ -85,8 +83,18 @@ def main(df):
 
         # Step 2: Optional log summary
         _ = EERQ_summarize_results(df)
-#       
-        return df
+
+        # Only return the summary columns for concatenation
+        summary_columns = [
+            'EERQ_Reappraisal_mean',
+            'EERQ_Suppression_mean',
+            'EERQ_Distraction_mean',
+            'EERQ_Selective_Attention_mean',
+            'EERQ_Situation_Selection_mean',
+            'EERQ_Total_E_ERQ_Score_mean'
+        ]
+        # Only return columns that exist (in case of errors)
+        return df[[col for col in summary_columns if col in df.columns]]
     return None
 
 if __name__ == "__main__":

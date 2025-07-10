@@ -2,47 +2,16 @@ import pandas as pd
 # Calculate UPPS-P subscale scores
 def UPPSP_calculate_scores(df):
     """
-    Calculate the subscale scores for the UPPS-P questionnaire.
-    Subscales include:
-    - Negative Urgency (NU)
-    - Positive Urgency (PU)
-    - Lack of Premeditation (LP)
-    - Lack of Perseverance (LPer)
-    - Sensation Seeking (SS)
-    Reverse scoring is applied where necessary.
-    """ 
-    all_upss_items = [
-    "UPPS_06", "UPPS_07", "UPPS_11", "UPPS_12", "UPPS_15", "UPPS_16",
-    "UPPS_17", "UPPS_18", "UPPS_19", "UPPS_20", "UPPS_21", "UPPS_22",
-    "UPPS_23", "UPPS_24", "UPPS_27", "UPPS_28", "UPPS_35", "UPPS_36",
-    "UPPS_37", "UPPS_39"
-    ]
-    # Convert all UPPS columns to numeric, coercing errors to NaN
-    for item in all_upss_items:
-        df[item] = pd.to_numeric(df[item], errors='coerce')
-    # Reverse-scored items for each subscale
-    reverse_neg_urgency = ["UPPS_07", "UPPS_11", "UPPS_17", "UPPS_20"] # Item numbers for Negative Urgency (reverse)
-    reverse_pos_urgency = ["UPPS_35", "UPPS_36", "UPPS_37", "UPPS_39"] # Positive Urgency (reverse)
-    reverse_sensation_seeking = ["UPPS_12", "UPPS_18", "UPPS_21", "UPPS_27"] # Sensation Seeking (reverse)
-
-    # Apply reverse scoring for relevant items
-    for item in reverse_neg_urgency:
-        df[item] = 5 - df[item]  # Assuming a 1-4 scale, reverse scoring is 5 - original response
-    
-    for item in reverse_pos_urgency:
-        df[item] = 5 - df[item]
-
-    for item in reverse_sensation_seeking:
-        df[item] = 5 - df[item]
-        
-    
-    # Calculate subscale scores
-    df['UPPS_Negative_Urgency'] = df[['UPPS_07', 'UPPS_11', 'UPPS_17', 'UPPS_20']].mean(axis=1)
-    df['UPPS_Positive_Urgency'] = df[['UPPS_35', 'UPPS_36', 'UPPS_37', 'UPPS_39']].mean(axis=1)
-    df['UPPS_Lack_Premeditation'] = df[['UPPS_06', 'UPPS_16', 'UPPS_23', 'UPPS_28']].mean(axis=1)
-    df['UPPS_Lack_Perseverance'] = df[['UPPS_15', 'UPPS_19', 'UPPS_22', 'UPPS_24']].mean(axis=1)
-    df['UPPS_Sensation_Seeking'] = df[['UPPS_12', 'UPPS_18', 'UPPS_21', 'UPPS_27']].mean(axis=1)
-    
+    Calculate the UPPS-P subscale scores and add them to the DataFrame efficiently.
+    """
+    new_columns = {
+        'UPPS_Negative_Urgency': df[['UPPS_07', 'UPPS_11', 'UPPS_17', 'UPPS_20']].mean(axis=1),
+        'UPPS_Positive_Urgency': df[['UPPS_35', 'UPPS_36', 'UPPS_37', 'UPPS_39']].mean(axis=1),
+        'UPPS_Lack_Premeditation': df[['UPPS_06', 'UPPS_16', 'UPPS_23', 'UPPS_28']].mean(axis=1),
+        'UPPS_Lack_Perseverance': df[['UPPS_15', 'UPPS_19', 'UPPS_22', 'UPPS_24']].mean(axis=1),
+        'UPPS_Sensation_Seeking': df[['UPPS_12', 'UPPS_18', 'UPPS_21', 'UPPS_27']].mean(axis=1)
+    }
+    df = pd.concat([df, pd.DataFrame(new_columns)], axis=1)
     return df
 
 # Summarize results
@@ -95,8 +64,16 @@ def main(df):
         # Step 2: Print summary stats (optional for dev)
         _ = UPPSP_summarize_results(df)
 
-
-        return df
+        # Only return the summary columns for concatenation
+        summary_columns = [
+            'UPPS_Negative_Urgency',
+            'UPPS_Positive_Urgency',
+            'UPPS_Lack_Premeditation',
+            'UPPS_Lack_Perseverance',
+            'UPPS_Sensation_Seeking'
+        ]
+        # Only return columns that exist (in case of errors)
+        return df[[col for col in summary_columns if col in df.columns]]
     return None
 
 if __name__ == "__main__":

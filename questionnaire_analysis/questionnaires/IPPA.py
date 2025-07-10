@@ -83,7 +83,15 @@ def main(df):
         # Summarize results
         summary = IPPA_summarize_results(df)
 
-        return df
+        # Only return the summary columns for concatenation
+        summary_columns = [
+            'IPPA_Trust_Score',
+            'IPPA_Communication_Score',
+            'IPPA_Alienation_Score',
+            'IPPA_Total_Score'
+        ]
+        # Only return columns that exist (in case of errors)
+        return df[[col for col in summary_columns if col in df.columns]]
     return None
 if __name__ == "__main__":
     main()

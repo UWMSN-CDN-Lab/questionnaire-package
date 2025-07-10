@@ -24,12 +24,22 @@ def main():
     # Call the main() function of each detected questionnaire module
     for prefix, main_fn in detected.items():
         print(f"\nProcessing questionnaire with prefix '{prefix}'...")
-        summary_df = main_fn(df)
+        try:
+            summary_df = main_fn(df)
+            if summary_df is not None:
+                summary_dfs.append(summary_df)
+        except Exception as e:
+            print(f"Error processing questionnaire '{prefix}': {e}")
+            continue
 
-    summary_output_path = args.csv_path.replace(".csv", "_summary.csv")
-    summary_df.to_csv(summary_output_path, index=False)
-    print(f"\n Summary saved to: {summary_output_path}")
-    return summary_df
+    # Combine all summaries (if multiple)
+    if summary_dfs:
+        final_summary = pd.concat(summary_dfs, axis=1)
+        summary_output_path = args.csv_path.replace(".csv", "_summary.csv")
+        final_summary.to_csv(summary_output_path, index=False)
+        print(f"\nSummary saved to: {summary_output_path}")
+        return final_summary
+    return None
 
 if __name__ == "__main__":
     main()

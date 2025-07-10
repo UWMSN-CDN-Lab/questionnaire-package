@@ -51,8 +51,14 @@ def main(df):
 
         # Save results to CSV
         SWLS_save_results_to_csv(df, output_file_path)
-        return df
-    return None 
+        
+        # Only return the summary columns for concatenation
+        summary_columns = [
+            'SWLS_Total_Score'
+        ]
+        # Only return columns that exist (in case of errors)
+        return df[[col for col in summary_columns if col in df.columns]]
+    return None
     
 
 if __name__ == "__main__":

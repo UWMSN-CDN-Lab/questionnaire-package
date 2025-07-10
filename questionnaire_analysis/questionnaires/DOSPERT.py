@@ -23,27 +23,32 @@ def DOSPERT_calculate_scores(df):
     Calculate the overall score for risk-taking and risk-perception.
     """
     risk_taking_subscales = {
-    'Ethical': ["DOSPERT_06", "DOSPERT_09", "DOSPERT_10", "DOSPERT_16", "DOSPERT_29", "DOSPERT_30"],
-    'Financial': ["DOSPERT_03", "DOSPERT_04", "DOSPERT_08", "DOSPERT_12", "DOSPERT_14", "DOSPERT_18"],
-    'Health_Safety': ["DOSPERT_05", "DOSPERT_15", "DOSPERT_17", "DOSPERT_20", "DOSPERT_23", "DOSPERT_26"],
-    'Recreational': ["DOSPERT_02", "DOSPERT_11", "DOSPERT_13", "DOSPERT_19", "DOSPERT_24", "DOSPERT_25"],
-    'Social': ["DOSPERT_01", "DOSPERT_07", "DOSPERT_21", "DOSPERT_22", "DOSPERT_27", "DOSPERT_28"]
-}
-    
+        'Ethical': ["DOSPERT_06", "DOSPERT_09", "DOSPERT_10", "DOSPERT_16", "DOSPERT_29", "DOSPERT_30"],
+        'Financial': ["DOSPERT_03", "DOSPERT_04", "DOSPERT_08", "DOSPERT_12", "DOSPERT_14", "DOSPERT_18"],
+        'Health_Safety': ["DOSPERT_05", "DOSPERT_15", "DOSPERT_17", "DOSPERT_20", "DOSPERT_23", "DOSPERT_26"],
+        'Recreational': ["DOSPERT_02", "DOSPERT_11", "DOSPERT_13", "DOSPERT_19", "DOSPERT_24", "DOSPERT_25"],
+        'Social': ["DOSPERT_01", "DOSPERT_07", "DOSPERT_21", "DOSPERT_22", "DOSPERT_27", "DOSPERT_28"]
+    }
+
+    # Convert all relevant columns to numeric (coerce errors)
     for subscale, items in risk_taking_subscales.items():
         for col in items:
             df[col] = pd.to_numeric(df[col], errors='coerce')
-        df[f'DOSPERT_{subscale}_Score'] = df[items].mean(axis=1)
+
+    # Calculate subscale scores all at once
+    new_columns = {f'DOSPERT_{subscale}_Score': df[items].mean(axis=1) for subscale, items in risk_taking_subscales.items()}
+    df = pd.concat([df, pd.DataFrame(new_columns)], axis=1)
+
     dospert_items = [
-    "DOSPERT_01", "DOSPERT_02", "DOSPERT_03", "DOSPERT_04", "DOSPERT_05",
-    "DOSPERT_06", "DOSPERT_07", "DOSPERT_08", "DOSPERT_09", "DOSPERT_10",
-    "DOSPERT_11", "DOSPERT_12", "DOSPERT_13", "DOSPERT_14", "DOSPERT_15",
-    "DOSPERT_16", "DOSPERT_17", "DOSPERT_18", "DOSPERT_19", "DOSPERT_20",
-    "DOSPERT_21", "DOSPERT_22", "DOSPERT_23", "DOSPERT_24", "DOSPERT_25",
-    "DOSPERT_26", "DOSPERT_27", "DOSPERT_28", "DOSPERT_29", "DOSPERT_30"
-]   
+        "DOSPERT_01", "DOSPERT_02", "DOSPERT_03", "DOSPERT_04", "DOSPERT_05",
+        "DOSPERT_06", "DOSPERT_07", "DOSPERT_08", "DOSPERT_09", "DOSPERT_10",
+        "DOSPERT_11", "DOSPERT_12", "DOSPERT_13", "DOSPERT_14", "DOSPERT_15",
+        "DOSPERT_16", "DOSPERT_17", "DOSPERT_18", "DOSPERT_19", "DOSPERT_20",
+        "DOSPERT_21", "DOSPERT_22", "DOSPERT_23", "DOSPERT_24", "DOSPERT_25",
+        "DOSPERT_26", "DOSPERT_27", "DOSPERT_28", "DOSPERT_29", "DOSPERT_30"
+    ]
     df['DOSPERT_Overall_Mean_Score'] = df[dospert_items].mean(axis=1)
-    
+
     return df
 
 # Summarize the results
@@ -103,7 +108,18 @@ def main(df):
 
         # Step 2: Optional logging
         _ = DOSPERT_summarize_results(df)
-        return df
+        
+        # Only return the summary columns for concatenation
+        summary_columns = [
+            'DOSPERT_Ethical_Score',
+            'DOSPERT_Financial_Score', 
+            'DOSPERT_Health_Safety_Score',
+            'DOSPERT_Recreational_Score',
+            'DOSPERT_Social_Score',
+            'DOSPERT_Overall_Mean_Score'
+        ]
+        # Only return columns that exist (in case of errors)
+        return df[[col for col in summary_columns if col in df.columns]]
     return None
 
 if __name__ == "__main__":

@@ -22,12 +22,12 @@ def ALQ_calculate_scores(df):
     """
     df = ALQ_reverse_score(df)
     # Calculate subscale scores
-    df['Conceptualization'] = df[['ALQ_01', 'ALQ_02', 'ALQ_03', 'ALQ_04']].mean(axis=1)
-    df['Identification'] = df[['ALQ_05', 'ALQ_06', 'ALQ_07']].mean(axis=1)
-    df['Integration'] = df[['ALQ_08', 'ALQ_09', 'ALQ_10', 'ALQ_11']].mean(axis=1)
+    df['ALQ_Conceptualization'] = df[['ALQ_01', 'ALQ_02', 'ALQ_03', 'ALQ_04']].mean(axis=1)
+    df['ALQ_Identification'] = df[['ALQ_05', 'ALQ_06', 'ALQ_07']].mean(axis=1)
+    df['ALQ_Integration'] = df[['ALQ_08', 'ALQ_09', 'ALQ_10', 'ALQ_11']].mean(axis=1)
     
     # Calculate total ALQ score
-    df['Total_ALQ_Score'] = df[['Conceptualization', 'Identification', 'Integration']].mean(axis=1)
+    df['ALQ_Total_Score'] = df[['ALQ_Conceptualization', 'ALQ_Identification', 'ALQ_Integration']].mean(axis=1)
     return df
 
 # Summarize ALQ results
@@ -35,26 +35,26 @@ def ALQ_summarize_results(df):
     """
     Summarize the ALQ scores by calculating the mean and standard deviation for each subscale and the total score.
     """
-    mean_scores = df[['Conceptualization', 'Identification', 'Integration', 'Total_ALQ_Score']].mean()
-    std_scores = df[['Conceptualization', 'Identification', 'Integration', 'Total_ALQ_Score']].std()
+    mean_scores = df[['ALQ_Conceptualization', 'ALQ_Identification', 'ALQ_Integration', 'ALQ_Total_Score']].mean()
+    std_scores = df[['ALQ_Conceptualization', 'ALQ_Identification', 'ALQ_Integration', 'ALQ_Total_Score']].std()
 
     print("\nSummary of ALQ Scores:")
-    print(df[['Conceptualization', 'Identification', 'Integration', 'Total_ALQ_Score']])
+    print(df[['ALQ_Conceptualization', 'ALQ_Identification', 'ALQ_Integration', 'ALQ_Total_Score']])
 
-    print(f"\nMean Conceptualization Score: {mean_scores['Conceptualization']:.2f}")
-    print(f"Mean Identification Score: {mean_scores['Identification']:.2f}")
-    print(f"Mean Integration Score: {mean_scores['Integration']:.2f}")
-    print(f"Mean Total ALQ Score: {mean_scores['Total_ALQ_Score']:.2f}")
+    print(f"\nMean Conceptualization Score: {mean_scores['ALQ_Conceptualization']:.2f}")
+    print(f"Mean Identification Score: {mean_scores['ALQ_Identification']:.2f}")
+    print(f"Mean Integration Score: {mean_scores['ALQ_Integration']:.2f}")
+    print(f"Mean Total ALQ Score: {mean_scores['ALQ_Total_Score']:.2f}")
     
     return {
-        'Mean Conceptualization Score': mean_scores['Conceptualization'],
-        'Mean Identification Score': mean_scores['Identification'],
-        'Mean Integration Score': mean_scores['Integration'],
-        'Mean Total ALQ Score': mean_scores['Total_ALQ_Score'],
-        'Std Dev Conceptualization': std_scores['Conceptualization'],
-        'Std Dev Identification': std_scores['Identification'],
-        'Std Dev Integration': std_scores['Integration'],
-        'Std Dev Total ALQ Score': std_scores['Total_ALQ_Score']
+        'Mean Conceptualization Score': mean_scores['ALQ_Conceptualization'],
+        'Mean Identification Score': mean_scores['ALQ_Identification'],
+        'Mean Integration Score': mean_scores['ALQ_Integration'],
+        'Mean Total ALQ Score': mean_scores['ALQ_Total_Score'],
+        'Std Dev Conceptualization': std_scores['ALQ_Conceptualization'],
+        'Std Dev Identification': std_scores['ALQ_Identification'],
+        'Std Dev Integration': std_scores['ALQ_Integration'],
+        'Std Dev Total ALQ Score': std_scores['ALQ_Total_Score']
     }
 
 # Calculate subgroup mean scores
@@ -90,8 +90,7 @@ def ALQ_save_summary_to_csv(summary, subgroup_summary, output_file_path):
     print(f"Summary saved to {output_file_path}.")
 
 # Main function to execute the steps
-def main():
-
+def main(df):
     if df is not None:
         # Step 1: Score calculations
         df = ALQ_calculate_scores(df)
@@ -101,14 +100,16 @@ def main():
         subgroup_column = 'Gender'
         subgroup_summary = ALQ_subgroup_means(df, subgroup_column)
 
-        # Step 3: Build a per-row summary DataFrame for merging in main script
-        summary_df = df[[
-            'ResponseId', 'Conceptualization', 'Identification',
-            'Integration', 'Total_ALQ_Score'
-        ]].copy()
-        summary_df["Questionnaire"] = "ALQ"
-
-        return summary_df
+        # Only return the summary columns for concatenation
+        summary_columns = [
+            'ALQ_Conceptualization',
+            'ALQ_Identification',
+            'ALQ_Integration',
+            'ALQ_Total_Score'
+        ]
+        # Only return columns that exist (in case of errors)
+        return df[[col for col in summary_columns if col in df.columns]]
+    return None
 
 if __name__ == "__main__":
     main()

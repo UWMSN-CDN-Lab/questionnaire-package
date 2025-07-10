@@ -76,11 +76,11 @@ def PSS_calculate_individual_scores(df):
         'PSS_14'
     ]
     
-    df['Anxiety_Score'] = df[anxiety_columns].sum(axis=1)
-    df['Stress_Score'] = df[stress_columns].sum(axis=1)
+    df['PSS_Anxiety_Score'] = df[anxiety_columns].sum(axis=1)
+    df['PSS_Stress_Score'] = df[stress_columns].sum(axis=1)
     
     print("\nIndividual Scores for Each Subcategory:")
-    print(df[['Anxiety_Score', 'Stress_Score']])
+    print(df[['PSS_Anxiety_Score', 'PSS_Stress_Score']])
     
     return df
 
@@ -113,8 +113,8 @@ def PSS_process_pss(df):
     df = PSS_reverse_scores(df, reverse_columns)
     
     # Calculate PSS score and determine stress level
-    df['Total_PSS_Score'] = df.apply(PSS_calculate_pss_score, axis=1)
-    df['Stress_Level'] = df['Total_PSS_Score'].apply(PSS_determine_stress_level)
+    df['PSS_Total_Score'] = df.apply(PSS_calculate_pss_score, axis=1)
+    df['PSS_Stress_Level'] = df['PSS_Total_Score'].apply(PSS_determine_stress_level)
     
     # Calculate individual scores
     df = PSS_calculate_individual_scores(df)
@@ -141,7 +141,16 @@ def main(df):
 
         # Save the results to a new CSV file
         PSS_save_results_to_csv(processed_df, output_file_path)
-        return processed_df
+        
+        # Only return the summary columns for concatenation
+        summary_columns = [
+            'PSS_Total_Score',
+            'PSS_Stress_Level',
+            'PSS_Anxiety_Score',
+            'PSS_Stress_Score'
+        ]
+        # Only return columns that exist (in case of errors)
+        return processed_df[[col for col in summary_columns if col in processed_df.columns]]
     return None
 
 if __name__ == "__main__":

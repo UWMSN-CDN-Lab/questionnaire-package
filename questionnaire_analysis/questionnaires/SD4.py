@@ -10,13 +10,13 @@ def SD4_calculate_scores(df):
     Psychopathy: mean of items 15-21
     Sadism: mean of items 22-28
     """
-    df['Machiavellianism'] = df[['SD4_1', 'SD4_2', 'SD4_3', 'SD4_4', 'SD4_5', 'SD4_6', 'SD4_7']].mean(axis=1)
-    df['Narcissism'] = df[['SD4_8', 'SD4_9', 'SD4_10', 'SD4_11', 'SD4_12', 'SD4_13', 'SD4_14']].mean(axis=1)
-    df['Psychopathy'] = df[['SD4_15', 'SD4_16', 'SD4_17', 'SD4_18', 'SD4_19', 'SD4_20', 'SD4_21']].mean(axis=1)
-    df['Sadism'] = df[['SD4_22', 'SD4_23', 'SD4_24', 'SD4_25', 'SD4_26', 'SD4_27', 'SD4_28']].mean(axis=1)
+    df['SD4_Machiavellianism'] = df[['SD4_1', 'SD4_2', 'SD4_3', 'SD4_4', 'SD4_5', 'SD4_6', 'SD4_7']].mean(axis=1)
+    df['SD4_Narcissism'] = df[['SD4_8', 'SD4_9', 'SD4_10', 'SD4_11', 'SD4_12', 'SD4_13', 'SD4_14']].mean(axis=1)
+    df['SD4_Psychopathy'] = df[['SD4_15', 'SD4_16', 'SD4_17', 'SD4_18', 'SD4_19', 'SD4_20', 'SD4_21']].mean(axis=1)
+    df['SD4_Sadism'] = df[['SD4_22', 'SD4_23', 'SD4_24', 'SD4_25', 'SD4_26', 'SD4_27', 'SD4_28']].mean(axis=1)
     
     # Optional: Calculate total mean score for overall "dark personality"
-    df['Total_SD4_Score'] = df[['Machiavellianism', 'Narcissism', 'Psychopathy', 'Sadism']].mean(axis=1)
+    df['SD4_Total_Score'] = df[['SD4_Machiavellianism', 'SD4_Narcissism', 'SD4_Psychopathy', 'SD4_Sadism']].mean(axis=1)
     
     return df
 
@@ -25,29 +25,29 @@ def SD4_summarize_results(df):
     """
     Summarize the SD4 scores by calculating the mean and standard deviation for each subscale and the total score.
     """
-    mean_scores = df[['Machiavellianism', 'Narcissism', 'Psychopathy', 'Sadism', 'Total_SD4_Score']].mean()
-    std_scores = df[['Machiavellianism', 'Narcissism', 'Psychopathy', 'Sadism', 'Total_SD4_Score']].std()
+    mean_scores = df[['SD4_Machiavellianism', 'SD4_Narcissism', 'SD4_Psychopathy', 'SD4_Sadism', 'SD4_Total_Score']].mean()
+    std_scores = df[['SD4_Machiavellianism', 'SD4_Narcissism', 'SD4_Psychopathy', 'SD4_Sadism', 'SD4_Total_Score']].std()
 
     print("\nSummary of SD4 Scores:")
-    print(df[['Machiavellianism', 'Narcissism', 'Psychopathy', 'Sadism', 'Total_SD4_Score']])
+    print(df[['SD4_Machiavellianism', 'SD4_Narcissism', 'SD4_Psychopathy', 'SD4_Sadism', 'SD4_Total_Score']])
 
-    print(f"\nMean Machiavellianism: {mean_scores['Machiavellianism']:.2f}")
-    print(f"Mean Narcissism: {mean_scores['Narcissism']:.2f}")
-    print(f"Mean Psychopathy: {mean_scores['Psychopathy']:.2f}")
-    print(f"Mean Sadism: {mean_scores['Sadism']:.2f}")
-    print(f"Mean Total SD4 Score: {mean_scores['Total_SD4_Score']:.2f}")
+    print(f"\nMean Machiavellianism: {mean_scores['SD4_Machiavellianism']:.2f}")
+    print(f"Mean Narcissism: {mean_scores['SD4_Narcissism']:.2f}")
+    print(f"Mean Psychopathy: {mean_scores['SD4_Psychopathy']:.2f}")
+    print(f"Mean Sadism: {mean_scores['SD4_Sadism']:.2f}")
+    print(f"Mean Total SD4 Score: {mean_scores['SD4_Total_Score']:.2f}")
     
     return {
-        'Mean Machiavellianism': mean_scores['Machiavellianism'],
-        'Mean Narcissism': mean_scores['Narcissism'],
-        'Mean Psychopathy': mean_scores['Psychopathy'],
-        'Mean Sadism': mean_scores['Sadism'],
-        'Mean Total SD4 Score': mean_scores['Total_SD4_Score'],
-        'Std Dev Machiavellianism': std_scores['Machiavellianism'],
-        'Std Dev Narcissism': std_scores['Narcissism'],
-        'Std Dev Psychopathy': std_scores['Psychopathy'],
-        'Std Dev Sadism': std_scores['Sadism'],
-        'Std Dev Total SD4 Score': std_scores['Total_SD4_Score']
+        'Mean Machiavellianism': mean_scores['SD4_Machiavellianism'],
+        'Mean Narcissism': mean_scores['SD4_Narcissism'],
+        'Mean Psychopathy': mean_scores['SD4_Psychopathy'],
+        'Mean Sadism': mean_scores['SD4_Sadism'],
+        'Mean Total SD4 Score': mean_scores['SD4_Total_Score'],
+        'Std Dev Machiavellianism': std_scores['SD4_Machiavellianism'],
+        'Std Dev Narcissism': std_scores['SD4_Narcissism'],
+        'Std Dev Psychopathy': std_scores['SD4_Psychopathy'],
+        'Std Dev Sadism': std_scores['SD4_Sadism'],
+        'Std Dev Total SD4 Score': std_scores['SD4_Total_Score']
     }
 
 # Calculate subgroup mean scores
@@ -56,7 +56,7 @@ def SD4_subgroup_means(df, subgroup_column):
     Calculate subgroup means and standard deviations for the SD4 subscales.
     The subgroup is defined by the 'subgroup_column'.
     """
-    subgroup_stats = df.groupby(subgroup_column)[['Machiavellianism', 'Narcissism', 'Psychopathy', 'Sadism', 'Total_SD4_Score']].agg(['mean', 'std'])
+    subgroup_stats = df.groupby(subgroup_column)[['SD4_Machiavellianism', 'SD4_Narcissism', 'SD4_Psychopathy', 'SD4_Sadism', 'SD4_Total_Score']].agg(['mean', 'std'])
     
     print(f"\nSubgroup Means and Standard Deviations for {subgroup_column}:")
     print(subgroup_stats)
@@ -104,7 +104,17 @@ def main(df):
 
         # Save summarized results to CSV
         SD4_save_summary_to_csv(summary, subgroup_summary, summary_output_file_path)
-        return df
+        
+        # Only return the summary columns for concatenation
+        summary_columns = [
+            'SD4_Machiavellianism',
+            'SD4_Narcissism',
+            'SD4_Psychopathy',
+            'SD4_Sadism',
+            'SD4_Total_Score'
+        ]
+        # Only return columns that exist (in case of errors)
+        return df[[col for col in summary_columns if col in df.columns]]
     return None
 
 if __name__ == "__main__":

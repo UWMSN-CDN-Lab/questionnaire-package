@@ -39,11 +39,11 @@ def BFI_calculate_scores(df):
         df[f'{item}r'] = 6 - df[item]
 
     # Calculate subscale scores
-    df['Extraversion'] = df[['BFI_01', 'BFI_06r', 'BFI_11', 'BFI_16', 'BFI_21r', 'BFI_26', 'BFI_31r', 'BFI_36']].mean(axis=1)
-    df['Agreeableness'] = df[['BFI_02r', 'BFI_07', 'BFI_12r', 'BFI_17', 'BFI_22', 'BFI_27r', 'BFI_32', 'BFI_37r', 'BFI_42']].mean(axis=1)
-    df['Conscientiousness'] = df[['BFI_03', 'BFI_08r', 'BFI_13', 'BFI_18r', 'BFI_23r', 'BFI_28', 'BFI_33', 'BFI_38', 'BFI_43r']].mean(axis=1)
-    df['Neuroticism'] = df[['BFI_04', 'BFI_09r', 'BFI_14', 'BFI_19', 'BFI_24r', 'BFI_29', 'BFI_34r', 'BFI_39']].mean(axis=1)
-    df['Openness'] = df[['BFI_05', 'BFI_10', 'BFI_15', 'BFI_20', 'BFI_25', 'BFI_30', 'BFI_35r', 'BFI_40', 'BFI_41r', 'BFI_44']].mean(axis=1)
+    df['BFI_Extraversion'] = df[['BFI_01', 'BFI_06r', 'BFI_11', 'BFI_16', 'BFI_21r', 'BFI_26', 'BFI_31r', 'BFI_36']].mean(axis=1)
+    df['BFI_Agreeableness'] = df[['BFI_02r', 'BFI_07', 'BFI_12r', 'BFI_17', 'BFI_22', 'BFI_27r', 'BFI_32', 'BFI_37r', 'BFI_42']].mean(axis=1)
+    df['BFI_Conscientiousness'] = df[['BFI_03', 'BFI_08r', 'BFI_13', 'BFI_18r', 'BFI_23r', 'BFI_28', 'BFI_33', 'BFI_38', 'BFI_43r']].mean(axis=1)
+    df['BFI_Neuroticism'] = df[['BFI_04', 'BFI_09r', 'BFI_14', 'BFI_19', 'BFI_24r', 'BFI_29', 'BFI_34r', 'BFI_39']].mean(axis=1)
+    df['BFI_Openness'] = df[['BFI_05', 'BFI_10', 'BFI_15', 'BFI_20', 'BFI_25', 'BFI_30', 'BFI_35r', 'BFI_40', 'BFI_41r', 'BFI_44']].mean(axis=1)
 
     return df
 
@@ -52,26 +52,26 @@ def BFI_summarize_results(df):
     """
     Summarize the BFI subscale scores by calculating the mean and standard deviation.
     """
-    mean_scores = df[['Extraversion', 'Agreeableness', 'Conscientiousness', 
-                      'Neuroticism', 'Openness']].mean()
-    std_scores = df[['Extraversion', 'Agreeableness', 'Conscientiousness', 
-                     'Neuroticism', 'Openness']].std()
+    mean_scores = df[['BFI_Extraversion', 'BFI_Agreeableness', 'BFI_Conscientiousness', 
+                      'BFI_Neuroticism', 'BFI_Openness']].mean()
+    std_scores = df[['BFI_Extraversion', 'BFI_Agreeableness', 'BFI_Conscientiousness', 
+                     'BFI_Neuroticism', 'BFI_Openness']].std()
 
     print("\nSummary of BFI Scores:")
-    print(df[['Extraversion', 'Agreeableness', 'Conscientiousness', 
-              'Neuroticism', 'Openness']])
+    print(df[['BFI_Extraversion', 'BFI_Agreeableness', 'BFI_Conscientiousness', 
+              'BFI_Neuroticism', 'BFI_Openness']])
     
     return {
-        'Mean Extraversion': mean_scores['Extraversion'],
-        'Mean Agreeableness': mean_scores['Agreeableness'],
-        'Mean Conscientiousness': mean_scores['Conscientiousness'],
-        'Mean Neuroticism': mean_scores['Neuroticism'],
-        'Mean Openness': mean_scores['Openness'],
-        'Std Dev Extraversion': std_scores['Extraversion'],
-        'Std Dev Agreeableness': std_scores['Agreeableness'],
-        'Std Dev Conscientiousness': std_scores['Conscientiousness'],
-        'Std Dev Neuroticism': std_scores['Neuroticism'],
-        'Std Dev Openness': std_scores['Openness']
+        'Mean Extraversion': mean_scores['BFI_Extraversion'],
+        'Mean Agreeableness': mean_scores['BFI_Agreeableness'],
+        'Mean Conscientiousness': mean_scores['BFI_Conscientiousness'],
+        'Mean Neuroticism': mean_scores['BFI_Neuroticism'],
+        'Mean Openness': mean_scores['BFI_Openness'],
+        'Std Dev Extraversion': std_scores['BFI_Extraversion'],
+        'Std Dev Agreeableness': std_scores['BFI_Agreeableness'],
+        'Std Dev Conscientiousness': std_scores['BFI_Conscientiousness'],
+        'Std Dev Neuroticism': std_scores['BFI_Neuroticism'],
+        'Std Dev Openness': std_scores['BFI_Openness']
     }
 
 # Save the results to CSV
@@ -93,7 +93,17 @@ def main(df):
 
         # Save individual scores to CSV
         BFI_save_results_to_csv(df, output_file_path)
-        return df
+        
+        # Only return the summary columns for concatenation
+        summary_columns = [
+            'BFI_Extraversion',
+            'BFI_Agreeableness', 
+            'BFI_Conscientiousness',
+            'BFI_Neuroticism',
+            'BFI_Openness'
+        ]
+        # Only return columns that exist (in case of errors)
+        return df[[col for col in summary_columns if col in df.columns]]
     return None
 
 if __name__ == "__main__":

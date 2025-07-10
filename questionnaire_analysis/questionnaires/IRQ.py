@@ -61,7 +61,7 @@ def IRQ_save_results_to_csv(df, output_file_path):
     print(f"Results saved to {output_file_path}.")
 
 # Main function to execute the steps
-def main():
+def main(df):
     output_file_path = 'processed_irq_results.csv'
     summary_output_file_path = 'irq_summary_results.csv'
 
@@ -75,7 +75,17 @@ def main():
 
         # Save individual scores to CSV
         IRQ_save_results_to_csv(df, output_file_path)
-        return df
+        
+        # Only return the summary columns for concatenation
+        summary_columns = [
+            'IRQ_NT_Score',
+            'IRQ_NE_Score',
+            'IRQ_PT_Score',
+            'IRQ_PE_Score',
+            'IRQ_Total_Score'
+        ]
+        # Only return columns that exist (in case of errors)
+        return df[[col for col in summary_columns if col in df.columns]]
     return None
 
 if __name__ == "__main__":

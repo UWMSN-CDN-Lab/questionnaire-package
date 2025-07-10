@@ -18,38 +18,39 @@ def MASQ_calculate_mean(df, items, label):
 # Process the data to calculate subscale scores
 def MASQ_process_data(df):
     """
-    Process the data by calculating subscale and overall scores.
+    Calculate subscale and overall scores for the MINI-MASQ.
+    Subscales:
+    - Positive Affect
+    - Negative Affect
+    - Physical Symptom
     """
-    # Calculate mean scores for subscales
-    df = MASQ_calculate_mean(df, positive_affect_items, 'Positive_Affect_Score')
-    df = MASQ_calculate_mean(df, negative_affect_items, 'Negative_Affect_Score')
-    df = MASQ_calculate_mean(df, physical_symptom_items, 'Physical_Symptom_Score')
-    
-    # Calculate overall mean score across all items
-    all_items = positive_affect_items + negative_affect_items + physical_symptom_items
-    df = MASQ_calculate_mean(df, all_items, 'Overall_Score')
-    
+    df['MASQ_Positive_Affect_Score'] = df[['MASQ_01', 'MASQ_02', 'MASQ_03', 'MASQ_04']].mean(axis=1)
+    df['MASQ_Negative_Affect_Score'] = df[['MASQ_05', 'MASQ_06', 'MASQ_07', 'MASQ_08']].mean(axis=1)
+    df['MASQ_Physical_Symptom_Score'] = df[['MASQ_09', 'MASQ_10', 'MASQ_11', 'MASQ_12']].mean(axis=1)
+    df['MASQ_Overall_Score'] = df[['MASQ_Positive_Affect_Score', 'MASQ_Negative_Affect_Score', 'MASQ_Physical_Symptom_Score']].mean(axis=1)
     return df
 
-# Summarize the results
+# Summarize results
 def MASQ_summarize_results(df):
     """
-    Summarize the subscale scores and the overall score.
+    Summarize the MINI-MASQ subscale and overall scores by calculating mean and standard deviation.
     """
-    print("\nSummary of Scores:")
-    print(df[['Positive_Affect_Score', 'Negative_Affect_Score', 'Physical_Symptom_Score', 'Overall_Score']])
-    
-    summary = {
-        'Mean Positive Affect Score': df['Positive_Affect_Score'].mean(),
-        'Mean Negative Affect Score': df['Negative_Affect_Score'].mean(),
-        'Mean Physical Symptom Score': df['Physical_Symptom_Score'].mean(),
-        'Mean Overall Score': df['Overall_Score'].mean()
+    mean_scores = df[['MASQ_Positive_Affect_Score', 'MASQ_Negative_Affect_Score', 'MASQ_Physical_Symptom_Score', 'MASQ_Overall_Score']].mean()
+    std_scores = df[['MASQ_Positive_Affect_Score', 'MASQ_Negative_Affect_Score', 'MASQ_Physical_Symptom_Score', 'MASQ_Overall_Score']].std()
+
+    print("\nSummary of MINI-MASQ Scores:")
+    print(df[['MASQ_Positive_Affect_Score', 'MASQ_Negative_Affect_Score', 'MASQ_Physical_Symptom_Score', 'MASQ_Overall_Score']])
+
+    return {
+        'Mean Positive Affect Score': mean_scores['MASQ_Positive_Affect_Score'],
+        'Mean Negative Affect Score': mean_scores['MASQ_Negative_Affect_Score'],
+        'Mean Physical Symptom Score': mean_scores['MASQ_Physical_Symptom_Score'],
+        'Mean Overall Score': mean_scores['MASQ_Overall_Score'],
+        'Std Dev Positive Affect': std_scores['MASQ_Positive_Affect_Score'],
+        'Std Dev Negative Affect': std_scores['MASQ_Negative_Affect_Score'],
+        'Std Dev Physical Symptom': std_scores['MASQ_Physical_Symptom_Score'],
+        'Std Dev Overall': std_scores['MASQ_Overall_Score']
     }
-    
-    for key, value in summary.items():
-        print(f"{key}: {value:.2f}")
-    
-    return summary
 
 # Save the results to CSV
 def MASQ_save_results_to_csv(df, output_file_path):
@@ -71,7 +72,18 @@ def main(df):
         # Summarize results
         summary = MASQ_summarize_results(df)
 
-        return df
+        # Save results to CSV
+        MASQ_save_results_to_csv(df, output_file_path)
+        
+        # Only return the summary columns for concatenation
+        summary_columns = [
+            'MASQ_Positive_Affect_Score',
+            'MASQ_Negative_Affect_Score',
+            'MASQ_Physical_Symptom_Score',
+            'MASQ_Overall_Score'
+        ]
+        # Only return columns that exist (in case of errors)
+        return df[[col for col in summary_columns if col in df.columns]]
     return None
 
 if __name__ == "__main__":
