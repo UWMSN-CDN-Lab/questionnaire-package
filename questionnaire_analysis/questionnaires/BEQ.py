@@ -7,10 +7,9 @@ def BEQ_reverse_score(df):
     """
     Reverse score specific BEQ items (3, 8, 9).
     """
-    # TODO
-    df['BEQ_03r'] = 8 - df['BEQ_03']
-    df['BEQ_08r'] = 8 - df['BEQ_08']
-    df['BEQ_09r'] = 8 - df['BEQ_09']
+    df['BEQ_03'] = 8 - df['BEQ_03']
+    df['BEQ_08'] = 8 - df['BEQ_08']
+    df['BEQ_09'] = 8 - df['BEQ_09']
     return df
 
 # Calculate the BEQ scores
@@ -21,9 +20,8 @@ def BEQ_calculate_scores(df):
     """
     # Reverse scoring
     df = BEQ_reverse_score(df)
-    # TODO
     # Calculate the BEQ subscale scores
-    df['BEQ_Negative_Expressivity'] = df[['BEQ_09r', 'BEQ_13', 'BEQ_16', 'BEQ_03r', 'BEQ_05', 'BEQ_08r']].mean(axis=1)
+    df['BEQ_Negative_Expressivity'] = df[['BEQ_09', 'BEQ_13', 'BEQ_16', 'BEQ_03', 'BEQ_05', 'BEQ_08']].mean(axis=1)
     df['BEQ_Positive_Expressivity'] = df[['BEQ_06', 'BEQ_01', 'BEQ_04', 'BEQ_10']].mean(axis=1)
     df['BEQ_Impulse_Strength'] = df[['BEQ_15', 'BEQ_11', 'BEQ_14', 'BEQ_07', 'BEQ_02', 'BEQ_12']].mean(axis=1)
 
@@ -74,23 +72,16 @@ def main(df):
         # Step 2: Optional summary logging
         _ = BEQ_summarize_results(df)
 
-        # Step 3: Build summary DataFrame to return
+        # Step 3: Define summary columns to return
         summary_columns = [
             "BEQ_Negative_Expressivity",
             "BEQ_Positive_Expressivity",
             "BEQ_Impulse_Strength",
             "BEQ_Total_Score"
         ]
-        summary_df = df[[
-            "ResponseId",
-            "BEQ_Negative_Expressivity",
-            "BEQ_Positive_Expressivity",
-            "BEQ_Impulse_Strength",
-            "BEQ_Total_Score"
-        ]].copy()
-        summary_df["Questionnaire"] = "BEQ"
 
-        return df
+        # Only return the summary columns for concatenation
+        return df[[col for col in summary_columns if col in df.columns]]
     return None
 
 

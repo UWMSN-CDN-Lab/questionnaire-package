@@ -8,7 +8,7 @@ def SWLS_calculate_score(df):
     Calculate the total score for the SWLS.
     SWLS total score is the sum of the ratings for all 5 items.
     """
-    swls_items = ['SWLS_1', 'SWLS_2', 'SWLS_3', 'SWLS_4', 'SWLS_5']
+    swls_items = ['SWLS_01', 'SWLS_02', 'SWLS_03', 'SWLS_04', 'SWLS_05']
     df['SWLS_Total_Score'] = df[swls_items].sum(axis=1)
     return df
 
@@ -50,7 +50,7 @@ def main(df):
         summary = SWLS_summarize_results(df)
 
         # Save results to CSV
-        SWLS_save_results_to_csv(df, output_file_path)
+        # SWLS_save_results_to_csv(df, output_file_path)  # Disabled for package use
         
         # Only return the summary columns for concatenation
         summary_columns = [

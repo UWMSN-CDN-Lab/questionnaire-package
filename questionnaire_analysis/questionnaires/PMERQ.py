@@ -29,8 +29,11 @@ def PMERQ_calculate_subscale_scores(df):
     """
     Calculate the mean score for each subscale in the PMERQ.
     """
+    # Calculate all subscale scores at once to avoid fragmentation
+    new_columns = {}
     for subscale, items in subscales.items():
-        df[f'PMERQ_{subscale}'] = PMERQ_calculate_subscale_mean(df, items)
+        new_columns[f'PMERQ_{subscale}'] = PMERQ_calculate_subscale_mean(df, items)
+    df = df.assign(**new_columns)
     return df
 
 # Summarize the overall engagement and disengagement scores
@@ -49,8 +52,12 @@ def PMERQ_summarize_engagement_disengagement(df):
         'PMERQ_Disengagement_Response_Modulation'
     ]
     
-    df['PMERQ_Engagement_Score'] = df[engagement_columns].mean(axis=1)
-    df['PMERQ_Disengagement_Score'] = df[disengagement_columns].mean(axis=1)
+    # Calculate engagement/disengagement scores at once
+    summary_scores = {
+        'PMERQ_Engagement_Score': df[engagement_columns].mean(axis=1),
+        'PMERQ_Disengagement_Score': df[disengagement_columns].mean(axis=1)
+    }
+    df = df.assign(**summary_scores)
     
     print("\nSummary of Engagement and Disengagement Scores:")
     print(df[['PMERQ_Engagement_Score', 'PMERQ_Disengagement_Score']])

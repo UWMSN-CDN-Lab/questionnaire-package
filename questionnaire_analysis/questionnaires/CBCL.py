@@ -17,14 +17,17 @@ def CBCL_calculate_scores(df):
     - Attention Problems
     - Aggressive Behavior
     """
-    # Example subscale calculation (adjust the item numbers based on your CBCL_uestionnaire):
-    df['CBCL_Anxiety_Depression'] = df[['CBCL_01', 'CBCL_02', 'CBCL_03', 'CBCL_04']].sum(axis=1)
-    df['CBCL_Withdrawn_Depressed'] = df[['CBCL_05', 'CBCL_06', 'CBCL_07']].sum(axis=1)
-    df['CBCL_Somatic_Complaints'] = df[['CBCL_08', 'CBCL_09', 'CBCL_10']].sum(axis=1)
-    df['CBCL_Social_Problems'] = df[['CBCL_11', 'CBCL_12', 'CBCL_13']].sum(axis=1)
-    df['CBCL_Thought_Problems'] = df[['CBCL_14', 'CBCL_15', 'CBCL_16']].sum(axis=1)
-    df['CBCL_Attention_Problems'] = df[['CBCL_17', 'CBCL_18', 'CBCL_19']].sum(axis=1)
-    df['CBCL_Aggressive_Behavior'] = df[['CBCL_20', 'CBCL_21', 'CBCL_22']].sum(axis=1)
+    # Calculate all CBCL subscales at once to avoid DataFrame fragmentation
+    all_changes = {
+        'CBCL_Anxiety_Depression': df[['CBCL_01', 'CBCL_02', 'CBCL_03', 'CBCL_04']].sum(axis=1),
+        'CBCL_Withdrawn_Depressed': df[['CBCL_05', 'CBCL_06', 'CBCL_07']].sum(axis=1),
+        'CBCL_Somatic_Complaints': df[['CBCL_08', 'CBCL_09', 'CBCL_10']].sum(axis=1),
+        'CBCL_Social_Problems': df[['CBCL_11', 'CBCL_12', 'CBCL_13']].sum(axis=1),
+        'CBCL_Thought_Problems': df[['CBCL_14', 'CBCL_15', 'CBCL_16']].sum(axis=1),
+        'CBCL_Attention_Problems': df[['CBCL_17', 'CBCL_18', 'CBCL_19']].sum(axis=1),
+        'CBCL_Aggressive_Behavior': df[['CBCL_20', 'CBCL_21', 'CBCL_22']].sum(axis=1)
+    }
+    df = df.assign(**all_changes)
     
     return df
 
@@ -81,7 +84,7 @@ def main(df):
         summary = CBCL_summarize_results(df)
 
         # Save individual scores to CSV
-        CBCL_save_results_to_csv(df, output_file_path)
+        # CBCL_save_results_to_csv(df, output_file_path)  # Disabled for package use
         
         # Only return the summary columns for concatenation
         summary_columns = [

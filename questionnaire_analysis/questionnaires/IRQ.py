@@ -74,7 +74,7 @@ def main(df):
         summary = IRQ_summarize_results(df)
 
         # Save individual scores to CSV
-        IRQ_save_results_to_csv(df, output_file_path)
+        # IRQ_save_results_to_csv(df, output_file_path)  # Disabled for package use
         
         # Only return the summary columns for concatenation
         summary_columns = [

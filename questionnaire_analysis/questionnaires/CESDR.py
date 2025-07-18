@@ -10,8 +10,9 @@ def CESDR_calculate_scores(df):
     """
     cesdr_items = [f'CESDR_{i:02d}' for i in range(1, 21)]  # Adjust if you have a different item range
 
-    for item in cesdr_items:
-        df[item] = pd.to_numeric(df[item], errors='coerce')
+    # Convert all CESDR columns to numeric at once to avoid fragmentation
+    numeric_conversions = {item: pd.to_numeric(df[item], errors='coerce') for item in cesdr_items}
+    df = df.assign(**numeric_conversions)
 
     df['CESDR_Total_Score'] = df[cesdr_items].sum(axis=1)
     return df
@@ -41,7 +42,7 @@ def CESDR_subgroup_means(df, subgroup_column):
     Calculate subgroup means and standard deviations for the CESD-R total score.
     The subgroup is defined by the 'subgroup_column'.
     """
-    subgroup_stats = df.groupby(subgroup_column)['Total_CESDR_Score'].agg(['mean', 'std'])
+    subgroup_stats = df.groupby(subgroup_column)['CESDR_Total_Score'].agg(['mean', 'std'])
     
     print(f"\nSubgroup Means and Standard Deviations for {subgroup_column}:")
     print(subgroup_stats)
@@ -86,10 +87,10 @@ def main(df):
         subgroup_summary = CESDR_subgroup_means(df, subgroup_column)
 
         # Save individual scores to CSV
-        CESDR_save_results_to_csv(df, output_file_path)
+        # CESDR_save_results_to_csv(df, output_file_path)  # Disabled for package use
 
         # Save summarized results to CSV
-        CESDR_save_summary_to_csv(summary, subgroup_summary, summary_output_file_path)
+        # CESDR_save_summary_to_csv(summary, subgroup_summary, summary_output_file_path)  # Disabled for package use
         
         # Only return the summary columns for concatenation
         summary_columns = [

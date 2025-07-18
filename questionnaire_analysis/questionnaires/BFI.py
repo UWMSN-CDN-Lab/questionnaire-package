@@ -24,26 +24,29 @@ def BFI_calculate_scores(df):
 
     # Apply reverse scoring for relevant items
     for item in reverse_extraversion:
-        df[f'{item}r'] = 6 - df[item]  # 1-5 scale, reverse scoring is 6 - original response
+        df[f'{item}'] = 6 - df[item]  # 1-5 scale, reverse scoring is 6 - original response
     
     for item in reverse_agreeableness:
-        df[f'{item}r'] = 6 - df[item]
+        df[f'{item}'] = 6 - df[item]
 
     for item in reverse_conscientiousness:
-        df[f'{item}r'] = 6 - df[item]
+        df[f'{item}'] = 6 - df[item]
 
     for item in reverse_neuroticism:
-        df[f'{item}r'] = 6 - df[item]
+        df[f'{item}'] = 6 - df[item]
 
     for item in reverse_openness:
-        df[f'{item}r'] = 6 - df[item]
+        df[f'{item}'] = 6 - df[item]
 
-    # Calculate subscale scores
-    df['BFI_Extraversion'] = df[['BFI_01', 'BFI_06r', 'BFI_11', 'BFI_16', 'BFI_21r', 'BFI_26', 'BFI_31r', 'BFI_36']].mean(axis=1)
-    df['BFI_Agreeableness'] = df[['BFI_02r', 'BFI_07', 'BFI_12r', 'BFI_17', 'BFI_22', 'BFI_27r', 'BFI_32', 'BFI_37r', 'BFI_42']].mean(axis=1)
-    df['BFI_Conscientiousness'] = df[['BFI_03', 'BFI_08r', 'BFI_13', 'BFI_18r', 'BFI_23r', 'BFI_28', 'BFI_33', 'BFI_38', 'BFI_43r']].mean(axis=1)
-    df['BFI_Neuroticism'] = df[['BFI_04', 'BFI_09r', 'BFI_14', 'BFI_19', 'BFI_24r', 'BFI_29', 'BFI_34r', 'BFI_39']].mean(axis=1)
-    df['BFI_Openness'] = df[['BFI_05', 'BFI_10', 'BFI_15', 'BFI_20', 'BFI_25', 'BFI_30', 'BFI_35r', 'BFI_40', 'BFI_41r', 'BFI_44']].mean(axis=1)
+    # Calculate subscale scores all at once to avoid fragmentation
+    subscale_scores = {
+        'BFI_Extraversion': df[['BFI_01', 'BFI_06', 'BFI_11', 'BFI_16', 'BFI_21', 'BFI_26', 'BFI_31', 'BFI_36']].mean(axis=1),
+        'BFI_Agreeableness': df[['BFI_02', 'BFI_07', 'BFI_12', 'BFI_17', 'BFI_22', 'BFI_27', 'BFI_32', 'BFI_37', 'BFI_42']].mean(axis=1),
+        'BFI_Conscientiousness': df[['BFI_03', 'BFI_08', 'BFI_13', 'BFI_18', 'BFI_23', 'BFI_28', 'BFI_33', 'BFI_38', 'BFI_43']].mean(axis=1),
+        'BFI_Neuroticism': df[['BFI_04', 'BFI_09', 'BFI_14', 'BFI_19', 'BFI_24', 'BFI_29', 'BFI_34', 'BFI_39']].mean(axis=1),
+        'BFI_Openness': df[['BFI_05', 'BFI_10', 'BFI_15', 'BFI_20', 'BFI_25', 'BFI_30', 'BFI_35', 'BFI_40', 'BFI_41', 'BFI_44']].mean(axis=1)
+    }
+    df = df.assign(**subscale_scores)
 
     return df
 
@@ -92,7 +95,7 @@ def main(df):
         summary = BFI_summarize_results(df)
 
         # Save individual scores to CSV
-        BFI_save_results_to_csv(df, output_file_path)
+        # BFI_save_results_to_csv(df, output_file_path)  # Disabled for package use
         
         # Only return the summary columns for concatenation
         summary_columns = [

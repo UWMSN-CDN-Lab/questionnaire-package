@@ -7,8 +7,9 @@ def SIAS_calculate_scores(df):
     """
     Calculate the SIAS total score by summing item scores.
     """
-    df['SIAS_Total_Score'] = df[['SIAS_01', 'SIAS_02', 'SIAS_03', 'SIAS_04', 'SIAS_05', 'SIAS_06', 'SIAS_07', 'SIAS_08', 'SIAS_09', 'SIAS_10',
-                                 'SIAS_11', 'SIAS_12', 'SIAS_13', 'SIAS_14', 'SIAS_15', 'SIAS_16', 'SIAS_17', 'SIAS_18', 'SIAS_19', 'SIAS_20']].sum(axis=1)
+    # Calculate SIAS total score to avoid DataFrame fragmentation
+    df = df.assign(SIAS_Total_Score=df[['SIAS_01', 'SIAS_02', 'SIAS_03', 'SIAS_04', 'SIAS_05', 'SIAS_06', 'SIAS_07', 'SIAS_08', 'SIAS_09', 'SIAS_10',
+                                        'SIAS_11', 'SIAS_12', 'SIAS_13', 'SIAS_14', 'SIAS_15', 'SIAS_16', 'SIAS_17', 'SIAS_18', 'SIAS_19', 'SIAS_20']].sum(axis=1))
     return df
 
 # Summarize results
@@ -43,7 +44,7 @@ def main(df):
         summary = SIAS_summarize_results(df)
 
         # Save individual scores to CSV
-        SIAS_save_results_to_csv(df, output_file_path)
+        # SIAS_save_results_to_csv(df, output_file_path)  # Disabled for package use
         
         # Only return the summary columns for concatenation
         summary_columns = [

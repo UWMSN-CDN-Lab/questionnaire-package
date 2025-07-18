@@ -10,13 +10,17 @@ def SD4_calculate_scores(df):
     Psychopathy: mean of items 15-21
     Sadism: mean of items 22-28
     """
-    df['SD4_Machiavellianism'] = df[['SD4_1', 'SD4_2', 'SD4_3', 'SD4_4', 'SD4_5', 'SD4_6', 'SD4_7']].mean(axis=1)
-    df['SD4_Narcissism'] = df[['SD4_8', 'SD4_9', 'SD4_10', 'SD4_11', 'SD4_12', 'SD4_13', 'SD4_14']].mean(axis=1)
-    df['SD4_Psychopathy'] = df[['SD4_15', 'SD4_16', 'SD4_17', 'SD4_18', 'SD4_19', 'SD4_20', 'SD4_21']].mean(axis=1)
-    df['SD4_Sadism'] = df[['SD4_22', 'SD4_23', 'SD4_24', 'SD4_25', 'SD4_26', 'SD4_27', 'SD4_28']].mean(axis=1)
+    # Calculate all SD4 scores at once to avoid DataFrame fragmentation
+    all_changes = {
+        'SD4_Machiavellianism': df[['SD4_01', 'SD4_02', 'SD4_03', 'SD4_04', 'SD4_05', 'SD4_06', 'SD4_07']].mean(axis=1),
+        'SD4_Narcissism': df[['SD4_08', 'SD4_09', 'SD4_10', 'SD4_11', 'SD4_12', 'SD4_13', 'SD4_14']].mean(axis=1),
+        'SD4_Psychopathy': df[['SD4_15', 'SD4_16', 'SD4_17', 'SD4_18', 'SD4_19', 'SD4_20', 'SD4_21']].mean(axis=1),
+        'SD4_Sadism': df[['SD4_22', 'SD4_23', 'SD4_24', 'SD4_25', 'SD4_26', 'SD4_27', 'SD4_28']].mean(axis=1)
+    }
+    df = df.assign(**all_changes)
     
-    # Optional: Calculate total mean score for overall "dark personality"
-    df['SD4_Total_Score'] = df[['SD4_Machiavellianism', 'SD4_Narcissism', 'SD4_Psychopathy', 'SD4_Sadism']].mean(axis=1)
+    # Calculate total mean score for overall "dark personality"
+    df = df.assign(SD4_Total_Score=df[['SD4_Machiavellianism', 'SD4_Narcissism', 'SD4_Psychopathy', 'SD4_Sadism']].mean(axis=1))
     
     return df
 
@@ -100,10 +104,10 @@ def main(df):
         subgroup_summary = SD4_subgroup_means(df, subgroup_column)
 
         # Save individual scores to CSV
-        SD4_save_results_to_csv(df, output_file_path)
+        # SD4_save_results_to_csv(df, output_file_path)  # Disabled for package use
 
         # Save summarized results to CSV
-        SD4_save_summary_to_csv(summary, subgroup_summary, summary_output_file_path)
+        # SD4_save_summary_to_csv(summary, subgroup_summary, summary_output_file_path)  # Disabled for package use
         
         # Only return the summary columns for concatenation
         summary_columns = [

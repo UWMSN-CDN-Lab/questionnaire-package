@@ -23,9 +23,9 @@ def LOTR_calculate_score(df):
     reverse_items = [3, 7, 9]
     df = LOTR_reverse_score(df, reverse_items)
     
-    # Calculate total score by summing specified items
+    # Calculate total score by summing specified items to avoid DataFrame fragmentation
     score_items = ['LOTR_01', 'LOTR_03', 'LOTR_04', 'LOTR_07', 'LOTR_09', 'LOTR_10']
-    df['LOTR_Total_Score'] = df[score_items].sum(axis=1)
+    df = df.assign(LOTR_Total_Score=df[score_items].sum(axis=1))
     
     return df
 
@@ -69,7 +69,7 @@ def main(df):
         summary = LOTR_summarize_results(df)
 
         # Save results to CSV
-        LOTR_save_results_to_csv(df, output_file_path)
+        # LOTR_save_results_to_csv(df, output_file_path)  # Disabled for package use
         
         # Only return the summary columns for concatenation
         summary_columns = [

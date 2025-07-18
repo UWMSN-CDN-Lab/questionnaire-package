@@ -60,7 +60,7 @@ def UCLA_subgroup_means(df, subgroup_column):
     Calculate subgroup means and standard deviations for the UCLA Loneliness Scale.
     The subgroup is defined by the 'subgroup_column'.
     """
-    subgroup_stats = df.groupby(subgroup_column)['Total_UCLA_Score'].agg(['mean', 'std'])
+    subgroup_stats = df.groupby(subgroup_column)['UCLA_Total_Score'].agg(['mean', 'std'])
     
     print(f"\nSubgroup Means and Standard Deviations for {subgroup_column}:")
     print(subgroup_stats)
@@ -105,10 +105,10 @@ def main(df):
         subgroup_summary = UCLA_subgroup_means(df, subgroup_column)
 
         # Save individual scores to CSV
-        UCLA_save_results_to_csv(df, output_file_path)
+        # UCLA_save_results_to_csv(df, output_file_path)  # Disabled for package use
 
         # Save summarized results to CSV
-        UCLA_save_summary_to_csv(summary, subgroup_summary, summary_output_file_path)
+        #UCLA_save_summary_to_csv(summary, subgroup_summary, summary_output_file_path)
         
         # Only return the summary columns for concatenation
         summary_columns = [

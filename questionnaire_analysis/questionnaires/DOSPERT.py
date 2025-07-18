@@ -1,5 +1,5 @@
 import pandas as pd
-# factor analysis. 
+# TODO: Apply fragmentation optimization pattern (df.assign(**all_changes)) to all questionnaire modules for better performance 
 
 # Calculate subscale scores
 def DOSPERT_calculate_subscale_scores(df):
@@ -30,14 +30,12 @@ def DOSPERT_calculate_scores(df):
         'Social': ["DOSPERT_01", "DOSPERT_07", "DOSPERT_21", "DOSPERT_22", "DOSPERT_27", "DOSPERT_28"]
     }
 
-    # Convert all relevant columns to numeric (coerce errors)
-    for subscale, items in risk_taking_subscales.items():
-        for col in items:
-            df[col] = pd.to_numeric(df[col], errors='coerce')
-
-    # Calculate subscale scores all at once
-    new_columns = {f'DOSPERT_{subscale}_Score': df[items].mean(axis=1) for subscale, items in risk_taking_subscales.items()}
-    df = pd.concat([df, pd.DataFrame(new_columns)], axis=1)
+    # Convert all columns to numeric and calculate scores at once to avoid fragmentation
+    all_items = [item for items in risk_taking_subscales.values() for item in items]
+    numeric_conversions = {col: pd.to_numeric(df[col], errors='coerce') for col in all_items}
+    subscale_scores = {f'DOSPERT_{subscale}_Score': df[items].mean(axis=1) for subscale, items in risk_taking_subscales.items()}
+    all_changes = {**numeric_conversions, **subscale_scores}
+    df = df.assign(**all_changes)
 
     dospert_items = [
         "DOSPERT_01", "DOSPERT_02", "DOSPERT_03", "DOSPERT_04", "DOSPERT_05",
@@ -68,13 +66,16 @@ def DOSPERT_summarize_results(df):
     print(df[[f'DOSPERT_{subscale}_Score' for subscale in subscales] + ['DOSPERT_Overall_Mean_Score']])
     
     summary = {
-        f'{subscale} Risk-Taking Mean': df[f'DOSPERT_{subscale}_Score'].mean() for subscale in subscales
+        f'{subscale} Risk-Taking Mean': df[f'DOSPERT_{subscale}_Score'].mean(skipna=True) for subscale in subscales
     }
-    summary['Overall Risk-Taking Mean'] = df['DOSPERT_Overall_Mean_Score'].mean()
+    summary['Overall Risk-Taking Mean'] = df['DOSPERT_Overall_Mean_Score'].mean(skipna=True)
 
     
     for key, value in summary.items():
-        print(f"{key}: {value:.3f}")
+        # Convert to scalar if it's a Series, handle NaN values
+        if hasattr(value, 'iloc'):
+            value = value.iloc[0] if len(value) > 0 else float('nan')
+        print(f"{key}: {value:.3f}" if not pd.isna(value) else f"{key}: NaN")
     
     return summary
 

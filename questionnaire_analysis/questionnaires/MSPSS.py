@@ -55,7 +55,7 @@ def main(df):
         summary = MSPSS_summarize_results(df)
 
         # Save individual scores to CSV
-        MSPSS_save_results_to_csv(df, output_file_path)
+        # MSPSS_save_results_to_csv(df, output_file_path)  # Disabled for package use
         
         # Only return the summary columns for concatenation
         summary_columns = [

@@ -42,13 +42,16 @@ def HEXACO_calculate_scores(df):
     for item in reverse_openness:
         df[f'HEXACO_{item:02d}'] = 6 - df[f'HEXACO_{item:02d}']
 
-    # Calculate subscale scores
-    df['HEXACO_Honesty_Humility'] = df[['HEXACO_01', 'HEXACO_04', 'HEXACO_09', 'HEXACO_16', 'HEXACO_24']].mean(axis=1)
-    df['HEXACO_Emotionality'] = df[['HEXACO_02', 'HEXACO_10', 'HEXACO_18', 'HEXACO_22', 'HEXACO_30']].mean(axis=1)
-    df['HEXACO_Extraversion'] = df[['HEXACO_03', 'HEXACO_12', 'HEXACO_15', 'HEXACO_27', 'HEXACO_36']].mean(axis=1)
-    df['HEXACO_Agreeableness'] = df[['HEXACO_05', 'HEXACO_14', 'HEXACO_18', 'HEXACO_26', 'HEXACO_31']].mean(axis=1)
-    df['HEXACO_Conscientiousness'] = df[['HEXACO_06', 'HEXACO_11', 'HEXACO_17', 'HEXACO_21', 'HEXACO_25']].mean(axis=1)
-    df['HEXACO_Openness'] = df[['HEXACO_07', 'HEXACO_13', 'HEXACO_19', 'HEXACO_23', 'HEXACO_28']].mean(axis=1)
+    # Calculate all subscale scores at once to avoid fragmentation
+    hexaco_scores = {
+        'HEXACO_Honesty_Humility': df[['HEXACO_01', 'HEXACO_04', 'HEXACO_09', 'HEXACO_16', 'HEXACO_24']].mean(axis=1),
+        'HEXACO_Emotionality': df[['HEXACO_02', 'HEXACO_10', 'HEXACO_18', 'HEXACO_22', 'HEXACO_30']].mean(axis=1),
+        'HEXACO_Extraversion': df[['HEXACO_03', 'HEXACO_12', 'HEXACO_15', 'HEXACO_27', 'HEXACO_36']].mean(axis=1),
+        'HEXACO_Agreeableness': df[['HEXACO_05', 'HEXACO_14', 'HEXACO_18', 'HEXACO_26', 'HEXACO_31']].mean(axis=1),
+        'HEXACO_Conscientiousness': df[['HEXACO_06', 'HEXACO_11', 'HEXACO_17', 'HEXACO_21', 'HEXACO_25']].mean(axis=1),
+        'HEXACO_Openness': df[['HEXACO_07', 'HEXACO_13', 'HEXACO_19', 'HEXACO_23', 'HEXACO_28']].mean(axis=1)
+    }
+    df = df.assign(**hexaco_scores)
 
     return df
 
@@ -98,7 +101,7 @@ def main(df):
         summary = HEXACO_summarize_results(df)
 
         # Save individual scores to CSV
-        HEXACO_save_results_to_csv(df, output_file_path)
+        # HEXACO_save_results_to_csv(df, output_file_path)  # Disabled for package use
         
         # Only return the summary columns for concatenation
         summary_columns = [

@@ -27,11 +27,15 @@ def SU_calculate_scores(df):
     # Calculate subscale scores
     numeric_columns = ['SU_01', 'SU_02', 'SU_03', 'SU_04', 'SU_05', 'SU_06',
                    'SU_07', 'SU_08', 'SU_09', 'SU_10']
-    for col in numeric_columns:
-        df[col] = pd.to_numeric(df[col], errors='coerce')
-    df['SU_Frequency_Use'] = df[['SU_01', 'SU_02', 'SU_03']].mean(axis=1)
-    df['SU_Substance_Type_Use'] = df[['SU_04', 'SU_05', 'SU_06']].mean(axis=1)
-    df['SU_Consequences_Use'] = df[['SU_07', 'SU_08', 'SU_09', 'SU_10']].mean(axis=1)
+    # Convert columns to numeric and calculate all scores at once to avoid fragmentation
+    numeric_conversions = {col: pd.to_numeric(df[col], errors='coerce') for col in numeric_columns}
+    su_scores = {
+        'SU_Frequency_Use': df[['SU_01', 'SU_02', 'SU_03']].mean(axis=1),
+        'SU_Substance_Type_Use': df[['SU_04', 'SU_05', 'SU_06']].mean(axis=1),
+        'SU_Consequences_Use': df[['SU_07', 'SU_08', 'SU_09', 'SU_10']].mean(axis=1)
+    }
+    all_changes = {**numeric_conversions, **su_scores}
+    df = df.assign(**all_changes)
     
     # Calculate total SU score
     df['SU_Total_Score'] = df[['SU_Frequency_Use', 'SU_Substance_Type_Use', 'SU_Consequences_Use']].mean(axis=1)

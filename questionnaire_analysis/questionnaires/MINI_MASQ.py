@@ -24,9 +24,13 @@ def MASQ_process_data(df):
     - Negative Affect
     - Physical Symptom
     """
-    df['MASQ_Positive_Affect_Score'] = df[['MASQ_01', 'MASQ_02', 'MASQ_03', 'MASQ_04']].mean(axis=1)
-    df['MASQ_Negative_Affect_Score'] = df[['MASQ_05', 'MASQ_06', 'MASQ_07', 'MASQ_08']].mean(axis=1)
-    df['MASQ_Physical_Symptom_Score'] = df[['MASQ_09', 'MASQ_10', 'MASQ_11', 'MASQ_12']].mean(axis=1)
+    # Calculate all scores at once to avoid fragmentation
+    masq_scores = {
+        'MASQ_Positive_Affect_Score': df[['MASQ_01', 'MASQ_02', 'MASQ_03', 'MASQ_04']].mean(axis=1),
+        'MASQ_Negative_Affect_Score': df[['MASQ_05', 'MASQ_06', 'MASQ_07', 'MASQ_08']].mean(axis=1),
+        'MASQ_Physical_Symptom_Score': df[['MASQ_09', 'MASQ_10', 'MASQ_11', 'MASQ_12']].mean(axis=1)
+    }
+    df = df.assign(**masq_scores)
     df['MASQ_Overall_Score'] = df[['MASQ_Positive_Affect_Score', 'MASQ_Negative_Affect_Score', 'MASQ_Physical_Symptom_Score']].mean(axis=1)
     return df
 
@@ -73,7 +77,7 @@ def main(df):
         summary = MASQ_summarize_results(df)
 
         # Save results to CSV
-        MASQ_save_results_to_csv(df, output_file_path)
+        # MASQ_save_results_to_csv(df, output_file_path)  # Disabled for package use
         
         # Only return the summary columns for concatenation
         summary_columns = [

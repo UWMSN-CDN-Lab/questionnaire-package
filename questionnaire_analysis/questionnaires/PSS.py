@@ -14,9 +14,9 @@ def PSS_calculate_pss_score(row):
     Calculate the total PSS score for a single row.
     """
     pss_columns = [
-        'PSS_01', 'PSS_02', 'PSS_03', 'PSS_04r', 'PSS_05r', 
-        'PSS_06r', 'PSS_07r', 'PSS_08', 'PSS_09r', 'PSS_10r', 
-        'PSS_11', 'PSS_12', 'PSS_13r', 'PSS_14'
+        'PSS_01', 'PSS_02', 'PSS_03', 'PSS_04', 'PSS_05', 
+        'PSS_06', 'PSS_07', 'PSS_08', 'PSS_09', 'PSS_10', 
+        'PSS_11', 'PSS_12', 'PSS_13', 'PSS_14'
     ]
     return row[pss_columns].sum()
 
@@ -35,10 +35,10 @@ def PSS_calculate_subgroup_means(df):
     """
     Calculate mean scores for each subgroup: anxiety and stress.
     """
-    anxiety_columns = ['PSS_3', 'PSS_8', 'PSS_11']
+    anxiety_columns = ['PSS_03', 'PSS_08', 'PSS_11']
     stress_columns = [
-        'PSS_1', 'PSS_2', 'PSS_4r', 'PSS_5r', 'PSS_6r', 
-        'PSS_7r', 'PSS_9r', 'PSS_10r', 'PSS_12', 'PSS_13r', 
+        'PSS_01', 'PSS_02', 'PSS_04', 'PSS_05', 'PSS_06', 
+        'PSS_07', 'PSS_09', 'PSS_10', 'PSS_12', 'PSS_13', 
         'PSS_14'
     ]
 
@@ -56,8 +56,8 @@ def PSS_calculate_overall_mean(df):
     Calculate the overall mean score for all PSS items.
     """
     pss_columns = [
-        'PSS_1', 'PSS_2', 'PSS_3', 'PSS_4r', 'PSS_5r', 'PSS_6r', 'PSS_7r', 
-        'PSS_8', 'PSS_9r', 'PSS_10r', 'PSS_11', 'PSS_12', 'PSS_13r', 'PSS_14'
+        'PSS_01', 'PSS_02', 'PSS_03', 'PSS_04', 'PSS_05', 'PSS_06', 'PSS_07', 
+        'PSS_08', 'PSS_09', 'PSS_10', 'PSS_11', 'PSS_12', 'PSS_13', 'PSS_14'
     ]
     
     overall_mean_score = df[pss_columns].mean().mean()
@@ -69,15 +69,19 @@ def PSS_calculate_individual_scores(df):
     """
     Calculate individual scores for each participant in each subcategory.
     """
-    anxiety_columns = ['PSS_3', 'PSS_8', 'PSS_11']
+    anxiety_columns = ['PSS_03', 'PSS_08', 'PSS_11']
     stress_columns = [
-        'PSS_1', 'PSS_2', 'PSS_4r', 'PSS_5r', 'PSS_6r', 
-        'PSS_7r', 'PSS_9r', 'PSS_10r', 'PSS_12', 'PSS_13r', 
+        'PSS_01', 'PSS_02', 'PSS_04', 'PSS_05', 'PSS_06', 
+        'PSS_07', 'PSS_09', 'PSS_10', 'PSS_12', 'PSS_13', 
         'PSS_14'
     ]
     
-    df['PSS_Anxiety_Score'] = df[anxiety_columns].sum(axis=1)
-    df['PSS_Stress_Score'] = df[stress_columns].sum(axis=1)
+    # Calculate anxiety and stress scores at once to avoid DataFrame fragmentation
+    all_changes = {
+        'PSS_Anxiety_Score': df[anxiety_columns].sum(axis=1),
+        'PSS_Stress_Score': df[stress_columns].sum(axis=1)
+    }
+    df = df.assign(**all_changes)
     
     print("\nIndividual Scores for Each Subcategory:")
     print(df[['PSS_Anxiety_Score', 'PSS_Stress_Score']])
@@ -109,12 +113,15 @@ def PSS_process_pss(df):
     mean scores for subgroups, and overall mean score.
     """
     # Reverse the necessary scores for PSS questions
-    reverse_columns = ['PSS_4r', 'PSS_5r', 'PSS_6r', 'PSS_7r', 'PSS_9r', 'PSS_10r', 'PSS_13r']
+    reverse_columns = ['PSS_04', 'PSS_05', 'PSS_06', 'PSS_07', 'PSS_09', 'PSS_10', 'PSS_13']
     df = PSS_reverse_scores(df, reverse_columns)
     
-    # Calculate PSS score and determine stress level
-    df['PSS_Total_Score'] = df.apply(PSS_calculate_pss_score, axis=1)
-    df['PSS_Stress_Level'] = df['PSS_Total_Score'].apply(PSS_determine_stress_level)
+    # Calculate PSS score and determine stress level at once to avoid DataFrame fragmentation
+    all_changes = {
+        'PSS_Total_Score': df.apply(PSS_calculate_pss_score, axis=1)
+    }
+    df = df.assign(**all_changes)
+    df = df.assign(PSS_Stress_Level=df['PSS_Total_Score'].apply(PSS_determine_stress_level))
     
     # Calculate individual scores
     df = PSS_calculate_individual_scores(df)
@@ -140,7 +147,7 @@ def main(df):
         processed_df = PSS_process_pss(df)
 
         # Save the results to a new CSV file
-        PSS_save_results_to_csv(processed_df, output_file_path)
+        #PSS_save_results_to_csv(processed_df, output_file_path)
         
         # Only return the summary columns for concatenation
         summary_columns = [

@@ -10,8 +10,8 @@ def BSSS_calculate_bsss_score(df):
     # Items contributing to the BSSS score
     bsss_items = ["BSSS_01", "BSSS_02", "BSSS_03", "BSSS_04", "BSSS_05", "BSSS_06", "BSSS_07", "BSSS_08"]
     
-    # Calculate total BSSS score by summing the responses to all items
-    df['BSSS_Total_Score'] = df[[item for item in bsss_items]].sum(axis=1)
+    # Calculate total BSSS score to avoid DataFrame fragmentation
+    df = df.assign(BSSS_Total_Score=df[[item for item in bsss_items]].sum(axis=1))
     
     return df
 
@@ -55,7 +55,7 @@ def main(df):
         summary = BSSS_summarize_results(df)
 
         # Save results to CSV
-        BSSS_save_results_to_csv(df, output_file_path)
+        # BSSS_save_results_to_csv(df, output_file_path)  # Disabled for package use
         
         # Only return the summary columns for concatenation
         summary_columns = [

@@ -24,15 +24,16 @@ def IPPA_calculate_scores(df):
     for item in reverse_peer:
         df[item] = 6 - df[item]
 
-    # Parent Attachment Scores (Trust, Communication, Alienation)
-    df['Parent_Trust'] = df[['IPPA_01', 'IPPA_02', 'IPPA_04', 'IPPA_13', 'IPPA_21']].mean(axis=1)
-    df['Parent_Communication'] = df[['IPPA_05', 'IPPA_07', 'IPPA_15', 'IPPA_17']].mean(axis=1)
-    df['Parent_Alienation'] = df[['IPPA_09', 'IPPA_18']].mean(axis=1)
-
-    # Peer Attachment Scores (Trust, Communication, Alienation)
-    df['Peer_Trust'] = df[['IPPA_06', 'IPPA_08', 'IPPA_12', 'IPPA_13']].mean(axis=1)
-    df['Peer_Communication'] = df[['IPPA_01', 'IPPA_02', 'IPPA_07']].mean(axis=1)
-    df['Peer_Alienation'] = df[['IPPA_09', 'IPPA_11', 'IPPA_18']].mean(axis=1)
+    # Calculate all attachment scores at once to avoid fragmentation
+    ippa_scores = {
+        'IPPA_Parent_Trust': df[['IPPA_01', 'IPPA_02', 'IPPA_04', 'IPPA_13', 'IPPA_21']].mean(axis=1),
+        'IPPA_Parent_Communication': df[['IPPA_05', 'IPPA_07', 'IPPA_15', 'IPPA_17']].mean(axis=1),
+        'IPPA_Parent_Alienation': df[['IPPA_09', 'IPPA_18']].mean(axis=1),
+        'IPPA_Peer_Trust': df[['IPPA_06', 'IPPA_08', 'IPPA_12', 'IPPA_13']].mean(axis=1),
+        'IPPA_Peer_Communication': df[['IPPA_01', 'IPPA_02', 'IPPA_07']].mean(axis=1),
+        'IPPA_Peer_Alienation': df[['IPPA_09', 'IPPA_11', 'IPPA_18']].mean(axis=1)
+    }
+    df = df.assign(**ippa_scores)
 
     return df
 
@@ -41,28 +42,28 @@ def IPPA_summarize_results(df):
     """
     Summarize the IPPA scores by calculating mean and standard deviation for each subscale.
     """
-    mean_scores = df[['Parent_Trust', 'Parent_Communication', 'Parent_Alienation',
-                      'Peer_Trust', 'Peer_Communication', 'Peer_Alienation']].mean()
-    std_scores = df[['Parent_Trust', 'Parent_Communication', 'Parent_Alienation',
-                     'Peer_Trust', 'Peer_Communication', 'Peer_Alienation']].std()
+    mean_scores = df[['IPPA_Parent_Trust', 'IPPA_Parent_Communication', 'IPPA_Parent_Alienation',
+                      'IPPA_Peer_Trust', 'IPPA_Peer_Communication', 'IPPA_Peer_Alienation']].mean()
+    std_scores = df[['IPPA_Parent_Trust', 'IPPA_Parent_Communication', 'IPPA_Parent_Alienation',
+                     'IPPA_Peer_Trust', 'IPPA_Peer_Communication', 'IPPA_Peer_Alienation']].std()
 
     print("\nSummary of IPPA Scores:")
-    print(df[['Parent_Trust', 'Parent_Communication', 'Parent_Alienation',
-              'Peer_Trust', 'Peer_Communication', 'Peer_Alienation']])
+    print(df[['IPPA_Parent_Trust', 'IPPA_Parent_Communication', 'IPPA_Parent_Alienation',
+              'IPPA_Peer_Trust', 'IPPA_Peer_Communication', 'IPPA_Peer_Alienation']])
 
     return {
-        'Mean Parent Trust': mean_scores['Parent_Trust'],
-        'Mean Parent Communication': mean_scores['Parent_Communication'],
-        'Mean Parent Alienation': mean_scores['Parent_Alienation'],
-        'Mean Peer Trust': mean_scores['Peer_Trust'],
-        'Mean Peer Communication': mean_scores['Peer_Communication'],
-        'Mean Peer Alienation': mean_scores['Peer_Alienation'],
-        'Std Dev Parent Trust': std_scores['Parent_Trust'],
-        'Std Dev Parent Communication': std_scores['Parent_Communication'],
-        'Std Dev Parent Alienation': std_scores['Parent_Alienation'],
-        'Std Dev Peer Trust': std_scores['Peer_Trust'],
-        'Std Dev Peer Communication': std_scores['Peer_Communication'],
-        'Std Dev Peer Alienation': std_scores['Peer_Alienation']
+        'Mean Parent Trust': mean_scores['IPPA_Parent_Trust'],
+        'Mean Parent Communication': mean_scores['IPPA_Parent_Communication'],
+        'Mean Parent Alienation': mean_scores['IPPA_Parent_Alienation'],
+        'Mean Peer Trust': mean_scores['IPPA_Peer_Trust'],
+        'Mean Peer Communication': mean_scores['IPPA_Peer_Communication'],
+        'Mean Peer Alienation': mean_scores['IPPA_Peer_Alienation'],
+        'Std Dev Parent Trust': std_scores['IPPA_Parent_Trust'],
+        'Std Dev Parent Communication': std_scores['IPPA_Parent_Communication'],
+        'Std Dev Parent Alienation': std_scores['IPPA_Parent_Alienation'],
+        'Std Dev Peer Trust': std_scores['IPPA_Peer_Trust'],
+        'Std Dev Peer Communication': std_scores['IPPA_Peer_Communication'],
+        'Std Dev Peer Alienation': std_scores['IPPA_Peer_Alienation']
     }
 
 # Save the results to CSV
@@ -85,10 +86,12 @@ def main(df):
 
         # Only return the summary columns for concatenation
         summary_columns = [
-            'IPPA_Trust_Score',
-            'IPPA_Communication_Score',
-            'IPPA_Alienation_Score',
-            'IPPA_Total_Score'
+            'IPPA_Parent_Trust',
+            'IPPA_Parent_Communication',
+            'IPPA_Parent_Alienation',
+            'IPPA_Peer_Trust',
+            'IPPA_Peer_Communication',
+            'IPPA_Peer_Alienation'
         ]
         # Only return columns that exist (in case of errors)
         return df[[col for col in summary_columns if col in df.columns]]

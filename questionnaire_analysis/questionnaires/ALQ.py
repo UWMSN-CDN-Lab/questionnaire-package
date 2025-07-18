@@ -6,8 +6,7 @@ def ALQ_reverse_score(df):
     Reverse score certain ALQ items that are negatively worded.
     Items to reverse: ALQ_4 and ALQ_6
     """
-    # TODO change to reverse scoring 
-    reverse_items = ['ALQ_4', 'ALQ_6']
+    reverse_items = ['ALQ_04', 'ALQ_06']
     for item in reverse_items:
         df[item] = 6 - df[item]  # Reverse scoring: 1 becomes 5, 5 becomes 1, etc.
     return df
@@ -63,7 +62,7 @@ def ALQ_subgroup_means(df, subgroup_column):
     Calculate subgroup means and standard deviations for the ALQ.
     The subgroup is defined by the 'subgroup_column'.
     """
-    subgroup_stats = df.groupby(subgroup_column)[['Conceptualization', 'Identification', 'Integration', 'Total_ALQ_Score']].agg(['mean', 'std'])
+    subgroup_stats = df.groupby(subgroup_column)[['ALQ_Conceptualization', 'ALQ_Identification', 'ALQ_Integration', 'ALQ_Total_Score']].agg(['mean', 'std'])
     
     print(f"\nSubgroup Means and Standard Deviations for {subgroup_column}:")
     print(subgroup_stats)

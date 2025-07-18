@@ -52,7 +52,7 @@ def main(df):
         summary = ECR_summarize_results(df)
 
         # Save individual scores to CSV
-        ECR_save_results_to_csv(df, output_file_path)
+        # ECR_save_results_to_csv(df, output_file_path)  # Disabled for package use
         
         # Only return the summary columns for concatenation
         summary_columns = [

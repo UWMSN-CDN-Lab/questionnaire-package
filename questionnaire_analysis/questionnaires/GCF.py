@@ -63,10 +63,10 @@ def main(df):
         summary = GCF_summarize_results(df)
 
         # Save individual scores to CSV
-        GCF_save_results_to_csv(df, output_file_path)
+        # GCF_save_results_to_csv(df, output_file_path)  # Disabled for package use
 
         # Save summarized results to CSV
-        GCF_save_summary_to_csv(summary,summary_output_file_path)
+        # GCF_save_summary_to_csv(summary,summary_output_file_path)  # Disabled for package use
         
         # Only return the summary columns for concatenation
         summary_columns = [

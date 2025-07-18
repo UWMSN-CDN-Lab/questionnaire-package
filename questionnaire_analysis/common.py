@@ -78,6 +78,14 @@ def analyze_questionnaire_csv(csv_path, output_summary=True):
     # Combine all summaries (if multiple)
     if summary_dfs:
         final_summary = pd.concat(summary_dfs, axis=1)
+        
+        # Remove completely empty rows from the final summary
+        initial_row_count = len(final_summary)
+        final_summary = final_summary.dropna(how='all')
+        removed_rows = initial_row_count - len(final_summary)
+        if removed_rows > 0:
+            print(f"Removed {removed_rows} completely empty row(s) from the summary CSV.")
+        
         if output_summary:
             summary_output_path = csv_path.replace(".csv", "_summary.csv")
             final_summary.to_csv(summary_output_path, index=False)
