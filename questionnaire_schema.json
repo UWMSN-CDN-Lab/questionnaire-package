@@ -1,0 +1,54 @@
+{
+  "questionnaire_name": "EXAMPLE",
+  "full_name": "Example Questionnaire",
+  "description": "A sample questionnaire for demonstration",
+  "prefix": "EXAMPLE_",
+  "items": {
+    "total_items": 20,
+    "item_range": [1, 20],
+    "item_format": "EXAMPLE_{:02d}"
+  },
+  "reverse_scoring": {
+    "enabled": true,
+    "items": [3, 7, 12, 15],
+    "scale_max": 5,
+    "formula": "scale_max + 1 - original_value"
+  },
+  "subscales": [
+    {
+      "name": "Positive_Affect",
+      "items": [1, 4, 6, 8, 10, 13, 16, 18],
+      "scoring_method": "mean",
+      "description": "Measures positive emotional states"
+    },
+    {
+      "name": "Negative_Affect", 
+      "items": [2, 5, 9, 11, 14, 17, 19, 20],
+      "scoring_method": "mean",
+      "description": "Measures negative emotional states"
+    },
+    {
+      "name": "Neutral_Items",
+      "items": [3, 7, 12, 15],
+      "scoring_method": "sum",
+      "description": "Neutral items for validation"
+    }
+  ],
+  "total_score": {
+    "enabled": true,
+    "method": "mean_of_subscales",
+    "name": "Total_Score",
+    "description": "Overall questionnaire score"
+  },
+  "validation": {
+    "min_items_required": 15,
+    "handle_missing": "skip_na",
+    "error_on_insufficient_data": false
+  },
+  "output_columns": [
+    "EXAMPLE_Positive_Affect",
+    "EXAMPLE_Negative_Affect", 
+    "EXAMPLE_Neutral_Items",
+    "EXAMPLE_Total_Score"
+  ]
+}

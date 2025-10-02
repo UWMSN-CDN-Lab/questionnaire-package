@@ -1,0 +1,54 @@
+{
+  "questionnaire_name": "NEWQ",
+  "full_name": "New Example Questionnaire",
+  "description": "A demonstration questionnaire showing automatic module generation",
+  "prefix": "NEWQ_",
+  "items": {
+    "total_items": 12,
+    "item_range": [1, 12],
+    "item_format": "NEWQ_{:02d}"
+  },
+  "reverse_scoring": {
+    "enabled": true,
+    "items": [3, 7, 11],
+    "scale_max": 5,
+    "formula": "scale_max + 1 - original_value"
+  },
+  "subscales": [
+    {
+      "name": "Positive_Emotions",
+      "items": [1, 2, 4, 6, 9],
+      "scoring_method": "mean",
+      "description": "Measures positive emotional experiences"
+    },
+    {
+      "name": "Negative_Emotions",
+      "items": [3, 5, 7, 8, 11],
+      "scoring_method": "mean",
+      "description": "Measures negative emotional experiences"
+    },
+    {
+      "name": "Regulation_Strategies",
+      "items": [10, 12],
+      "scoring_method": "mean",
+      "description": "Measures emotion regulation strategies"
+    }
+  ],
+  "total_score": {
+    "enabled": true,
+    "method": "mean_of_subscales",
+    "name": "Total_Score",
+    "description": "Overall emotional experience score"
+  },
+  "validation": {
+    "min_items_required": 10,
+    "handle_missing": "skip_na",
+    "error_on_insufficient_data": false
+  },
+  "output_columns": [
+    "NEWQ_Positive_Emotions",
+    "NEWQ_Negative_Emotions",
+    "NEWQ_Regulation_Strategies",
+    "NEWQ_Total_Score"
+  ]
+}
