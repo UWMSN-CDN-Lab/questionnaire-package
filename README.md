@@ -2,6 +2,21 @@
 
 A comprehensive Python package for automated scoring and analysis of psychological questionnaires from CSV data files.
 
+## Installation
+
+```bash
+# Clone the repository
+git clone <repository-url>
+
+After you clone the repository ensure that the package folder is located in the same folder as your script.  
+
+# Install dependencies
+pip install pandas
+
+# Python import
+from questionnaire_analysis.common import analyze_questionnaire_csv
+```
+
 ## Overview
 
 This package provides a modular system for processing psychological questionnaire data with automatic questionnaire detection, scoring, and summary generation. It currently supports **27 standardized questionnaires** and includes a powerful module generator for adding new questionnaires.
@@ -53,17 +68,6 @@ The package currently supports these psychological instruments:
 **And more:** ALQ, IRQ, GCF, SU, CBCL, SIAS
 
 ## Quick Start
-
-### Installation
-
-```bash
-# Clone the repository
-git clone <repository-url>
-cd questionnaire-package
-
-# Install dependencies
-pip install pandas
-```
 
 ### Basic Usage
 
