@@ -18,7 +18,7 @@ from questionnaire_analysis.common import analyze_questionnaire_csv
 # Detect and Analyze questionnaire data from your CSV
 summary_df = analyze_questionnaire_csv("your_data.csv")
 
-# Direct Module usage wihtout detection
+# Direct Module usage without detection
 from questionnaire_analysis.questionnaires import PANAS, DOSPERT
 # Process data with specific questionnaire
 panas_scores = PANAS.main(your_dataframe)
