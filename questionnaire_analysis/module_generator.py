@@ -370,7 +370,7 @@ import pandas as pd
             # Add import if needed
             if f'{name},' not in content and f'{name} ' not in content:
                 # Find the import section and add the new questionnaire
-                import_pattern = r'from questionnaire_analysis\.questionnaires import \((.*?)\)'
+                import_pattern = r'from \.questionnaires import \((.*?)\)'
                 match = re.search(import_pattern, content, re.DOTALL)
                 if match:
                     current_imports = match.group(1)

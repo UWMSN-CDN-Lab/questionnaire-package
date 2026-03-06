@@ -1,5 +1,5 @@
 import pandas as pd
-from questionnaire_analysis.questionnaires import (
+from .questionnaires import (
 UCLA, PANAS, RAS, GCF, ECR, MSPSS, SWLS, ALQ, BEQ, IRQ,
 CESDR, MINI_MASQ, PMERQ, BFI, SU, EERQ, HEXACO, CARE, SD4, CBCL, UPPS,
 BSSS, SIAS, PSS, LOTR, DOSPERT, IPPA
@@ -50,6 +50,7 @@ def detect_questionnaires(df):
         if any(col.startswith(prefix) for col in df.columns):
             detected[prefix] = main_fn
     return detected
+
 def analyze_questionnaire_csv(csv_path, output_summary=True):
     """
     Loads a CSV, detects questionnaires, runs analyses, and returns or saves the summary.

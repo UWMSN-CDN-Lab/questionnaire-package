@@ -1,8 +1,8 @@
 
 
 __all__ = [
-    "UCLA", "DTCGT", "PANAS", "RAS", "GCF_C", "ECR_C", "MSPSS", "SWLS", "ALQ",
-"BEQ", "IRQ_T", "CESDR", "MINI_MASQ", "PMERQ", "BFI", "SU", "EERQ", "HEXACO",
+    "UCLA", "PANAS", "RAS", "GCF", "ECR", "MSPSS", "SWLS", "ALQ",
+"BEQ", "IRQ", "CESDR", "MINI_MASQ", "PMERQ", "BFI", "SU", "EERQ", "HEXACO",
 "CARE", "SD4", "CBCL", "UPPS", "BSSS", "SIAS", "PSS", "LOTR", "DOSPERT", "IPPA"
 ]
 

@@ -1,5 +1,5 @@
 import pandas as pd
-from questionnaires.DOSPERT import (
+from .questionnaires.DOSPERT import (
     DOSPERT_calculate_scores,
     DOSPERT_summarize_results,
     DOSPERT_save_results_to_csv
