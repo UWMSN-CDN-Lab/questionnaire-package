@@ -50,8 +50,8 @@ def CARE_summarize_results(df):
         'CARE_Risky_Sexual_Activity',
         'CARE_Risky_Drugs',
         'CARE_Risky_Alcohol',
-        'CARE_Safe_Sexual_Activity',
-        'CARE_Total_Score'
+        'CARE_Misc',
+        'CARE_Risk_Score'
     ]
 
     mean_scores = df[subscales].mean()
@@ -78,8 +78,8 @@ def main(df):
             'CARE_Risky_Sexual_Activity',
             'CARE_Risky_Drugs',
             'CARE_Risky_Alcohol',
-            'CARE_Safe_Sexual_Activity',
-            'CARE_Total_Score'
+            'CARE_Misc',
+            'CARE_Risk_Score'
         ]
         # Only return columns that exist (in case of errors)
         return df[[col for col in summary_columns if col in df.columns]]
