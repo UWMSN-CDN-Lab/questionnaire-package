@@ -17,7 +17,7 @@ def CARE_calculate_scores(df):
             df[col] = pd.to_numeric(df[col], errors='coerce')
 
     # Define item categories according to the guidelines
-    risky_sexual_items = ['CARE_02', 'CARE_03', 'CARE_04', 'CARE_05', 'CARE_06', 'CARE_09', 
+    risky_sexual_items = ['CARE_02', 'CARE_03', 'CARE_04', 'CARE_05', 'CARE_06', 'CARE_08', 'CARE_09', 
                          'CARE_10', 'CARE_11', 'CARE_12', 'CARE_13', 'CARE_14', 'CARE_15', 
                          'CARE_16', 'CARE_17']
     risky_drug_items = ['CARE_19', 'CARE_20', 'CARE_21', 'CARE_22', 'CARE_23', 'CARE_24']
