@@ -5,7 +5,7 @@ setup(
     name='questionnaire_analysis',
     version='0.1.0',
     description='A package for analyzing questionnaires from CSV files using modular scripts.',
-    long_description=open('README.md').read(),
+    long_description=open('README.md', encoding='utf-8').read(),
     long_description_content_type='text/markdown',
     author='Your Name', #TODO
     author_email='your.email@example.com', # TODO
