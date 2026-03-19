@@ -190,7 +190,7 @@ The package includes a powerful module generator that creates new questionnaire 
 python generate_questionnaire.py my_questionnaire.json
 
 # Interactive configuration creation
-python generate_questionnaire.py --interactive
+python generate_questionnaire.py
 
 # Create example configuration template
 python generate_questionnaire.py --example

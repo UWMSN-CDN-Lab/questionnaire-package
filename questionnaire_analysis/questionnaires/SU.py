@@ -14,15 +14,12 @@ def SU_calculate_scores(df):
     """
     
     # Example: Reverse scoring (modify as needed)
-    reverse_substance_use_items = [5, 10]  # Example reverse items for substance use
+    reverse_substance_use_items = ['SU_05', 'SU_10']  # Example reverse items for substance use
     
     # Apply reverse scoring for relevant items
     for item in reverse_substance_use_items:
-        column_name = f'SU_{item:02d}'  # Ensure consistent formatting if needed (e.g., SU_05)
-        # Convert the column to numeric first
-        df[column_name] = pd.to_numeric(df[column_name], errors='coerce')
-        # Apply reverse scoring: assuming a 1-5 scale, reverse is computed as 6 - value
-        df[column_name] = 6 - df[column_name]  # Assuming a 1-5 scale, reverse scoring is 6 - original response
+        df[item] = pd.to_numeric(df[item], errors='coerce')
+        df[item] = 6 - df[item]  # Assuming a 1-5 scale, reverse scoring is 6 - original response
 
     # Calculate subscale scores
     numeric_columns = ['SU_01', 'SU_02', 'SU_03', 'SU_04', 'SU_05', 'SU_06',
