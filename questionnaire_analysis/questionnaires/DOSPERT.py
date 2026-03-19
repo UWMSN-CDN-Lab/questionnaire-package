@@ -30,12 +30,14 @@ def DOSPERT_calculate_scores(df):
         'Social': ["DOSPERT_01", "DOSPERT_07", "DOSPERT_21", "DOSPERT_22", "DOSPERT_27", "DOSPERT_28"]
     }
 
-    # Convert all columns to numeric and calculate scores at once to avoid fragmentation
+    # Convert all columns to numeric FIRST
     all_items = [item for items in risk_taking_subscales.values() for item in items]
-    numeric_conversions = {col: pd.to_numeric(df[col], errors='coerce') for col in all_items}
+    for col in all_items:
+        df[col] = pd.to_numeric(df[col], errors='coerce')
+
+    # NOW calculate subscale scores
     subscale_scores = {f'DOSPERT_{subscale}_Score': df[items].mean(axis=1) for subscale, items in risk_taking_subscales.items()}
-    all_changes = {**numeric_conversions, **subscale_scores}
-    df = df.assign(**all_changes)
+    df = df.assign(**subscale_scores)
 
     dospert_items = [
         "DOSPERT_01", "DOSPERT_02", "DOSPERT_03", "DOSPERT_04", "DOSPERT_05",
