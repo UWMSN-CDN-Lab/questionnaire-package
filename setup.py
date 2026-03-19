@@ -9,7 +9,7 @@ setup(
     long_description_content_type='text/markdown',
     author='Your Name', #TODO
     author_email='your.email@example.com', # TODO
-    packages=find_packages(),  # Automatically find all packages and subpackages # TODO
+    packages=find_packages(), 
     install_requires=[
         'pandas>=1.0',  # List your dependencies here
     ],
@@ -20,7 +20,7 @@ setup(
     },
     classifiers=[
         'Programming Language :: Python :: 3',
-        'License :: OSI Approved :: MIT License',  # Change if you use another license # TODO
+        'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
     python_requires='>=3.6',
