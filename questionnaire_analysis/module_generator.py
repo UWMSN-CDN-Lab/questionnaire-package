@@ -382,6 +382,127 @@ import pandas as pd
         
         print(f"Updated package imports for {name}")
 
+    def remove_questionnaire(self, name: str, confirm: bool = True) -> bool:
+        """
+        Remove a questionnaire module and all its references from the package.
+
+        Args:
+            name: Questionnaire name (e.g., 'NEWQ')
+            confirm: Whether to ask for confirmation before deleting
+
+        Returns:
+            True if removal was successful, False otherwise
+        """
+        name = name.upper()
+        prefix = f"{name}_"
+
+        # Check if module exists
+        module_path = self.questionnaires_dir / f"{name}.py"
+        if not module_path.exists():
+            print(f"Error: Questionnaire module '{name}.py' not found in {self.questionnaires_dir}")
+            return False
+
+        # Show what will be removed
+        print(f"\n=== Removing Questionnaire: {name} ===")
+        print(f"This will:")
+        print(f"  1. Delete: {module_path}")
+        print(f"  2. Remove from: questionnaires/__init__.py")
+        print(f"  3. Remove from: common.py (imports and questionnaire_map)")
+
+        if confirm:
+            response = input("\nProceed with removal? (y/n): ").lower().strip()
+            if not response.startswith('y'):
+                print("Removal cancelled.")
+                return False
+
+        errors = []
+
+        # 1. Delete the module file
+        try:
+            module_path.unlink()
+            print(f"✓ Deleted {module_path}")
+        except Exception as e:
+            errors.append(f"Failed to delete module file: {e}")
+
+        # 2. Remove from questionnaires/__init__.py
+        init_path = self.questionnaires_dir / "__init__.py"
+        if init_path.exists():
+            try:
+                with open(init_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+
+                # Remove from __all__ list
+                # Handle various formats: "NAME", "NAME",  and "NAME" at end
+                content = re.sub(rf',?\s*"{name}"', '', content)
+                content = re.sub(rf'"{name}",?\s*', '', content)
+
+                # Remove import statement
+                content = re.sub(rf'\nfrom \. import {name}', '', content)
+                content = re.sub(rf'from \. import {name}\n?', '', content)
+
+                # Clean up any double newlines
+                content = re.sub(r'\n{3,}', '\n\n', content)
+
+                with open(init_path, 'w', encoding='utf-8') as f:
+                    f.write(content)
+
+                print(f"✓ Removed from questionnaires/__init__.py")
+            except Exception as e:
+                errors.append(f"Failed to update __init__.py: {e}")
+
+        # 3. Remove from common.py
+        common_path = self.questionnaires_dir.parent / "common.py"
+        if common_path.exists():
+            try:
+                with open(common_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+
+                # Remove from imports (handle various formats)
+                content = re.sub(rf',\s*{name}(?=[\s,\)])', '', content)
+                content = re.sub(rf'{name},\s*', '', content)
+                content = re.sub(rf',\s*{name}\s*\)', ')', content)
+
+                # Remove from questionnaire_map
+                content = re.sub(rf',?\s*"{prefix}":\s*{name}\.main', '', content)
+                content = re.sub(rf'"{prefix}":\s*{name}\.main,?\s*', '', content)
+
+                # Clean up any double newlines or trailing commas before }
+                content = re.sub(r',(\s*\n\s*\})', r'\1', content)
+                content = re.sub(r'\n{3,}', '\n\n', content)
+
+                with open(common_path, 'w', encoding='utf-8') as f:
+                    f.write(content)
+
+                print(f"✓ Removed from common.py")
+            except Exception as e:
+                errors.append(f"Failed to update common.py: {e}")
+
+        if errors:
+            print(f"\n⚠️  Completed with errors:")
+            for error in errors:
+                print(f"  - {error}")
+            return False
+        else:
+            print(f"\n✓ Successfully removed questionnaire '{name}'")
+            print(f"\nRemember to reinstall the package: pip install -e .")
+            return True
+
+
+def remove_questionnaire(name: str, questionnaires_dir: str = None, confirm: bool = True) -> bool:
+    """
+    Convenience function to remove a questionnaire from the package.
+
+    Args:
+        name: Questionnaire name (e.g., 'NEWQ')
+        questionnaires_dir: Directory for questionnaire modules
+        confirm: Whether to ask for confirmation
+
+    Returns:
+        True if removal was successful
+    """
+    generator = QuestionnaireModuleGenerator(questionnaires_dir)
+    return generator.remove_questionnaire(name, confirm)
+
 
 def generate_questionnaire_from_json(json_path: str, questionnaires_dir: str = None) -> str:
     """

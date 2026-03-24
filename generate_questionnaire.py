@@ -6,13 +6,14 @@ Usage:
     python generate_questionnaire.py config.json
     python generate_questionnaire.py --interactive
     python generate_questionnaire.py --example
+    python generate_questionnaire.py --remove QUESTIONNAIRE_NAME
 """
 
 import argparse
 import json
 import sys
 from pathlib import Path
-from questionnaire_analysis.module_generator import generate_questionnaire_from_json
+from questionnaire_analysis.module_generator import generate_questionnaire_from_json, remove_questionnaire
 
 def create_example_config():
     """Create an example configuration file."""
@@ -213,38 +214,49 @@ def interactive_config_creation():
 def main():
     """Main CLI function."""
     parser = argparse.ArgumentParser(
-        description="Generate questionnaire modules from JSON configuration",
+        description="Generate or remove questionnaire modules",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
   python generate_questionnaire.py my_questionnaire.json
   python generate_questionnaire.py --interactive
   python generate_questionnaire.py --example
+  python generate_questionnaire.py --remove NEWQ
+  python generate_questionnaire.py --remove NEWQ --force
         """
     )
-    
+
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("config_file", nargs="?", help="JSON configuration file")
-    group.add_argument("--interactive", "-i", action="store_true", 
+    group.add_argument("--interactive", "-i", action="store_true",
                       help="Create configuration interactively")
     group.add_argument("--example", "-e", action="store_true",
                       help="Create example configuration file")
-    
+    group.add_argument("--remove", "-r", metavar="NAME",
+                      help="Remove a questionnaire by name (e.g., NEWQ)")
+
+    parser.add_argument("--force", "-f", action="store_true",
+                       help="Skip confirmation prompt when removing")
+
     args = parser.parse_args()
-    
+
     try:
         if args.example:
             create_example_config()
         elif args.interactive:
             interactive_config_creation()
+        elif args.remove:
+            success = remove_questionnaire(args.remove, confirm=not args.force)
+            if not success:
+                sys.exit(1)
         elif args.config_file:
             if not Path(args.config_file).exists():
                 print(f"Error: Configuration file '{args.config_file}' not found")
                 sys.exit(1)
-            
+
             module_path = generate_questionnaire_from_json(args.config_file)
             print(f"Successfully generated module: {module_path}")
-        
+
     except Exception as e:
         print(f"Error: {e}")
         sys.exit(1)

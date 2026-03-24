@@ -22,6 +22,24 @@ pip install -e .
 pip show questionnaire_analysis
 ```
 
+### Updating the Package
+
+When new changes are pushed to the repository (e.g., new questionnaires added), update with:
+
+```bash
+# 1. Pull the latest changes
+cd questionnaire-package
+git pull
+
+# 2. Uninstall the old version
+pip uninstall questionnaire_analysis -y
+
+# 3. Reinstall the updated package
+pip install -e .
+```
+
+> **Tip:** If you're using a Jupyter notebook, restart the kernel after reinstalling to load the new changes.
+
 ---
 
 ## Usage
