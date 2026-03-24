@@ -375,7 +375,7 @@ import pandas as pd
                 if match:
                     current_imports = match.group(1)
                     new_imports = current_imports.rstrip() + f', {name}'
-                    content = re.sub(import_pattern, f'from questionnaire_analysis.questionnaires import ({new_imports})', content, flags=re.DOTALL)
+                    content = re.sub(import_pattern, f'from .questionnaires import ({new_imports})', content, flags=re.DOTALL)
             
             with open(common_path, 'w', encoding='utf-8') as f:
                 f.write(content)

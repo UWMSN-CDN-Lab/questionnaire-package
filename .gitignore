@@ -72,3 +72,6 @@ nosetests.xml
 coverage.xml
 *.cover
 .hypothesis/
+
+# Personal files
+README_PERSONAL_PACKAGE.md
