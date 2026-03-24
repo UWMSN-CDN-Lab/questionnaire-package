@@ -4,27 +4,47 @@ A comprehensive Python package for automated scoring and analysis of psychologic
 
 ## Installation
 
+### 1. Clone the Repository
 ```bash
-# Clone the repository
 git clone <repository-url>
+cd questionnaire-package
+```
 
-After you clone the repository ensure that the package folder is located in the same folder as your script.  
+### 2. Install the Package
+```bash
+pip install -e .
+```
 
-# Install dependencies
-pip install pandas
+> **Note:** All dependencies (pandas, etc.) are installed automatically. The `-e` flag enables "editable" mode — any code changes take effect immediately without reinstalling.
 
-# Python import
+### 3. Verify Installation
+```bash
+pip show questionnaire_analysis
+```
+
+---
+
+## Usage
+
+Once installed, you can use the package **from any directory**:
+
+```python
 from questionnaire_analysis.common import analyze_questionnaire_csv
-# Detect and Analyze questionnaire data from your CSV
-summary_df = analyze_questionnaire_csv("your_data.csv")
 
-# Direct Module usage without detection
+# Analyze questionnaire data (creates your_data_summary.csv)
+summary_df = analyze_questionnaire_csv("path/to/your_data.csv")
+```
+
+For direct module usage:
+
+```python
 from questionnaire_analysis.questionnaires import PANAS, DOSPERT
-# Process data with specific questionnaire
+
 panas_scores = PANAS.main(your_dataframe)
 dospert_scores = DOSPERT.main(your_dataframe)
-
 ```
+
+---
 
 ## Overview
 
@@ -106,7 +126,7 @@ print(summary_df.head())
 Your CSV file should contain questionnaire responses with standardized column naming:
 
 ```csv
-SubjectIDPANAS_01,PANAS_02,DOSPERT_01,DOSPERT_02,UCLA_01,UCLA_02,...
+SubjectID,PANAS_01,PANAS_02,DOSPERT_01,DOSPERT_02,UCLA_01,UCLA_02,...
 S001,4,2,3,5,2,4,...
 S002,5,1,4,3,3,2,...
 ```
@@ -189,9 +209,6 @@ The package includes a powerful module generator that creates new questionnaire 
 # Generate questionnaire module from JSON config
 python generate_questionnaire.py my_questionnaire.json
 
-# Interactive configuration creation
-python generate_questionnaire.py
-
 # Create example configuration template
 python generate_questionnaire.py --example
 ```
@@ -202,7 +219,8 @@ The generator automatically:
 - ✅ Creates new questionnaire module (`questionnaires/NEWQ.py`)
 - ✅ Updates package imports (`questionnaires/__init__.py`)
 - ✅ Adds to detection system (`common.py`)
-- ✅ Makes questionnaire immediately available for use
+
+Make sure to reinstall using pip install -e again after adding the questionnaire
 
 ## Advanced Features
 
@@ -265,7 +283,6 @@ questionnaire-package/
 │       ├── UCLA.py                # UCLA questionnaire
 │       └── ...                    # 27 questionnaire modules
 ├── generate_questionnaire.py       # Module generator CLI
-├── sample_data.csv                 # Example data file
 └── README.md                       # This file
 ```
 
