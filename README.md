@@ -238,7 +238,26 @@ The generator automatically:
 - ✅ Updates package imports (`questionnaires/__init__.py`)
 - ✅ Adds to detection system (`common.py`)
 
-Make sure to reinstall using pip install -e again after adding the questionnaire
+> **Note:** Reinstall the package after adding a questionnaire: `pip install -e .`
+
+### Removing a Questionnaire
+
+To remove a questionnaire that was previously added:
+
+```bash
+# Remove with confirmation prompt
+python generate_questionnaire.py --remove NEWQ
+
+# Remove without confirmation
+python generate_questionnaire.py --remove NEWQ --force
+```
+
+This will:
+- ✅ Delete the questionnaire module (`questionnaires/NEWQ.py`)
+- ✅ Remove from package imports (`questionnaires/__init__.py`)
+- ✅ Remove from detection system (`common.py`)
+
+> **Note:** Reinstall the package after removing a questionnaire: `pip install -e .`
 
 ## Advanced Features
 
