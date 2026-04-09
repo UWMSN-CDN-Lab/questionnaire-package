@@ -7,6 +7,11 @@ def SIAS_calculate_scores(df):
     """
     Calculate the SIAS total score by summing item scores.
     """
+     # Reverse scoring for items 5, 9, 11
+    reverse_items = ['SIAS_05', 'SIAS_09', 'SIAS_11']
+    for item in reverse_items:
+        df[item] = 4 - df[item]
+    
     # Calculate SIAS total score to avoid DataFrame fragmentation
     df = df.assign(SIAS_Total_Score=df[['SIAS_01', 'SIAS_02', 'SIAS_03', 'SIAS_04', 'SIAS_05', 'SIAS_06', 'SIAS_07', 'SIAS_08', 'SIAS_09', 'SIAS_10',
                                         'SIAS_11', 'SIAS_12', 'SIAS_13', 'SIAS_14', 'SIAS_15', 'SIAS_16', 'SIAS_17', 'SIAS_18', 'SIAS_19', 'SIAS_20']].sum(axis=1))
