@@ -10,6 +10,11 @@ def ECR_calculate_scores(df):
     - Anxiety
     - Avoidance
     """
+    # Reverse scoring for items 1, 5, 8, 9
+    reverse_items = ['ECR_01', 'ECR_05', 'ECR_08', 'ECR_09']
+    for item in reverse_items:
+        df[item] = 8 - df[item]
+        
     df['ECR_Anxiety'] = df[['ECR_02', 'ECR_04', 'ECR_06', 'ECR_08', 'ECR_10', 'ECR_12']].mean(axis=1)
     df['ECR_Avoidance'] = df[['ECR_01', 'ECR_03', 'ECR_05', 'ECR_07', 'ECR_09', 'ECR_11']].mean(axis=1)
     
