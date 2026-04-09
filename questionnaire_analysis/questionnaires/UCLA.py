@@ -16,7 +16,7 @@ def UCLA_reverse_score(df):
     Reverse score certain UCLA items that are positively worded.
     Items to reverse: 1, 5, 6, 9, 10, 15, 16, 19, 20
     """
-    reverse_items = ['UCLA_1', 'UCLA_5', 'UCLA_6', 'UCLA_9', 'UCLA_10', 'UCLA_15', 'UCLA_16', 'UCLA_19', 'UCLA_20']
+    reverse_items = ['UCLA_01', 'UCLA_05', 'UCLA_06', 'UCLA_09', 'UCLA_10', 'UCLA_15', 'UCLA_16', 'UCLA_19', 'UCLA_20']
     for item in reverse_items:
         df[item] = 5 - df[item]  # Reverse score: 1 becomes 4, 4 becomes 1, etc.
     return df
