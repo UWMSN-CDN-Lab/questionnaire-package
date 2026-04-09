@@ -12,9 +12,8 @@ def MASQ_process_data(df):
     # General Distress (GD): Items 2, 3, 7, 12, 13, 17, 20, 21
     masq_gd_columns = ['MASQ_02', 'MASQ_03', 'MASQ_07', 'MASQ_12', 'MASQ_13', 'MASQ_17', 'MASQ_20', 'MASQ_21']
 
-    # Anxious Arousal (AA): Items 4, 6, 8, 10, 14, 16, 18, 22, 24, 2, 3, 7, 12, 13, 17, 20, 21, 26
-    masq_aa_columns = ['MASQ_04', 'MASQ_06', 'MASQ_08', 'MASQ_10', 'MASQ_14', 'MASQ_16', 'MASQ_18', 'MASQ_22', 'MASQ_24',
-                       'MASQ_02', 'MASQ_03', 'MASQ_07', 'MASQ_12', 'MASQ_13', 'MASQ_17', 'MASQ_20', 'MASQ_21', 'MASQ_26']
+    # Anxious Arousal (AA): Items 4, 6, 8, 10, 14, 16, 18, 22, 24, 26 ONLY
+    masq_aa_columns = ['MASQ_04', 'MASQ_06', 'MASQ_08', 'MASQ_10', 'MASQ_14', 'MASQ_16', 'MASQ_18', 'MASQ_22', 'MASQ_24', 'MASQ_26']
 
     # Anhedonic Depression (AD): Forward items 5, 11; Reverse items 1, 9, 15, 19, 23, 25
     masq_ad_forward_columns = ['MASQ_05', 'MASQ_11']
